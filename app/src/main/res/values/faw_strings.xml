@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="faw_user">&#xf007;</string>
+    <string name="faw_location_arrow">&#xf124;</string>
+    <string name="faw_globe_europe">&#xf7a2;</string>
+</resources>

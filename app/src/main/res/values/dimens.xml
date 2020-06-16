@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="size_xxs">8.4dp</dimen>
+    <dimen name="size_xs">9.8dp</dimen>
+    <dimen name="size_s">11.7dp</dimen>
+    <dimen name="size_m">13.6dp</dimen>
+    <dimen name="size_l">15dp</dimen>
+    <dimen name="size_xl">17dp</dimen>
+    <dimen name="size_xxl">20dp</dimen>
+
+
+    <dimen name="size_faw_xxs">9dp</dimen>
+    <dimen name="size_faw_xs">10dp</dimen>
+    <dimen name="size_faw_s">12.5dp</dimen>
+    <dimen name="size_faw_m">14dp</dimen>
+    <dimen name="size_faw_l">17dp</dimen>
+    <dimen name="size_faw_xl">19dp</dimen>
+    <dimen name="size_faw_xxl">22dp</dimen>
+</resources>

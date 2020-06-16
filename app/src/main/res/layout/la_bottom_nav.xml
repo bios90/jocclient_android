@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/lal_root"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/lal_profile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:background="@{BuilderBg.getSquareRippleTransOrange()}"
+            android:gravity="center">
+
+            <TextView
+                style="@style/TvFawReg.Xl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/faw_user"
+                android:textColor="@color/gray5" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lal_list"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:background="@{BuilderBg.getSquareRippleTransOrange()}"
+            android:gravity="center">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TvFawReg.Xl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/faw_location_arrow"
+                android:textColor="@color/gray5" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lal_map"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:background="@{BuilderBg.getSquareRippleTransOrange()}"
+            android:gravity="center">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TvFawReg.Xl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/faw_globe_europe"
+                android:textColor="@color/gray5" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

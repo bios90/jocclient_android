@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Joc</string>
+    <string name="loading">Loading</string>
+    <string name="MAPS_API_KEY" templateMergeStrategy="preserve" translatable="false">AIzaSyAHoROJoCnsD4-7gkV4uPWo0j4DwyyLRU4</string>
+</resources>

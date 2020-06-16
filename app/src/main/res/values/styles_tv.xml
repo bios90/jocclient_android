@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TvReg">
+        <item name="android:hyphenationFrequency">none</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/gray4</item>
+        <item name="android:fontFamily">@font/exo_reg</item>
+    </style>
+
+    <style name="TvReg.Xxs" parent="TvReg">
+        <item name="android:textSize">@dimen/size_xxs</item>
+    </style>
+
+    <style name="TvReg.Xs" parent="TvReg">
+        <item name="android:textSize">@dimen/size_xs</item>
+    </style>
+
+    <style name="TvReg.S" parent="TvReg">
+        <item name="android:textSize">@dimen/size_s</item>
+    </style>
+
+    <style name="TvReg.M" parent="TvReg">
+        <item name="android:textSize">@dimen/size_m</item>
+    </style>
+
+    <style name="TvReg.L" parent="TvReg">
+        <item name="android:textSize">@dimen/size_l</item>
+    </style>
+
+    <style name="TvReg.Xl" parent="TvReg">
+        <item name="android:textSize">@dimen/size_xl</item>
+    </style>
+
+    <style name="TvReg.Xxl" parent="TvReg">
+        <item name="android:textSize">@dimen/size_xxl</item>
+    </style>
+
+    <style name="TvBold">
+        <item name="android:hyphenationFrequency">none</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/gray4</item>
+        <item name="android:fontFamily">@font/exo_bold</item>
+    </style>
+
+    <style name="TvBold.Xxs" parent="TvBold">
+        <item name="android:textSize">@dimen/size_xxs</item>
+    </style>
+
+    <style name="TvBold.Xs" parent="TvBold">
+        <item name="android:textSize">@dimen/size_xs</item>
+    </style>
+
+    <style name="TvBold.S" parent="TvBold">
+        <item name="android:textSize">@dimen/size_s</item>
+    </style>
+
+    <style name="TvBold.M" parent="TvBold">
+        <item name="android:textSize">@dimen/size_m</item>
+    </style>
+
+    <style name="TvBold.L" parent="TvBold">
+        <item name="android:textSize">@dimen/size_l</item>
+    </style>
+
+    <style name="TvBold.Xl" parent="TvBold">
+        <item name="android:textSize">@dimen/size_xl</item>
+    </style>
+
+    <style name="TvLight">
+        <item name="android:hyphenationFrequency">none</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/gray4</item>
+        <item name="android:fontFamily">@font/exo_light</item>
+    </style>
+
+    <style name="TvLight.Xxs" parent="TvLight">
+        <item name="android:textSize">@dimen/size_xxs</item>
+    </style>
+
+    <style name="TvLight.Xs" parent="TvLight">
+        <item name="android:textSize">@dimen/size_xs</item>
+    </style>
+
+    <style name="TvLight.S" parent="TvLight">
+        <item name="android:textSize">@dimen/size_s</item>
+    </style>
+
+    <style name="TvLight.M" parent="TvLight">
+        <item name="android:textSize">@dimen/size_m</item>
+    </style>
+
+    <style name="TvLight.L" parent="TvLight">
+        <item name="android:textSize">@dimen/size_l</item>
+    </style>
+
+    <style name="TvLight.Xl" parent="TvLight">
+        <item name="android:textSize">@dimen/size_xl</item>
+    </style>
+
+    <style name="TvFawSolid">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/gray4</item>
+        <item name="android:fontFamily">@font/fa_solid</item>
+    </style>
+
+    <style name="TvFawSolid.Xxs">
+        <item name="android:textSize">@dimen/size_faw_xxs</item>
+    </style>
+
+    <style name="TvFawSolid.Xs">
+        <item name="android:textSize">@dimen/size_faw_xs</item>
+    </style>
+
+    <style name="TvFawSolid.S">
+        <item name="android:textSize">@dimen/size_faw_s</item>
+    </style>
+
+    <style name="TvFawSolid.M">
+        <item name="android:textSize">@dimen/size_faw_m</item>
+    </style>
+
+    <style name="TvFawSolid.L">
+        <item name="android:textSize">@dimen/size_faw_l</item>
+    </style>
+
+    <style name="TvFawSolid.Xl">
+        <item name="android:textSize">@dimen/size_faw_xl</item>
+    </style>
+
+
+    <style name="TvFawReg">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/gray4</item>
+        <item name="android:fontFamily">@font/fa_regular</item>
+    </style>
+
+    <style name="TvFawReg.Xxs">
+        <item name="android:textSize">@dimen/size_faw_xxs</item>
+    </style>
+
+    <style name="TvFawReg.Xs">
+        <item name="android:textSize">@dimen/size_faw_xs</item>
+    </style>
+
+    <style name="TvFawReg.S">
+        <item name="android:textSize">@dimen/size_faw_s</item>
+    </style>
+
+    <style name="TvFawReg.M">
+        <item name="android:textSize">@dimen/size_faw_m</item>
+    </style>
+
+    <style name="TvFawReg.L">
+        <item name="android:textSize">@dimen/size_faw_l</item>
+    </style>
+
+    <style name="TvFawReg.Xl">
+        <item name="android:textSize">@dimen/size_faw_xl</item>
+    </style>
+
+
+    <style name="TvFawLight">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/gray4</item>
+        <item name="android:fontFamily">@font/fa_light</item>
+    </style>
+
+    <style name="TvFawLight.Xxs">
+        <item name="android:textSize">@dimen/size_faw_xxs</item>
+    </style>
+
+    <style name="TvFawLight.Xs">
+        <item name="android:textSize">@dimen/size_faw_xs</item>
+    </style>
+
+    <style name="TvFawLight.S">
+        <item name="android:textSize">@dimen/size_faw_s</item>
+    </style>
+
+    <style name="TvFawLight.M">
+        <item name="android:textSize">@dimen/size_faw_m</item>
+    </style>
+
+    <style name="TvFawLight.L">
+        <item name="android:textSize">@dimen/size_faw_l</item>
+    </style>
+
+    <style name="TvFawLight.Xl">
+        <item name="android:textSize">@dimen/size_faw_xl</item>
+    </style>
+
+</resources>
