@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="EditText">
+        <item name="android:textCursorDrawable">@drawable/et_cursor</item>
+        <item name="android:gravity">left</item>
+        <item name="android:fontFamily">@font/exo_reg</item>
+        <item name="android:inputType">textCapSentences</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textSize">@dimen/size_m</item>
+        <item name="android:textColor">@color/gray7</item>
+    </style>
+
+    <style name="EditText.Multiline">
+        <item name="android:inputType">textCapSentences|textMultiLine</item>
+        <item name="android:minLines">5</item>
+    </style>
+</resources>

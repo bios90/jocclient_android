@@ -1,10 +1,8 @@
-package com.justordercompany.client.logic.view_models
+package com.justordercompany.client.logic.utils
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.justordercompany.client.ui.act_main.VmActMain
-import dagger.Provides
 
 @Suppress("UNCHECKED_CAST")
 class MyVmFactory(private val activity: AppCompatActivity)

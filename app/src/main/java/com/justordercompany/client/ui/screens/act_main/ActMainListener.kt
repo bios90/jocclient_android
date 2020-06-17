@@ -1,4 +1,4 @@
-package com.justordercompany.client.ui.act_main
+package com.justordercompany.client.ui.screens.act_main
 
 import com.justordercompany.client.base.enums.TypeTab
 

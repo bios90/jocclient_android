@@ -3,15 +3,16 @@ package com.justordercompany.client.di.activity
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import com.justordercompany.client.logic.utils.MessagesManager
-import com.justordercompany.client.logic.view_models.MyVmFactory
+import com.justordercompany.client.logic.utils.MyVmFactory
+import com.justordercompany.client.logic.utils.PermissionManager
 import dagger.Module
 import dagger.Provides
 
 @Module
-class ModuleActivity(val activity:AppCompatActivity)
+class ModuleActivity(val activity: AppCompatActivity)
 {
     @Provides
-    fun provideActivity():AppCompatActivity
+    fun provideActivity(): AppCompatActivity
     {
         return activity
     }
@@ -23,14 +24,20 @@ class ModuleActivity(val activity:AppCompatActivity)
     }
 
     @Provides
-    fun provideMyVmFactory():MyVmFactory
+    fun provideMyVmFactory(): MyVmFactory
     {
         return MyVmFactory(activity)
     }
 
     @Provides
-    fun provideMessagesManager():MessagesManager
+    fun provideMessagesManager(): MessagesManager
     {
         return MessagesManager(activity)
+    }
+
+    @Provides
+    fun providePermissionManager(): PermissionManager
+    {
+        return PermissionManager(activity)
     }
 }

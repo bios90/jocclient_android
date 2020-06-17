@@ -2,7 +2,9 @@ package com.justordercompany.client.extensions
 
 import android.graphics.LinearGradient
 import android.graphics.Shader
+import android.text.TextUtils
 import android.util.Log
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.justordercompany.client.R
@@ -26,4 +28,15 @@ fun TextView.makeTextGradient(colors: ArrayList<Int>)
 fun TextView.removeGradient()
 {
     this.paint.setShader(null)
+}
+
+fun EditText.getNullableText(): String?
+{
+    val text = this.text.toString().trim()
+    if (TextUtils.isEmpty(text))
+    {
+        return null
+    }
+
+    return text
 }

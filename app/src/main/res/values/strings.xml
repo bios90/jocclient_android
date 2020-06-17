@@ -1,5 +1,23 @@
 <resources>
     <string name="app_name">Joc</string>
-    <string name="loading">Loading</string>
     <string name="MAPS_API_KEY" templateMergeStrategy="preserve" translatable="false">AIzaSyAHoROJoCnsD4-7gkV4uPWo0j4DwyyLRU4</string>
+    <string name="format_for_server" translatable="false">yyyy-MM-dd HH:mm:ss</string>
+    <string name="format_for_display_short" translatable="false">dd MMM yyyy</string>
+    <string name="format_for_result" translatable="false">dd MMM yyyy - HH:mm</string>
+    <string name="format_for_photo_file" translatable="false">yyyy-MM-dd-HH-mm-ss-SSS</string>
+
+    <string name="loading">Loading</string>
+    <string name="permissions">Permissions</string>
+    <string name="need_permissions_geo">To be able to search on a map, you must provide access to geolocation</string>
+    <string name="need_permissions_global">For the full application to work, you must provide permissions</string>
+    <string name="try_again">Try again</string>
+    <string name="later">Later</string>
+    <string name="to_settings">To Settings</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="authorization">Authorization</string>
+    <string name="make_auth_for">Пройдите авторизацию для ....</string>
+    <string name="enter_phone_number">Введите ваш номер телефона</string>
+    <string name="enter_sms_code">Введите код подтверждения</string>
+    <string name="send">Send</string>
 </resources>

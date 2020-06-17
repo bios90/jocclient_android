@@ -190,4 +190,14 @@
         <item name="android:textSize">@dimen/size_faw_xl</item>
     </style>
 
+    <style name="AlerterTitle" parent="TvBold.Xl">
+        <item name="android:gravity">left</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="AlerterText" parent="TvReg.M">
+        <item name="android:gravity">left</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>

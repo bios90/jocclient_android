@@ -1,7 +1,9 @@
 package com.justordercompany.client.base
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.justordercompany.client.R
 import com.justordercompany.client.di.activity.ComponentActivity
@@ -9,18 +11,22 @@ import com.justordercompany.client.di.activity.ModuleActivity
 import com.justordercompany.client.di.application.ComponentApplication
 import com.justordercompany.client.extensions.*
 import com.justordercompany.client.logic.utils.MessagesManager
-import com.justordercompany.client.logic.view_models.MyVmFactory
+import com.justordercompany.client.logic.utils.MyVmFactory
+import com.justordercompany.client.logic.utils.PermissionManager
 import io.reactivex.disposables.CompositeDisposable
 import java.lang.RuntimeException
 import javax.inject.Inject
 
-abstract class BaseActivity:AppCompatActivity()
+abstract class BaseActivity : AppCompatActivity()
 {
     @Inject
-    lateinit var my_vm_factory:MyVmFactory
+    lateinit var my_vm_factory: MyVmFactory
 
     @Inject
-    lateinit var messages_manager:MessagesManager
+    lateinit var permissions_manager: PermissionManager
+
+    @Inject
+    lateinit var messages_manager: MessagesManager
 
     var color_status_bar: Int = getColorMy(R.color.orange)
     var is_light_status_bar: Boolean = false
@@ -29,8 +35,7 @@ abstract class BaseActivity:AppCompatActivity()
 
     val composite_diposable = CompositeDisposable()
 
-    private lateinit var base_vm: BaseViewModel
-    private var base_vm_actions_setted = false
+    private var base_vms: ArrayList<BaseViewModel> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -38,25 +43,24 @@ abstract class BaseActivity:AppCompatActivity()
         super.onCreate(savedInstanceState)
     }
 
-    fun getAppComponent():ComponentApplication
+    fun getAppComponent(): ComponentApplication
     {
         return AppClass.app_component
     }
 
-    fun getActivityComponent():ComponentActivity
+    fun getActivityComponent(): ComponentActivity
     {
         return getAppComponent().getActivityComponent(ModuleActivity(this))
     }
 
-    fun setBaseVmActions(base_vm:BaseViewModel)
+    fun setBaseVmActions(base_vm: BaseViewModel)
     {
-        if(base_vm_actions_setted)
+        if (base_vms.contains(base_vm))
         {
             throw RuntimeException("**** Error base vm actions alredy setted")
         }
 
-        this.base_vm = base_vm
-
+        base_vms.add(base_vm)
         base_vm.ps_intent_builded
                 .mainThreaded()
                 .subscribe(
@@ -72,7 +76,7 @@ abstract class BaseActivity:AppCompatActivity()
                 .mainThreaded()
                 .subscribe(
                     {
-                        if(it)
+                        if (it)
                         {
                             messages_manager.showProgressDialog()
                         }
@@ -82,6 +86,67 @@ abstract class BaseActivity:AppCompatActivity()
                         }
                     })
                 .disposeBy(composite_diposable)
+
+        base_vm.ps_to_show_dialog
+                .mainThreaded()
+                .subscribe(
+                    {
+                        it.build(this)
+                    })
+                .disposeBy(composite_diposable)
+
+        base_vm.ps_request_permissions
+                .mainThreaded()
+                .subscribe(
+                    {
+                        it.build(this)
+                    })
+                .disposeBy(composite_diposable)
+
+        base_vm.ps_to_finish
+                .mainThreaded()
+                .subscribe(
+                    {
+                        if (it.value != null)
+                        {
+                            setResult(Activity.RESULT_OK, it.value)
+                        }
+                        finish()
+                    })
+                .disposeBy(composite_diposable)
+
+        base_vm.ps_enable_disable_screen_touches
+                .mainThreaded()
+                .subscribe(
+                    {
+                        if (it)
+                        {
+                            messages_manager.disableScreenTouches()
+                        }
+                        else
+                        {
+                            messages_manager.enableScreenTouches()
+                        }
+                    })
+                .disposeBy(composite_diposable)
+
+        base_vm.ps_to_show_alerter
+                .mainThreaded()
+                .subscribe(
+                    {
+                        it.show(this)
+                    })
+                .disposeBy(composite_diposable)
+
+        base_vm.activityAttached()
+    }
+
+    fun addBackClick(view: View, base_vm: BaseViewModel)
+    {
+        view.setOnClickListener(
+            {
+                base_vm.clickedBack()
+            })
     }
 
     fun applyStatusNavColors()
@@ -90,5 +155,12 @@ abstract class BaseActivity:AppCompatActivity()
         this.setStatusLightDark(is_light_status_bar)
         this.setNavBarColor(color_nav_bar)
         this.setNavBarLightDark(is_light_nav_bar)
+    }
+
+    override fun onDestroy()
+    {
+        base_vms.clear()
+        composite_diposable.dispose()
+        super.onDestroy()
     }
 }

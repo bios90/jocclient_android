@@ -1,8 +1,9 @@
-package com.justordercompany.client.logic.utils
+package com.justordercompany.client.logic.utils.builders
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.github.florent37.inlineactivityresult.kotlin.startForResult
+import com.justordercompany.client.base.enums.TypeActivityAnim
 import com.justordercompany.client.extensions.myPutExtra
 import java.lang.RuntimeException
 
@@ -14,6 +15,7 @@ class BuilderIntent()
     private var params: ArrayList<Pair<String, Any?>> = ArrayList()
     private var flags: ArrayList<Int> = ArrayList()
     private var on_start_action: (() -> Unit)? = null
+    private var type_anim:TypeActivityAnim? = null
 
     fun setActivityToStart(act_class: Class<out AppCompatActivity>): BuilderIntent
     {
@@ -55,6 +57,12 @@ class BuilderIntent()
     fun addOnStartAction(action: () -> Unit): BuilderIntent
     {
         this.on_start_action = action
+        return this
+    }
+
+    fun addActivityAnim(anim: TypeActivityAnim?): BuilderIntent
+    {
+        this.type_anim = anim
         return this
     }
 
@@ -100,5 +108,9 @@ class BuilderIntent()
         }
 
         on_start_action?.let({ it.invoke() })
+        type_anim?.let(
+            {
+                it.animateWithActivity(activity_from)
+            })
     }
 }

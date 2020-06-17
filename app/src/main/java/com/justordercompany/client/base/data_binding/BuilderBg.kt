@@ -1,12 +1,11 @@
 package com.justordercompany.client.base.data_binding
 
 import android.content.res.ColorStateList
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
+import android.graphics.Color
+import android.graphics.drawable.*
 import android.view.View
 import java.lang.RuntimeException
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.RippleDrawable
+import android.util.Log
 import android.widget.TextView
 import com.justordercompany.client.R
 import com.justordercompany.client.extensions.dp2px
@@ -23,6 +22,9 @@ class BuilderBg
     private var corner_radius: Float = 0f
     private var is_ripple: Boolean = false
     private var ripple_color: Int = getColorMy(R.color.orange_trans_50)
+    private var is_gradient: Boolean = false
+    private var grad_colors: List<Int> = arrayListOf()
+    private var grad_orientation: GradientDrawable.Orientation = GradientDrawable.Orientation.LEFT_RIGHT
 
     fun setView(view: View): BuilderBg
     {
@@ -72,6 +74,24 @@ class BuilderBg
         return this
     }
 
+    fun isGradient(is_gradient: Boolean): BuilderBg
+    {
+        this.is_gradient = is_gradient
+        return this
+    }
+
+    fun setGradColors(colors: List<Int>): BuilderBg
+    {
+        this.grad_colors = colors
+        return this
+    }
+
+    fun setGradOrientation(orientation: GradientDrawable.Orientation): BuilderBg
+    {
+        this.grad_orientation = orientation
+        return this
+    }
+
     fun get(): Drawable
     {
         if (is_dp_mode)
@@ -84,9 +104,16 @@ class BuilderBg
         drawable.setStroke(stroke_width.toInt(), stroke_color)
         drawable.cornerRadius = corner_radius
 
+        if (is_gradient)
+        {
+            drawable.setColors(grad_colors.toIntArray())
+            drawable.orientation = grad_orientation
+        }
+
         if (is_ripple)
         {
-            val drawable_ripple = getRippleDrawable(ripple_color, ripple_color, drawable, corner_radius)
+//            val is_trans = bg_color == getColorMy(R.color.transparent)
+            val drawable_ripple = getRippleDrawable(ripple_color, ripple_color, drawable, corner_radius, true)
             return drawable_ripple
         }
 
@@ -121,6 +148,55 @@ class BuilderBg
                     .setRippleColor(getColorMy(R.color.orange_trans_50))
                     .get()
         }
+
+        @JvmStatic
+        fun getRounded4White(): Drawable
+        {
+            return BuilderBg()
+                    .setBgColor(getColorMy(R.color.white))
+                    .setCorners(4f)
+                    .isDpMode(true)
+                    .get()
+        }
+
+        @JvmStatic
+        fun getSimpleDrawable(radius: Float, color: Int): Drawable
+        {
+            return BuilderBg()
+                    .setBgColor(getColorMy(color))
+                    .setCorners(radius)
+                    .isDpMode(true)
+                    .get()
+        }
+
+        @JvmStatic
+        fun getEmptyOrange(radius: Float): Drawable
+        {
+            return BuilderBg()
+                    .setBgColor(getColorMy(R.color.transparent))
+                    .setStrokeColor(getColorMy(R.color.orange))
+                    .setStrokeWidth(2f)
+                    .setCorners(radius)
+                    .isDpMode(true)
+                    .isRipple(true)
+                    .setRippleColor(getColorMy(R.color.orange))
+                    .get()
+        }
+
+        @JvmStatic
+        fun getGradOrange(radius: Float = 4f, orientation: GradientDrawable.Orientation = GradientDrawable.Orientation.BL_TR): Drawable
+        {
+            val colors = arrayListOf(getColorMy(R.color.orange_dark), getColorMy(R.color.orange_light))
+            return BuilderBg()
+                    .isGradient(true)
+                    .setGradOrientation(orientation)
+                    .setGradColors(colors)
+                    .setCorners(radius)
+                    .isDpMode(true)
+                    .isRipple(true)
+                    .setRippleColor(getColorMy(R.color.gray6))
+                    .get()
+        }
     }
 }
 
@@ -140,12 +216,15 @@ fun getStateColorList(color_normal: Int, color_pressed: Int): ColorStateList
     )
 }
 
-fun getRippleDrawable(color_normal: Int, color_pressed: Int, inner_drawable: Drawable, corner_radius: Float): RippleDrawable
+fun getRippleDrawable(color_normal: Int, color_pressed: Int, inner_drawable: Drawable, corner_radius: Float, is_trans: Boolean): RippleDrawable
 {
+    val corners = FloatArray(8, { corner_radius })
     val drawbale_mask = GradientDrawable()
     drawbale_mask.setColor(color_normal)
     drawbale_mask.cornerRadius = corner_radius
+    drawbale_mask.cornerRadii = corners
+    (drawbale_mask.mutate() as GradientDrawable).setCornerRadii(corners)
 
-    val colors_list = getStateColorList(color_normal, color_pressed)
+    val colors_list: ColorStateList = getStateColorList(color_normal, color_pressed)
     return RippleDrawable(colors_list, inner_drawable, drawbale_mask)
 }

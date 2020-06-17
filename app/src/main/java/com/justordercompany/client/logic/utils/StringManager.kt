@@ -7,6 +7,25 @@ class StringManager
 {
     companion object
     {
+        fun listOfStringToSingle(strings: List<String>): String
+        {
+            return Companion.listOfStringToSingle(strings, "\n")
+        }
+
+        fun listOfStringToSingle(strings: List<String>, separator: String): String
+        {
+            val sb = StringBuilder()
+            for (element in strings)
+            {
+                sb.append(element)
+                if (strings.indexOf(element) != strings.size - 1)
+                {
+                    sb.append(separator)
+                }
+            }
+
+            return sb.toString()
+        }
 
     }
 }

@@ -1,11 +1,11 @@
-package com.justordercompany.client.ui.act_main.tabs.list
+package com.justordercompany.client.ui.screens.act_main.tabs.list
 
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.justordercompany.client.R
 import com.justordercompany.client.databinding.LaMainListBinding
-import com.justordercompany.client.ui.act_main.ActMain
-import com.justordercompany.client.ui.act_main.tabs.MainHelper
+import com.justordercompany.client.ui.screens.act_main.ActMain
+import com.justordercompany.client.ui.screens.act_main.tabs.MainHelper
 
 class MainHelperList(val act_main:ActMain): MainHelper
 {

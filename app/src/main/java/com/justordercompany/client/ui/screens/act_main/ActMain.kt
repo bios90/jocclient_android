@@ -1,7 +1,6 @@
-package com.justordercompany.client.ui.act_main
+package com.justordercompany.client.ui.screens.act_main
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
@@ -14,9 +13,9 @@ import com.justordercompany.client.extensions.disposeBy
 import com.justordercompany.client.extensions.getColorMy
 import com.justordercompany.client.extensions.makeTextGradient
 import com.justordercompany.client.extensions.removeGradient
-import com.justordercompany.client.ui.act_main.tabs.list.MainHelperList
-import com.justordercompany.client.ui.act_main.tabs.map.MainHelperMap
-import com.justordercompany.client.ui.act_main.tabs.profile.MainHelperProfile
+import com.justordercompany.client.ui.screens.act_main.tabs.list.MainHelperList
+import com.justordercompany.client.ui.screens.act_main.tabs.map.MainHelperMap
+import com.justordercompany.client.ui.screens.act_main.tabs.profile.MainHelperProfile
 import kotlinx.android.synthetic.main.act_main.*
 
 class ActMain : BaseActivity()
