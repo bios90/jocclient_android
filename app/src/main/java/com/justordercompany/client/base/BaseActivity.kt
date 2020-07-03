@@ -2,7 +2,6 @@ package com.justordercompany.client.base
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.justordercompany.client.R
@@ -10,9 +9,11 @@ import com.justordercompany.client.di.activity.ComponentActivity
 import com.justordercompany.client.di.activity.ModuleActivity
 import com.justordercompany.client.di.application.ComponentApplication
 import com.justordercompany.client.extensions.*
+import com.justordercompany.client.logic.utils.images.ImageCameraManager
 import com.justordercompany.client.logic.utils.MessagesManager
 import com.justordercompany.client.logic.utils.MyVmFactory
 import com.justordercompany.client.logic.utils.PermissionManager
+import com.justordercompany.client.ui.dialogs.DialogBottomSheetRounded
 import io.reactivex.disposables.CompositeDisposable
 import java.lang.RuntimeException
 import javax.inject.Inject
@@ -27,6 +28,9 @@ abstract class BaseActivity : AppCompatActivity()
 
     @Inject
     lateinit var messages_manager: MessagesManager
+
+    @Inject
+    lateinit var image_camera_manager: ImageCameraManager
 
     var color_status_bar: Int = getColorMy(R.color.orange)
     var is_light_status_bar: Boolean = false
@@ -134,11 +138,42 @@ abstract class BaseActivity : AppCompatActivity()
                 .mainThreaded()
                 .subscribe(
                     {
+
                         it.show(this)
                     })
                 .disposeBy(composite_diposable)
 
-        base_vm.activityAttached()
+        base_vm.ps_to_show_bottom_dialog
+                .mainThreaded()
+                .subscribe(
+                    {
+                        val dialog = DialogBottomSheetRounded()
+                        dialog.setBtns(it.btns)
+                        dialog.show(this.supportFragmentManager, null)
+                        dialog.isCancelable = it.cancel_on_touch_outside
+                    })
+                .disposeBy(composite_diposable)
+
+        base_vm.ps_pick_action
+                .mainThreaded()
+                .subscribe(
+                    {
+                        when (it)
+                        {
+                            ImageCameraManager.TypePick.CAMERA_IMAGE ->
+                            {
+                                image_camera_manager.pickCameraImage(it.action_success)
+                            }
+
+                            ImageCameraManager.TypePick.GALLERY_IMAGE ->
+                            {
+                                image_camera_manager.pickGalleryImage(it.action_success)
+                            }
+                        }
+                    })
+                .disposeBy(composite_diposable)
+
+        base_vm.viewAttached()
     }
 
     fun addBackClick(view: View, base_vm: BaseViewModel)

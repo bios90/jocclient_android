@@ -4,7 +4,7 @@
     <style name="TvReg">
         <item name="android:hyphenationFrequency">none</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/gray4</item>
+        <item name="android:textColor">@color/gray6</item>
         <item name="android:fontFamily">@font/exo_reg</item>
     </style>
 
@@ -39,7 +39,7 @@
     <style name="TvBold">
         <item name="android:hyphenationFrequency">none</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/gray4</item>
+        <item name="android:textColor">@color/gray6</item>
         <item name="android:fontFamily">@font/exo_bold</item>
     </style>
 
@@ -70,7 +70,7 @@
     <style name="TvLight">
         <item name="android:hyphenationFrequency">none</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/gray4</item>
+        <item name="android:textColor">@color/gray6</item>
         <item name="android:fontFamily">@font/exo_light</item>
     </style>
 
@@ -100,7 +100,7 @@
 
     <style name="TvFawSolid">
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/gray4</item>
+        <item name="android:textColor">@color/gray6</item>
         <item name="android:fontFamily">@font/fa_solid</item>
     </style>
 
@@ -131,7 +131,7 @@
 
     <style name="TvFawReg">
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/gray4</item>
+        <item name="android:textColor">@color/gray6</item>
         <item name="android:fontFamily">@font/fa_regular</item>
     </style>
 
@@ -162,7 +162,7 @@
 
     <style name="TvFawLight">
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/gray4</item>
+        <item name="android:textColor">@color/gray6</item>
         <item name="android:fontFamily">@font/fa_light</item>
     </style>
 

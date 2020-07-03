@@ -2,14 +2,14 @@ package com.justordercompany.client.logic.responses
 
 import com.google.gson.annotations.SerializedName
 import com.justordercompany.client.base.enums.TypeResponseStatus
-import com.justordercompany.client.logic.utils.StringManager
+import com.justordercompany.client.logic.utils.strings.StringManager
 import com.justordercompany.client.networking.ServerError
 import com.justordercompany.client.networking.UnknownServerError
 import java.lang.RuntimeException
 
-data class BaseResponse
+open class BaseResponse
     (
-        val status: TypeResponseStatus,
+        val status: TypeResponseStatus? = null,
 //        val message: String?,
         @SerializedName("message")
         var errors: List<String>? = null

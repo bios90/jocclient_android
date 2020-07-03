@@ -4,5 +4,5 @@ import com.justordercompany.client.base.enums.TypeTab
 
 interface ActMainListener
 {
-    fun clickedTab(tab:TypeTab)
+    fun clickedTab(tab: TypeTab)
 }

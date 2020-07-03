@@ -11,6 +11,7 @@ import androidx.databinding.ViewDataBinding
 import com.justordercompany.client.R
 import com.justordercompany.client.extensions.getNullableText
 import com.justordercompany.client.extensions.makeTransparentBg
+import com.justordercompany.client.extensions.setTextHtml
 import com.justordercompany.client.logic.utils.BtnAction
 import com.justordercompany.client.logic.utils.BtnActionWithText
 import java.lang.RuntimeException
@@ -31,6 +32,7 @@ class BuilderDialogMy()
     private var dismiss_on_touch_outside = false
     private var cancelable = true
     private var dismiss_on_btn_touch = true
+    private var is_html: Boolean = false
     private var dialog: AlertDialog? = null
 
     fun setView(view: View) = apply(
@@ -106,6 +108,11 @@ class BuilderDialogMy()
             this.cancelable = cancelable
         })
 
+    fun setIsHtml(is_html: Boolean) = apply(
+        {
+            this.is_html = is_html
+        })
+
     fun build(context: Context)
     {
         if (view == null && view_id == null)
@@ -134,6 +141,19 @@ class BuilderDialogMy()
 
         tv_title?.text = title
         tv_text?.text = text
+
+        if (is_html)
+        {
+            if (text != null)
+            {
+                tv_text?.setTextHtml(text!!)
+            }
+        }
+        else
+        {
+            tv_text?.text = text
+        }
+
 
         applyTextAndActions(tv_ok, et_et, btn_ok, btn_ok_text)
         applyTextAndActions(tv_cancel, et_et, btn_cancel, btn_cancel_text)

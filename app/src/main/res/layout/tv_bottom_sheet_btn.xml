@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/TvBold.L"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingTop="10dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="10dp"
+    android:text="Button"
+    android:textColor="@color/gray7" />

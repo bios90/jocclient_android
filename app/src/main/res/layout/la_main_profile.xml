@@ -14,40 +14,9 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:clipChildren="false"
-            android:id="@+id/ral_not_registered"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/tv_make_auth_for"
-                style="@style/TvReg.M"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_centerInParent="true"
-                android:text="It is not possible to change the color of elevation shadow provided by the framework"
-                android:textColor="@color/gray6" />
-
-            <TextView
-                android:elevation="44dp"
-                android:id="@+id/btn_auth"
-                style="@style/TvReg.L"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_make_auth_for"
-                android:layout_margin="16dp"
-                android:background="@{BuilderBg.getGradOrange(999f,GradientDrawable.Orientation.BL_TR)}"
-                android:paddingLeft="16dp"
-                android:paddingTop="12dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="12dp"
-                android:text="@string/authorization"
-                android:textColor="@color/white" />
-
-        </RelativeLayout>
+        <include
+            android:id="@+id/lar_auth_dialog"
+            layout="@layout/act_auth" />
 
     </RelativeLayout>
 

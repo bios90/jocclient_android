@@ -20,4 +20,21 @@
     <string name="enter_phone_number">Введите ваш номер телефона</string>
     <string name="enter_sms_code">Введите код подтверждения</string>
     <string name="send">Send</string>
+    <string name="authorization_allows_you">Authorization will allow you to place orders, track order status, leave feedback and much more. Go through the process of registration right now, it will take no more than 1 minute.</string>
+    <string name="please_phone">Please fill in the phone number</string>
+    <string name="send_code">Send code</string>
+    <string name="confirm">Confirm</string>
+    <string name="its_clear">Понятно</string>
+    <string name="please_fill">Please fill in the field \'%1$s\'</string>
+    <string name="code">code</string>
+    <string name="please_confirm_offert">Пожалуйста подтвердите согласие с оффертой</string>
+    <string name="profile">Профиль</string>
+    <string name="profile_is_empty_fill_now">Ваш профиль не заполнен, хотите заполнить его сейчас?</string>
+    <string name="fill">Заполнить</string>
+    <string name="name">Имя</string>
+    <string name="phone">Телефон</string>
+    <string name="save">Сохранить</string>
+    <string name="gallery">Галлерея</string>
+    <string name="camera">Камера</string>
+    <string name="for_full_work_need_permissions">Для полноценной работы приложения необходимо предоставить разрешения</string>
 </resources>

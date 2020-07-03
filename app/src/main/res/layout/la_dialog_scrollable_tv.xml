@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
+        <import type="com.justordercompany.client.R" />
+    </data>
+
+    <RelativeLayout
+        android:background="@{BuilderBg.getRounded4White()}"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/TvBold.Xl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:gravity="left"
+            android:textColor="@color/gray7"
+            tools:text="Title" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_above="@id/lar_bottom"
+            android:layout_below="@id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_text"
+                    style="@style/TvReg.M"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:gravity="left"
+                    android:textColor="@color/gray7"
+                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+
+        <RelativeLayout
+            android:id="@+id/lar_bottom"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <TextView
+                android:id="@+id/tv_ok"
+                android:background="@{BuilderBg.getSquareRippleTransOrange()}"
+                style="@style/TvReg.M"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginBottom="16dp"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColor="@color/orange"
+                tools:text="Ok" />
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_toLeftOf="@id/tv_ok"
+
+                android:layout_alignWithParentIfMissing="true"
+                android:background="@{BuilderBg.getSquareRippleTransOrange()}"
+                style="@style/TvReg.M"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColor="@color/orange"
+                tools:text="Cancel" />
+
+            <TextView
+                android:id="@+id/tv_left"
+                android:background="@{BuilderBg.getSquareRippleTransOrange()}"
+                style="@style/TvReg.M"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColor="@color/orange"
+                tools:text="Left" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</layout>

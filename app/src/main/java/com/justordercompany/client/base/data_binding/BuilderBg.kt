@@ -20,6 +20,7 @@ class BuilderBg
     private var stroke_color: Int = getColorMy(R.color.transparent)
     private var bg_color: Int = getColorMy(R.color.transparent)
     private var corner_radius: Float = 0f
+    private var corners_radius: ArrayList<Float>? = null
     private var is_ripple: Boolean = false
     private var ripple_color: Int = getColorMy(R.color.orange_trans_50)
     private var is_gradient: Boolean = false
@@ -92,6 +93,11 @@ class BuilderBg
         return this
     }
 
+    fun setCornerRadiuses(left_top: Float, right_top: Float, right_bottom: Float, left_bottom: Float)
+    {
+        this.corners_radius = arrayListOf(left_top, right_top, right_bottom, left_bottom)
+    }
+
     fun get(): Drawable
     {
         if (is_dp_mode)
@@ -104,6 +110,11 @@ class BuilderBg
         drawable.setStroke(stroke_width.toInt(), stroke_color)
         drawable.cornerRadius = corner_radius
 
+        corners_radius?.let(
+            {
+                drawable.cornerRadii = floatArrayOf(it.get(0), it.get(0), it.get(1), it.get(1), it.get(2), it.get(2), it.get(3), it.get(3))
+            })
+
         if (is_gradient)
         {
             drawable.setColors(grad_colors.toIntArray())
@@ -112,8 +123,13 @@ class BuilderBg
 
         if (is_ripple)
         {
-//            val is_trans = bg_color == getColorMy(R.color.transparent)
-            val drawable_ripple = getRippleDrawable(ripple_color, ripple_color, drawable, corner_radius, true)
+            var corners = FloatArray(8, { corner_radius })
+            corners_radius?.let(
+                {
+                    corners = floatArrayOf(it.get(0), it.get(0), it.get(1), it.get(1), it.get(2), it.get(2), it.get(3), it.get(3))
+                })
+
+            val drawable_ripple = getRippleDrawable(ripple_color, ripple_color, drawable, corners, true)
             return drawable_ripple
         }
 
@@ -134,6 +150,15 @@ class BuilderBg
     {
         stroke_width = dp2px(stroke_width)
         corner_radius = dp2px(corner_radius)
+        corners_radius?.let(
+            {
+                val left_top = dp2px(it.get(0))
+                val right_top = dp2px(it.get(1))
+                val right_bottom = dp2px(it.get(2))
+                val left_bottom = dp2px(it.get(3))
+
+                corners_radius = arrayListOf(left_top, right_top, right_bottom, left_bottom)
+            })
     }
 
     companion object
@@ -146,6 +171,17 @@ class BuilderBg
                     .setBgColor(getColorMy(R.color.transparent))
                     .isRipple(true)
                     .setRippleColor(getColorMy(R.color.orange_trans_50))
+                    .get()
+        }
+
+        @JvmStatic
+        fun getSquareRippleTransGray(): Drawable
+        {
+            return BuilderBg()
+                    .isDpMode(true)
+                    .setBgColor(getColorMy(R.color.transparent))
+                    .isRipple(true)
+                    .setRippleColor(getColorMy(R.color.gray4_trans_50))
                     .get()
         }
 
@@ -216,14 +252,13 @@ fun getStateColorList(color_normal: Int, color_pressed: Int): ColorStateList
     )
 }
 
-fun getRippleDrawable(color_normal: Int, color_pressed: Int, inner_drawable: Drawable, corner_radius: Float, is_trans: Boolean): RippleDrawable
+fun getRippleDrawable(color_normal: Int, color_pressed: Int, inner_drawable: Drawable, corner_radius: FloatArray, is_trans: Boolean): RippleDrawable
 {
-    val corners = FloatArray(8, { corner_radius })
     val drawbale_mask = GradientDrawable()
     drawbale_mask.setColor(color_normal)
-    drawbale_mask.cornerRadius = corner_radius
-    drawbale_mask.cornerRadii = corners
-    (drawbale_mask.mutate() as GradientDrawable).setCornerRadii(corners)
+//    drawbale_mask.cornerRadius = corner_radius
+    drawbale_mask.cornerRadii = corner_radius
+    (drawbale_mask.mutate() as GradientDrawable).cornerRadii = corner_radius
 
     val colors_list: ColorStateList = getStateColorList(color_normal, color_pressed)
     return RippleDrawable(colors_list, inner_drawable, drawbale_mask)

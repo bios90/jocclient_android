@@ -8,6 +8,7 @@ import com.justordercompany.client.base.Constants
 import com.justordercompany.client.extensions.getStringMy
 import com.justordercompany.client.networking.MyInterceptor
 import com.justordercompany.client.networking.apis.ApiAuth
+import com.justordercompany.client.networking.apis.ApiCafe
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -87,6 +88,13 @@ class ModuleNetworking
     fun provideApiAuth(retrofit: Retrofit):ApiAuth
     {
         return retrofit.create(ApiAuth::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideApiCafes(retrofit: Retrofit):ApiCafe
+    {
+        return retrofit.create(ApiCafe::class.java)
     }
 
 }

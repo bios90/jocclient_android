@@ -3,8 +3,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
         <import type="com.justordercompany.client.R" />
+        <import type="android.graphics.drawable.GradientDrawable" />
 
         <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
     </data>
@@ -17,17 +17,41 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_margin="24dp"
             android:background="@{BuilderBg.getRounded4White()}"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/TvBold.Xl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/authorization"
+                android:textColor="@color/gray8" />
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:id="@+id/tv_text"
+                style="@style/TvLight.M"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_title"
+                android:text="@string/authorization_allows_you"
+                android:textColor="@color/gray6" />
+
             <LinearLayout
+                android:layout_below="@id/tv_text"
                 android:id="@+id/lal_anim"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="52dp"
+                android:layout_marginTop="24dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -46,11 +70,12 @@
                         android:text="@string/enter_phone_number"
                         android:textColor="@color/gray6" />
 
-                    <EditText
+                    <com.justordercompany.client.ui.custom_views.MyEtWithObserv
+                        android:textColor="@color/gray8"
                         android:id="@+id/et_phone"
                         style="@style/EditText"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="38dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
                         android:background="@{BuilderBg.getSimpleDrawable(2f,R.color.gray1)}"
@@ -78,11 +103,12 @@
                         android:text="@string/enter_sms_code"
                         android:textColor="@color/gray6" />
 
-                    <EditText
+                    <com.justordercompany.client.ui.custom_views.MyEtWithObserv
+                        android:textColor="@color/gray8"
                         android:id="@+id/et_code"
                         style="@style/EditText"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="38dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
                         android:background="@{BuilderBg.getSimpleDrawable(2f,R.color.gray1)}"
@@ -93,7 +119,39 @@
 
             </LinearLayout>
 
+            <RelativeLayout
+                android:layout_marginTop="12dp"
+                android:id="@+id/lar_offert"
+                android:layout_below="@id/lal_anim"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:background="@{BuilderBg.getSquareRippleTransGray()}"
+                    android:id="@+id/tv_offert"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/ch_offert"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <CheckBox
+                    android:id="@+id/ch_offert"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:buttonTint="@color/orange"
+                    android:fontFamily="@font/exo_reg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_times"
                 style="@style/TvFawSolid.Xl"
                 android:layout_width="26dp"
@@ -105,20 +163,18 @@
                 android:textColor="@color/gray6" />
 
             <TextView
+                android:layout_below="@id/lar_offert"
                 android:id="@+id/tv_send"
                 style="@style/TvBold.M"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:layout_height="38dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
-                android:background="@{BuilderBg.getEmptyOrange(4f)}"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp"
+                android:background="@{BuilderBg.getGradOrange(4f,GradientDrawable.Orientation.BL_TR)}"
                 android:text="@string/send"
-                android:textColor="@color/orange" />
+                android:textColor="@color/white" />
 
         </RelativeLayout>
 

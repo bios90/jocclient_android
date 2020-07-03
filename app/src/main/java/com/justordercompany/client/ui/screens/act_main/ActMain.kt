@@ -13,39 +13,42 @@ import com.justordercompany.client.extensions.disposeBy
 import com.justordercompany.client.extensions.getColorMy
 import com.justordercompany.client.extensions.makeTextGradient
 import com.justordercompany.client.extensions.removeGradient
-import com.justordercompany.client.ui.screens.act_main.tabs.list.MainHelperList
-import com.justordercompany.client.ui.screens.act_main.tabs.map.MainHelperMap
-import com.justordercompany.client.ui.screens.act_main.tabs.profile.MainHelperProfile
+import com.justordercompany.client.ui.screens.act_main.tabs.list.TabList
+import com.justordercompany.client.ui.screens.act_main.tabs.map.TabMap
+import com.justordercompany.client.ui.screens.act_main.tabs.profile.TabProfile
 import kotlinx.android.synthetic.main.act_main.*
 
 class ActMain : BaseActivity()
 {
     lateinit var vm_act_main: VmActMain
     lateinit var bnd_act_main: ActMainBinding
-    lateinit var listener: ActMainListener
 
-    lateinit var main_helper_profile: MainHelperProfile
-    lateinit var main_helper_map: MainHelperMap
-    lateinit var main_helper_list: MainHelperList
+    lateinit var tab_profile: TabProfile
+    lateinit var tab_map: TabMap
+    lateinit var tab_list: TabList
 
     val adapter_vp_base = AdapterVpBase()
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
-        color_status_bar = getColorMy(R.color.orange)
-        is_light_status_bar = true
-        color_nav_bar = getColorMy(R.color.white)
-        is_light_nav_bar = false
+        setNavStatus()
         super.onCreate(savedInstanceState)
         bnd_act_main = DataBindingUtil.setContentView(this, R.layout.act_main)
         getActivityComponent().inject(this)
         vm_act_main = my_vm_factory.getViewModel(VmActMain::class.java)
         setBaseVmActions(vm_act_main)
-        listener = vm_act_main.ViewListener()
 
         setPager()
         setListeners()
         setEvents()
+    }
+
+    private fun setNavStatus()
+    {
+        color_status_bar = getColorMy(R.color.orange)
+        is_light_status_bar = true
+        color_nav_bar = getColorMy(R.color.white)
+        is_light_nav_bar = false
     }
 
     fun setPager()
@@ -53,11 +56,11 @@ class ActMain : BaseActivity()
         bnd_act_main.vpMain.adapter = adapter_vp_base
         bnd_act_main.vpMain.offscreenPageLimit = 3
 
-        main_helper_profile = MainHelperProfile(this)
-        main_helper_list = MainHelperList(this)
-        main_helper_map = MainHelperMap(this)
+        tab_profile = TabProfile(this)
+        tab_list = TabList(this)
+        tab_map = TabMap(this)
 
-        val views = arrayListOf(main_helper_profile.getView(), main_helper_map.getView(), main_helper_list.getView())
+        val views = arrayListOf(tab_profile.getView(), tab_map.getView(), tab_list.getView())
         adapter_vp_base.setViews(views)
     }
 
@@ -65,17 +68,17 @@ class ActMain : BaseActivity()
     {
         bnd_act_main.lalBottomNav.lalProfile.setOnClickListener(
             {
-                listener.clickedTab(TypeTab.PROFILE)
+                vm_act_main.ViewListener().clickedTab(TypeTab.PROFILE)
             })
 
         bnd_act_main.lalBottomNav.lalList.setOnClickListener(
             {
-                listener.clickedTab(TypeTab.LIST)
+                vm_act_main.ViewListener().clickedTab(TypeTab.LIST)
             })
 
         bnd_act_main.lalBottomNav.lalMap.setOnClickListener(
             {
-                listener.clickedTab(TypeTab.MAP)
+                vm_act_main.ViewListener().clickedTab(TypeTab.MAP)
             })
     }
 
@@ -84,7 +87,7 @@ class ActMain : BaseActivity()
         vm_act_main.ps_scroll_to_tab.subscribe(
             {
                 changeColorsOfTabs(it)
-                vp_main.setCurrentItem(it.getPos(),true)
+                vp_main.setCurrentItem(it.getPos(), true)
             })
                 .disposeBy(composite_diposable)
     }

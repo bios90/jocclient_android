@@ -1,5 +1,7 @@
-package com.justordercompany.client.logic.utils
+package com.justordercompany.client.logic.utils.strings
 
+import com.justordercompany.client.logic.utils.DateManager
+import com.justordercompany.client.logic.utils.formatToString
 import java.lang.StringBuilder
 import java.util.*
 
@@ -9,7 +11,7 @@ class StringManager
     {
         fun listOfStringToSingle(strings: List<String>): String
         {
-            return Companion.listOfStringToSingle(strings, "\n")
+            return listOfStringToSingle(strings, "\n")
         }
 
         fun listOfStringToSingle(strings: List<String>, separator: String): String
@@ -25,6 +27,13 @@ class StringManager
             }
 
             return sb.toString()
+        }
+
+        fun getNameForNewFile(extension: String): String
+        {
+            var name = Date().formatToString(DateManager.FORMAT_FILE_NAME)
+            name += ".$extension"
+            return name
         }
 
     }

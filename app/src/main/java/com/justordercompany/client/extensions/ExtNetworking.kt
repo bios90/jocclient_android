@@ -11,6 +11,8 @@ import com.justordercompany.client.networking.ParsingError
 import com.justordercompany.client.networking.ServerError
 import com.justordercompany.client.networking.UnknownServerError
 import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import okhttp3.ResponseBody
 import retrofit2.Response
 import java.lang.Exception
@@ -147,3 +149,14 @@ fun <T> Observable<T>.addParseChecker(action: (T) -> Boolean): Observable<T>
             throw ParsingError()
         })
 }
+
+fun <T> Observable<T>.subscribeMy(action_success: (T) -> Unit,action_error: ((Throwable) -> Unit)? = null): Disposable
+{
+    return this.subscribe(action_success,
+        {
+            action_error?.invoke(it)
+            it.printStackTrace()
+            Log.e("subscribeMy", "**** Got error in subscribeMy ****")
+        })
+}
+

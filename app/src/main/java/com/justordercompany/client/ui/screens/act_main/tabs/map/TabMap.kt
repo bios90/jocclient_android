@@ -8,18 +8,18 @@ import com.google.android.gms.maps.model.LatLng
 import com.justordercompany.client.R
 import com.justordercompany.client.databinding.LaMainMapBinding
 import com.justordercompany.client.extensions.disposeBy
+import com.justordercompany.client.extensions.getVisibleDistance
 import com.justordercompany.client.extensions.mainThreaded
 import com.justordercompany.client.extensions.moveCameraToPos
 import com.justordercompany.client.logic.utils.PermissionManager
 import com.justordercompany.client.ui.screens.act_main.ActMain
-import com.justordercompany.client.ui.screens.act_main.tabs.MainHelper
+import com.justordercompany.client.ui.screens.act_main.tabs.ActMainTab
 
-class MainHelperMap(val act_main: ActMain) : MainHelper
+class TabMap(val act_main: ActMain) : ActMainTab
 {
     val composite_disposable = act_main.composite_diposable
     val bnd_map: LaMainMapBinding
-    val vm_main_map: VmMainMap
-    val listener: LaMainMapListener
+    val vm_tab_map: VmTabMap
 
     lateinit var frag_map: SupportMapFragment
     lateinit var google_map: GoogleMap
@@ -27,16 +27,22 @@ class MainHelperMap(val act_main: ActMain) : MainHelper
     init
     {
         bnd_map = DataBindingUtil.inflate(act_main.layoutInflater, R.layout.la_main_map, null, false)
-        vm_main_map = act_main.my_vm_factory.getViewModel(VmMainMap::class.java)
-        listener = vm_main_map.ViewListener()
+        vm_tab_map = act_main.my_vm_factory.getViewModel(VmTabMap::class.java)
+        act_main.setBaseVmActions(vm_tab_map)
+
         setEvents()
+        setListeners()
         initMap()
-        vm_main_map.activityAttached()
+    }
+
+    fun setListeners()
+    {
+
     }
 
     fun setEvents()
     {
-        vm_main_map.ps_move_map_pos
+        vm_tab_map.ps_move_map_pos
                 .mainThreaded()
                 .subscribe(
                     {
@@ -60,6 +66,7 @@ class MainHelperMap(val act_main: ActMain) : MainHelper
                 this.google_map.getUiSettings().setMapToolbarEnabled(false)
                 this.google_map.getUiSettings().setMyLocationButtonEnabled(false)
                 google_map.moveCameraToPos(LatLng(55.7558, 37.6173))
+                setMapListener()
 
                 act_main.permissions_manager.checkAndRequest(PermissionManager.permissions_location)
                         .subscribe(
@@ -71,7 +78,22 @@ class MainHelperMap(val act_main: ActMain) : MainHelper
                                 it.printStackTrace()
                             })
                         .disposeBy(composite_disposable)
-                listener.mapInited()
+
+                vm_tab_map.ViewListener().mapInited()
+            })
+    }
+
+    private fun setMapListener()
+    {
+        google_map.setOnCameraIdleListener(
+            {
+                val distance = google_map.getVisibleDistance()
+                vm_tab_map.bs_current_visible_distance.onNext(distance)
+
+                val center = google_map.cameraPosition.target
+                vm_tab_map.bs_current_center.onNext(center)
+
+                vm_tab_map.ViewListener().mapIdled()
             })
     }
 }

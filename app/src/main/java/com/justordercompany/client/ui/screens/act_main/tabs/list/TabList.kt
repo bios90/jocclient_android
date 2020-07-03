@@ -5,9 +5,9 @@ import androidx.databinding.DataBindingUtil
 import com.justordercompany.client.R
 import com.justordercompany.client.databinding.LaMainListBinding
 import com.justordercompany.client.ui.screens.act_main.ActMain
-import com.justordercompany.client.ui.screens.act_main.tabs.MainHelper
+import com.justordercompany.client.ui.screens.act_main.tabs.ActMainTab
 
-class MainHelperList(val act_main:ActMain): MainHelper
+class TabList(val act_main:ActMain): ActMainTab
 {
     val bnd_list:LaMainListBinding
 

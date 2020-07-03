@@ -10,6 +10,7 @@ import com.justordercompany.client.extensions.mainThreaded
 import com.justordercompany.client.extensions.runActionWithDelay
 import com.justordercompany.client.logic.utils.*
 import com.justordercompany.client.logic.utils.builders.BuilderAlerter
+import com.justordercompany.client.logic.utils.builders.BuilderDialogBottom
 import io.reactivex.subjects.PublishSubject
 
 class VmActMain : BaseViewModel()
@@ -23,7 +24,7 @@ class VmActMain : BaseViewModel()
         setBusEvents()
     }
 
-    override fun activityAttached()
+    override fun viewAttached()
     {
         checkGeoPermissions()
     }

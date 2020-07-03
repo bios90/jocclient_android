@@ -1,26 +1,37 @@
 package com.justordercompany.client.extensions
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.Typeface
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.ColorUtils
 import com.justordercompany.client.base.AppClass
-import com.justordercompany.client.logic.utils.getRandomString
+import com.justordercompany.client.logic.utils.strings.getRandomString
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import java.io.*
 import java.util.*
 import java.util.concurrent.TimeUnit
+
 
 fun runActionWithDelay(delay: Int, action: () -> Unit, error_action: (() -> Unit)? = null): Disposable
 {
@@ -109,6 +120,11 @@ fun getStringMy(id: Int, vararg values: Any): String
     return AppClass.app.getResources().getString(id, *values)
 }
 
+fun getTypeFaceFromResource(id: Int): Typeface
+{
+    return ResourcesCompat.getFont(AppClass.app, id)!!
+}
+
 fun openAppSettings()
 {
     val intent = Intent()
@@ -141,5 +157,118 @@ fun isNetworkAvailable(): Boolean
     {
         val nwInfo = connectivityManager.activeNetworkInfo ?: return false
         return nwInfo.isConnected
+    }
+}
+
+fun getStringFromRawRes(res_id: Int): String?
+{
+    val inputStream: InputStream
+    try
+    {
+        inputStream = AppClass.app.resources.openRawResource(res_id)
+    }
+    catch (e: Resources.NotFoundException)
+    {
+        e.printStackTrace()
+        return null
+    }
+
+
+    val byteArrayOutputStream = ByteArrayOutputStream()
+    val buffer = ByteArray(1024)
+    var length: Int = inputStream.read(buffer)
+    try
+    {
+        while (length != -1)
+        {
+            byteArrayOutputStream.write(buffer, 0, length)
+        }
+    }
+    catch (e: IOException)
+    {
+        e.printStackTrace()
+        return null
+    }
+    finally
+    {
+        try
+        {
+            inputStream.close()
+            byteArrayOutputStream.close()
+        }
+        catch (e: IOException)
+        {
+            e.printStackTrace()
+        }
+
+    }
+
+    val resultString: String
+    try
+    {
+        resultString = byteArrayOutputStream.toString("UTF-8")
+    }
+    catch (e: UnsupportedEncodingException)
+    {
+        e.printStackTrace()
+        return null
+    }
+
+    return resultString
+}
+
+fun Any?.toJsonMy(): String?
+{
+    if (this == null)
+    {
+        return null
+    }
+
+    val json = AppClass.gson.toJson(this)
+    if (json.equals("null") || json.equals("\"null\""))
+    {
+        return null
+    }
+
+    return json
+}
+
+fun Int.applyTransparency(percent: Int): Int
+{
+    val alpha = (255 * percent) / 100
+    val new_color = ColorUtils.setAlphaComponent(this, alpha)
+    return new_color
+}
+
+fun Dialog.setDimAlpha(alpha: Float)
+{
+    val window = this.getWindow() ?: return
+    val params = window.attributes ?: return
+    params.dimAmount = alpha
+    params.flags = params.flags or WindowManager.LayoutParams.FLAG_DIM_BEHIND
+    window.setAttributes(params)
+}
+
+fun Dialog.setNavigationBarColor(color: Int)
+{
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+    {
+        val window = this.window ?: return
+        val metrics = DisplayMetrics()
+        window.getWindowManager().getDefaultDisplay().getMetrics(metrics)
+
+        val dimDrawable = GradientDrawable()
+
+        val navigationBarDrawable = GradientDrawable()
+        navigationBarDrawable.shape = GradientDrawable.RECTANGLE
+        navigationBarDrawable.setColor(color)
+
+        val layers = arrayOf<Drawable>(dimDrawable, navigationBarDrawable)
+
+        val windowBackground = LayerDrawable(layers)
+
+        windowBackground.setLayerInsetTop(1, metrics.heightPixels)
+
+        window.setBackgroundDrawable(windowBackground)
     }
 }
