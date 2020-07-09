@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="RadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:gravity">center</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:fontFamily">@font/exo_reg</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:button">@null</item>
+        <item name="android:minHeight">32dp</item>
+        <item name="android:textSize">@dimen/size_m</item>
+    </style>
+
+
+    <style name="RadioButton.GradOrange" parent="RadioButton">
+        <item name="android:minHeight">0dp</item>
+        <item name="android:fontFamily">@font/exo_bold</item>
+        <item name="android:textColor">@color/sel_radio_grad_orange</item>
+        <item name="android:background">@drawable/radio_grad_orange_round</item>
+    </style>
+
+</resources>

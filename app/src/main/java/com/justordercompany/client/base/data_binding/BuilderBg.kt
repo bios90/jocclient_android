@@ -93,9 +93,10 @@ class BuilderBg
         return this
     }
 
-    fun setCornerRadiuses(left_top: Float, right_top: Float, right_bottom: Float, left_bottom: Float)
+    fun setCornerRadiuses(left_top: Float, right_top: Float, right_bottom: Float, left_bottom: Float): BuilderBg
     {
         this.corners_radius = arrayListOf(left_top, right_top, right_bottom, left_bottom)
+        return this
     }
 
     fun get(): Drawable
@@ -206,6 +207,18 @@ class BuilderBg
         }
 
         @JvmStatic
+        fun getSimpleDrawableRipple(radius: Float, color: Int, color_ripple: Int): Drawable
+        {
+            return BuilderBg()
+                    .setBgColor(getColorMy(color))
+                    .setCorners(radius)
+                    .isDpMode(true)
+                    .isRipple(true)
+                    .setRippleColor(getColorMy(color_ripple))
+                    .get()
+        }
+
+        @JvmStatic
         fun getEmptyOrange(radius: Float): Drawable
         {
             return BuilderBg()
@@ -231,6 +244,16 @@ class BuilderBg
                     .isDpMode(true)
                     .isRipple(true)
                     .setRippleColor(getColorMy(R.color.gray6))
+                    .get()
+        }
+
+        @JvmStatic
+        fun getRoundedCorners(color: Int, top_left: Float, top_right: Float, bottom_right: Float, bottom_left: Float): Drawable
+        {
+            return BuilderBg()
+                    .isDpMode(true)
+                    .setBgColor(getColorMy(color))
+                    .setCornerRadiuses(top_left, top_right, bottom_right, bottom_left)
                     .get()
         }
     }

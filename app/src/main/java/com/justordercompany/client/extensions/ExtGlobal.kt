@@ -18,6 +18,7 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
 import android.view.WindowManager
+import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
@@ -238,6 +239,20 @@ fun Int.applyTransparency(percent: Int): Int
     val alpha = (255 * percent) / 100
     val new_color = ColorUtils.setAlphaComponent(this, alpha)
     return new_color
+}
+
+@ColorInt
+infix fun @receiver:ColorInt Int.overlay(@ColorInt bottomColor: Int): Int
+{
+    val topAlpha = Color.alpha(this)
+    val bottomAlpha = Color.alpha(bottomColor)
+    val alphaSum = bottomAlpha + topAlpha
+    return Color.argb(
+        Math.min(255, alphaSum),
+        (Color.red(bottomColor) * bottomAlpha + Color.red(this) * topAlpha) / alphaSum,
+        (Color.green(bottomColor) * bottomAlpha + Color.green(this) * topAlpha) / alphaSum,
+        (Color.blue(bottomColor) * bottomAlpha + Color.blue(this) * topAlpha) / alphaSum
+    )
 }
 
 fun Dialog.setDimAlpha(alpha: Float)

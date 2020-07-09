@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="ucrop_color_widget_background" tools:override="true">@color/white</color>
+    <color name="ucrop_color_widget" tools:override="true">@color/red</color>
+    <color name="ucrop_color_widget_active" tools:override="true">@color/orange</color>
+    <color name="ucrop_color_statusbar" tools:override="true">@color/gray8</color>
+    <color name="ucrop_color_toolbar" tools:override="true">@color/gray8</color>
+    <color name="ucrop_color_toolbar_widget" tools:override="true">@color/white</color>
+
+    <string name="ucrop_crop" tools:override="true">Обрезать</string>
+    <string name="ucrop_label_edit_photo" tools:override="true">Редактирование</string>
+    <string name="ucrop_label_original" tools:override="true">Оригинал</string>
+    <string name="ucrop_menu_crop" tools:override="true">Обрезка</string>
+    <string name="ucrop_rotate" tools:override="true">Угол</string>
+    <string name="ucrop_scale" tools:override="true">Масштаб</string>
+</resources>

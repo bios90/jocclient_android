@@ -1,17 +1,20 @@
 package com.justordercompany.client.ui.screens.act_main.tabs.map
 
 import android.view.View
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.justordercompany.client.R
 import com.justordercompany.client.databinding.LaMainMapBinding
-import com.justordercompany.client.extensions.disposeBy
-import com.justordercompany.client.extensions.getVisibleDistance
-import com.justordercompany.client.extensions.mainThreaded
-import com.justordercompany.client.extensions.moveCameraToPos
+import com.justordercompany.client.extensions.*
+import com.justordercompany.client.logic.models.ModelCafe
 import com.justordercompany.client.logic.utils.PermissionManager
+import com.justordercompany.client.ui.dialogs.DialogBottomCafe
+import com.justordercompany.client.ui.dialogs.DialogBottomSheetRounded
 import com.justordercompany.client.ui.screens.act_main.ActMain
 import com.justordercompany.client.ui.screens.act_main.tabs.ActMainTab
 
@@ -47,6 +50,24 @@ class TabMap(val act_main: ActMain) : ActMainTab
                 .subscribe(
                     {
                         google_map.moveCameraToPos(it)
+                    })
+                .disposeBy(composite_disposable)
+
+        vm_tab_map.bs_cafe_to_display
+                .mainThreaded()
+                .subscribe(
+                    {
+                        bindCafes(it)
+                    })
+                .disposeBy(composite_disposable)
+
+        vm_tab_map.bs_cafe_bottom_dialog
+                .mainThreaded()
+                .subscribe(
+                    {
+                        val dialog = DialogBottomCafe()
+                        dialog.cafe = it
+                        dialog.show(this.act_main.supportFragmentManager, null)
                     })
                 .disposeBy(composite_disposable)
     }
@@ -95,5 +116,41 @@ class TabMap(val act_main: ActMain) : ActMainTab
 
                 vm_tab_map.ViewListener().mapIdled()
             })
+
+        google_map.setOnMarkerClickListener(
+            {
+                val cafe = it.tag as? ModelCafe
+                if(cafe != null)
+                {
+                    vm_tab_map.ViewListener().clickedCafe(cafe)
+                    return@setOnMarkerClickListener true
+                }
+
+                return@setOnMarkerClickListener false
+            })
+    }
+
+    private fun bindCafes(cafes: ArrayList<ModelCafe>)
+    {
+        google_map.clear()
+
+        for (cafe in cafes)
+        {
+            if (cafe.lat == null || cafe.lon == null || cafe.name == null)
+            {
+                continue
+            }
+
+            val view = act_main.layoutInflater.inflate(R.layout.la_marker, null, false)
+            val tv: TextView = view.findViewById(R.id.tv_cafe_name)
+            tv.text = cafe.name
+            val bitmap = view.toBitmap()
+            val options = MarkerOptions()
+                    .position(LatLng(cafe.lat!!, cafe.lon!!))
+                    .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+
+            val marker = google_map.addMarker(options)
+            marker.tag = cafe
+        }
     }
 }

@@ -1,16 +1,22 @@
 package com.justordercompany.client.ui.screens.act_main
 
+import android.util.Log
 import com.justordercompany.client.R
 import com.justordercompany.client.base.AppClass
 import com.justordercompany.client.base.BaseViewModel
+import com.justordercompany.client.base.Constants
 import com.justordercompany.client.base.enums.TypeTab
 import com.justordercompany.client.extensions.disposeBy
 import com.justordercompany.client.extensions.getStringMy
 import com.justordercompany.client.extensions.mainThreaded
 import com.justordercompany.client.extensions.runActionWithDelay
+import com.justordercompany.client.logic.models.FilterData
 import com.justordercompany.client.logic.utils.*
 import com.justordercompany.client.logic.utils.builders.BuilderAlerter
 import com.justordercompany.client.logic.utils.builders.BuilderDialogBottom
+import com.justordercompany.client.logic.utils.builders.BuilderIntent
+import com.justordercompany.client.ui.screens.act_filter.ActFilter
+import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 
 class VmActMain : BaseViewModel()
@@ -41,6 +47,7 @@ class VmActMain : BaseViewModel()
                 .disposeBy(composite_disposable)
     }
 
+
     private fun checkGeoPermissions()
     {
         val text_blocked = getStringMy(R.string.need_permissions_geo)
@@ -69,6 +76,23 @@ class VmActMain : BaseViewModel()
         override fun clickedTab(tab: TypeTab)
         {
             bus_main_events.bs_current_tab.onNext(tab)
+        }
+
+        override fun clickedFilter()
+        {
+            val builder = BuilderIntent()
+                    .setActivityToStart(ActFilter::class.java)
+                    .addParam(Constants.Extras.EXTRA_FILTER, bus_main_events.bs_filter.value)
+                    .setSlider(BuilderIntent.TypeSlider.BOTTOM_UP)
+                    .setOkAction(
+                        {
+
+                            val filter = it?.getSerializableExtra(Constants.Extras.EXTRA_FILTER) as? FilterData
+                            filter ?: return@setOkAction
+
+                            bus_main_events.bs_filter.onNext(filter)
+                        })
+            ps_intent_builded.onNext(builder)
         }
     }
 }

@@ -1,9 +1,13 @@
 package com.justordercompany.client.ui.screens.act_main
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.iid.InstanceIdResult
 import com.justordercompany.client.R
 import com.justordercompany.client.base.adapters.AdapterVpBase
 import com.justordercompany.client.base.BaseActivity
@@ -13,6 +17,7 @@ import com.justordercompany.client.extensions.disposeBy
 import com.justordercompany.client.extensions.getColorMy
 import com.justordercompany.client.extensions.makeTextGradient
 import com.justordercompany.client.extensions.removeGradient
+import com.justordercompany.client.local_data.SharedPrefsManager
 import com.justordercompany.client.ui.screens.act_main.tabs.list.TabList
 import com.justordercompany.client.ui.screens.act_main.tabs.map.TabMap
 import com.justordercompany.client.ui.screens.act_main.tabs.profile.TabProfile
@@ -41,6 +46,12 @@ class ActMain : BaseActivity()
         setPager()
         setListeners()
         setEvents()
+
+        //Ressaving if got some problems
+        getFirebaseToken(
+            {
+                SharedPrefsManager.saveString(SharedPrefsManager.Key.FB_TOKEN,it)
+            })
     }
 
     private fun setNavStatus()
@@ -79,6 +90,11 @@ class ActMain : BaseActivity()
         bnd_act_main.lalBottomNav.lalMap.setOnClickListener(
             {
                 vm_act_main.ViewListener().clickedTab(TypeTab.MAP)
+            })
+
+        bnd_act_main.tvFilter.setOnClickListener(
+            {
+                vm_act_main.ViewListener().clickedFilter()
             })
     }
 

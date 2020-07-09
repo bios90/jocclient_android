@@ -1,16 +1,23 @@
 package com.justordercompany.client.ui.screens.act_main.tabs.map
 
 import android.util.Log
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.android.gms.maps.model.LatLng
 import com.justordercompany.client.base.AppClass
 import com.justordercompany.client.base.BaseViewModel
+import com.justordercompany.client.base.Constants
 import com.justordercompany.client.base.enums.PmCafeSort
 import com.justordercompany.client.base.enums.PmSortDirection
 import com.justordercompany.client.extensions.*
+import com.justordercompany.client.logic.models.ModelCafe
 import com.justordercompany.client.logic.models.ModelMapPos
+import com.justordercompany.client.logic.requests.ReqCafes
+import com.justordercompany.client.logic.responses.RespCafeSingle
 import com.justordercompany.client.logic.responses.RespCafes
+import com.justordercompany.client.logic.utils.builders.BuilderIntent
 import com.justordercompany.client.logic.utils.toLatLng
 import com.justordercompany.client.networking.apis.ApiCafe
+import com.justordercompany.client.ui.screens.act_cafe_popup.ActCafePopup
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
@@ -18,11 +25,13 @@ import javax.inject.Inject
 class VmTabMap : BaseViewModel()
 {
     @Inject
-    lateinit var api_cafes:ApiCafe
+    lateinit var api_cafes: ApiCafe
 
     var ps_move_map_pos: PublishSubject<ModelMapPos> = PublishSubject.create()
-    var bs_current_visible_distance:BehaviorSubject<Float> = BehaviorSubject.create()
-    var bs_current_center:BehaviorSubject<LatLng> = BehaviorSubject.create()
+    var bs_current_visible_distance: BehaviorSubject<Float> = BehaviorSubject.create()
+    var bs_current_center: BehaviorSubject<LatLng> = BehaviorSubject.create()
+    var bs_cafe_to_display: BehaviorSubject<ArrayList<ModelCafe>> = BehaviorSubject.create()
+    var bs_cafe_bottom_dialog: BehaviorSubject<ModelCafe> = BehaviorSubject.create()
 
     init
     {
@@ -37,6 +46,25 @@ class VmTabMap : BaseViewModel()
                 Log.e("VmTabMap", "setEvents: Current distenace is $it")
             })
                 .disposeBy(composite_disposable)
+
+        bus_main_events.bs_filter
+                .subscribe(
+                    {
+                        val distance = bs_current_visible_distance.value ?: return@subscribe
+                        val center = bs_current_center.value ?: return@subscribe
+
+                        val request = ReqCafes()
+                        request.lat = center.latitude
+                        request.lon = center.longitude
+                        request.distance = distance.toInt()
+                        request.filter = it
+
+                        Networking().getCafes(request,
+                            {
+                                bs_cafe_to_display.onNext(it)
+                            })
+                    })
+                .disposeBy(composite_disposable)
     }
 
     private fun moveMapToUserLocation()
@@ -46,6 +74,7 @@ class VmTabMap : BaseViewModel()
                     {
                         val map_pos = ModelMapPos(it.toLatLng())
                         ps_move_map_pos.onNext(map_pos)
+                        bus_main_events.bs_current_user_position.onNext(it.toLatLng())
                     },
                     {
                         it.printStackTrace()
@@ -60,22 +89,71 @@ class VmTabMap : BaseViewModel()
 //            moveMapToUserLocation()
         }
 
+        override fun clickedCafe(cafe: ModelCafe)
+        {
+            val cafe_id = cafe.id ?: return
+//            Networking().loadCafeSingle(cafe_id,
+//                {
+//                    bs_cafe_bottom_dialog.onNext(it)
+//                })
+//
+            val builder = BuilderIntent()
+                    .setActivityToStart(ActCafePopup::class.java)
+                    .addParam(Constants.Extras.EXTRA_CAFE_ID, cafe_id)
+                    .setSlider(BuilderIntent.TypeSlider.BOTTOM_UP)
+
+            ps_intent_builded.onNext(builder)
+        }
+
         override fun mapIdled()
         {
             val distance = bs_current_visible_distance.value ?: return
             val center = bs_current_center.value ?: return
 
+            val request = ReqCafes()
+            request.lat = center.latitude
+            request.lon = center.longitude
+            request.distance = distance.toInt()
+            request.filter = bus_main_events.bs_filter.value
 
-            api_cafes.getCafes(center.latitude,center.longitude,distance.toInt(),PmCafeSort.DISTANCE,PmSortDirection.ASC)
+            Networking().getCafes(request,
+                {
+                    bs_cafe_to_display.onNext(it)
+                })
+        }
+    }
+
+    inner class Networking
+    {
+        fun getCafes(req: ReqCafes, action_success: (ArrayList<ModelCafe>) -> Unit)
+        {
+            req.getRequest(api_cafes)
                     .mainThreaded()
                     .addMyParser<RespCafes>(RespCafes::class.java)
                     .addProgress(this@VmTabMap)
                     .addScreenDisabling(this@VmTabMap)
                     .addErrorCatcher(this@VmTabMap)
-                    .addParseChecker({ it.cafes != null })
+                    .addParseChecker({ it.data?.cafes != null })
                     .subscribeMy(
                         {
-                            Log.e("ViewListener", "mapIdled: Loaded cafes count is ${it.cafes?.size}")
+                            val cafes = it.data?.cafes!!
+                            action_success(cafes)
+                        })
+                    .disposeBy(composite_disposable)
+        }
+
+        fun loadCafeSingle(id: Int, action_success: (ModelCafe) -> Unit)
+        {
+            api_cafes.getCafeSingle(id)
+                    .mainThreaded()
+                    .addMyParser<RespCafeSingle>(RespCafeSingle::class.java)
+                    .addProgress(this@VmTabMap)
+                    .addScreenDisabling(this@VmTabMap)
+                    .addErrorCatcher(this@VmTabMap)
+                    .addParseChecker({ it.cafe != null })
+                    .subscribeMy(
+                        {
+                            action_success(it.cafe!!)
                         })
                     .disposeBy(composite_disposable)
         }

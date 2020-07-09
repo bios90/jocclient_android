@@ -2,6 +2,7 @@ package com.justordercompany.client.logic.utils.builders
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.github.florent37.inlineactivityresult.kotlin.startForResult
 import com.justordercompany.client.base.enums.TypeActivityAnim
 import com.justordercompany.client.extensions.myPutExtra
@@ -9,13 +10,19 @@ import java.lang.RuntimeException
 
 class BuilderIntent()
 {
+    enum class TypeSlider
+    {
+        BOTTOM_UP
+    }
+
     private var class_to_start: Class<out AppCompatActivity>? = null
     private var ok_lambda: ((Intent?) -> Unit)? = null
     private var cancel_lambda: ((Intent?) -> Unit)? = null
     private var params: ArrayList<Pair<String, Any?>> = ArrayList()
     private var flags: ArrayList<Int> = ArrayList()
     private var on_start_action: (() -> Unit)? = null
-    private var type_anim:TypeActivityAnim? = null
+    private var type_anim: TypeActivityAnim? = null
+    private var slider: TypeSlider? = null
 
     fun setActivityToStart(act_class: Class<out AppCompatActivity>): BuilderIntent
     {
@@ -66,6 +73,12 @@ class BuilderIntent()
         return this
     }
 
+    fun setSlider(slider: TypeSlider?): BuilderIntent
+    {
+        this.slider = slider
+        return this
+    }
+
     fun startActivity(activity_from: AppCompatActivity)
     {
         if (class_to_start == null)
@@ -106,6 +119,14 @@ class BuilderIntent()
         {
             activity_from.startActivity(intent)
         }
+
+        slider?.let(
+            {
+                when (it)
+                {
+                    TypeSlider.BOTTOM_UP -> Animatoo.animateSlideUp(activity_from)
+                }
+            })
 
         on_start_action?.let({ it.invoke() })
         type_anim?.let(

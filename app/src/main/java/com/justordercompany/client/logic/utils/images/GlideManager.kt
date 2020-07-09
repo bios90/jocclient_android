@@ -24,5 +24,15 @@ class GlideManager
                     .transition(DrawableTransitionOptions.withCrossFade(250))
                     .into(img)
         }
+
+        fun loadImageSimpleCircle(uri: String, img: ImageView)
+        {
+            Glide.with(AppClass.app)
+                    .load(uri)
+                    .fitCenter()
+                    .diskCacheStrategy(DiskCacheStrategy.DATA)
+                    .dontAnimate()
+                    .into(img)
+        }
     }
 }

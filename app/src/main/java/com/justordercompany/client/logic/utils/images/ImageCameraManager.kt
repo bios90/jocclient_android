@@ -5,6 +5,8 @@ import android.net.Uri
 import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
 import com.github.florent37.inlineactivityresult.kotlin.startForResult
+import com.justordercompany.client.R
+import com.justordercompany.client.extensions.getColorMy
 import com.justordercompany.client.extensions.runActionWithDelay
 import com.justordercompany.client.logic.utils.MessagesManager
 import com.justordercompany.client.logic.utils.files.FileManager
@@ -72,17 +74,7 @@ class ImageCameraManager(val activity: AppCompatActivity, val messagesManager: M
                     .doFinally({ messagesManager.dismissProgressDialog() })
                     .subscribe(
                         {
-                            //                            action_success(it)
-
-                            val file_copy = MyFileItem.createFromFile(FileManager.create_temp_image_file())
-
-                            val uri_1 = Uri.fromFile(it.getFile())
-                            val uri_2 = Uri.fromFile(file_copy.getFile())
-                            UCrop.of(uri_1, uri_2)
-                                    .withAspectRatio(1f, 1f)
-//                                    .getIntent(activity)
-                                    .start(activity)
-
+                            action_success(it)
                         },
                         {
                             it.printStackTrace()

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.justordercompany.client.R" />
+
+        <import type="android.graphics.drawable.GradientDrawable" />
+
+        <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:fitsSystemWindows="true"
+        android:id="@+id/lac_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <RelativeLayout
+            android:id="@+id/lar_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@{BuilderBg.getRoundedCorners(R.color.white,12f,12f,0f,0f)}"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_logo"
+                android:layout_width="102dp"
+                android:layout_height="102dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="32dp"
+                android:elevation="20dp"
+                app:civ_circle_background_color="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/TvBold.Xxl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/img_logo"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:textColor="@color/gray6"
+                tools:text="Stumptown Coffee" />
+
+            <TextView
+                android:id="@+id/tv_adress"
+                style="@style/TvReg.M"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_name"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:textColor="@color/gray4"
+                tools:text="New York, 212b Pacific Str" />
+
+            <RelativeLayout
+                android:id="@+id/lar_rating_distance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_adress"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="16dp">
+
+                <TextView
+                    android:id="@+id/tv_arrow"
+                    style="@style/TvFawLight.L"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/faw_location_arrow"
+                    android:textColor="@color/gray4" />
+
+                <TextView
+                    android:id="@+id/tv_distance"
+                    style="@style/TvBold.M"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/tv_arrow"
+                    android:textColor="@color/gray5"
+                    tools:text="212 m" />
+
+                <com.willy.ratingbar.ScaleRatingBar
+                    android:id="@+id/rating_bar"
+                    style="@style/RatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_weight="25"
+                    android:clipToPadding="false"
+                    android:padding="6dp"
+                    app:srb_clickable="false"
+                    app:srb_scrollable="false"
+                    app:srb_starHeight="22dp"
+                    app:srb_starPadding="0dp"
+                    app:srb_starWidth="24dp" />
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_about"
+                style="@style/TvLight.M"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lar_rating_distance"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="16dp"
+                android:gravity="left"
+                tools:text="Mauris rhoncus aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas maecenas." />
+
+            <TextView
+                android:id="@+id/tv_clock"
+                style="@style/TvFawLight.L"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_about"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="22dp"
+                android:text="@string/faw_clock"
+                android:textColor="@color/gray4" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                style="@style/TvBold.M"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_clock"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/gray5"
+                tools:text="9:30 - 21:00" />
+
+            <TextView
+                android:id="@+id/tv_send"
+                style="@style/TvBold.M"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_below="@id/tv_time"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@{BuilderBg.getGradOrange(4f,GradientDrawable.Orientation.BL_TR)}"
+                android:text="@string/send"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/lal_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@{BuilderBg.getRoundedCorners(R.color.white,12f,12f,0f,0f)}"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@id/lar_content" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

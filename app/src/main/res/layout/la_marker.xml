@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_cafe_name"
+
+        style="@style/TvReg.M"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sel_round_grad_orange"
+        android:ellipsize="end"
+        android:maxLength="16"
+        android:maxLines="1"
+        android:paddingLeft="12dp"
+        android:paddingTop="4dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="4dp"
+        android:textColor="@color/white"
+        tools:text="Кафе огонек as sdf" />
+
+    <ImageView
+        android:layout_width="14dp"
+        android:layout_height="7dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="-1dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_carret_orange" />
+</LinearLayout>

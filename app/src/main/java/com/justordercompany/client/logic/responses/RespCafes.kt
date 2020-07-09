@@ -5,5 +5,9 @@ import com.justordercompany.client.logic.models.ModelCafe
 
 class RespCafes
     (
-        @SerializedName("data") var cafes: ArrayList<ModelCafe>? = null
+        @SerializedName("data") var data: RespCafeData?
 ) : BaseResponse()
+
+class RespCafeData(
+        @SerializedName("data") var cafes: ArrayList<ModelCafe>? = null
+)

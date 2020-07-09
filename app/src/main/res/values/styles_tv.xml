@@ -67,6 +67,10 @@
         <item name="android:textSize">@dimen/size_xl</item>
     </style>
 
+    <style name="TvBold.Xxl" parent="TvBold">
+        <item name="android:textSize">@dimen/size_xxl</item>
+    </style>
+
     <style name="TvLight">
         <item name="android:hyphenationFrequency">none</item>
         <item name="android:gravity">center</item>

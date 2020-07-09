@@ -2,17 +2,20 @@ package com.justordercompany.client.base
 
 import android.content.Intent
 import android.util.Log
+import androidx.core.graphics.alpha
 import androidx.lifecycle.ViewModel
 import com.justordercompany.client.R
 import com.justordercompany.client.extensions.Optional
+import com.justordercompany.client.extensions.applyTransparency
+import com.justordercompany.client.extensions.getColorMy
 import com.justordercompany.client.extensions.getStringMy
 import com.justordercompany.client.logic.utils.*
-import com.justordercompany.client.logic.utils.builders.BuilderIntent
-import com.justordercompany.client.logic.utils.builders.BuilderAlerter
-import com.justordercompany.client.logic.utils.builders.BuilderDialogBottom
-import com.justordercompany.client.logic.utils.builders.BuilderDialogMy
+import com.justordercompany.client.logic.utils.builders.*
 import com.justordercompany.client.logic.utils.files.MyFileItem
 import com.justordercompany.client.logic.utils.images.ImageCameraManager
+import com.r0adkll.slidr.Slidr
+import com.r0adkll.slidr.model.SlidrConfig
+import com.r0adkll.slidr.model.SlidrPosition
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
@@ -31,6 +34,9 @@ interface BaseViewModelInterface
     val ps_request_permissions: PublishSubject<BuilderPermRequest>
     val ps_to_finish: PublishSubject<Optional<Intent>>
     val ps_pick_action: PublishSubject<ImageCameraManager.TypePick>
+    val ps_ucrop_action: PublishSubject<BuilderCropMy>
+    val ps_to_toggle_overlay: PublishSubject<Pair<Boolean, Int>>
+    val ps_act_slider:PublishSubject<SlidrConfig>
 
     fun clickedBack()
     {
@@ -58,6 +64,9 @@ abstract class BaseViewModel : ViewModel(), BaseViewModelInterface
     override val ps_request_permissions: PublishSubject<BuilderPermRequest> = PublishSubject.create()
     override val ps_to_finish: PublishSubject<Optional<Intent>> = PublishSubject.create()
     override val ps_pick_action: PublishSubject<ImageCameraManager.TypePick> = PublishSubject.create()
+    override val ps_ucrop_action: PublishSubject<BuilderCropMy> = PublishSubject.create()
+    override val ps_to_toggle_overlay: PublishSubject<Pair<Boolean, Int>> = PublishSubject.create()
+    override val ps_act_slider: PublishSubject<SlidrConfig> = PublishSubject.create()
 
     override fun viewAttached()
     {
@@ -104,5 +113,20 @@ abstract class BaseViewModel : ViewModel(), BaseViewModelInterface
                     })
 
         ps_request_permissions.onNext(builder)
+    }
+
+    fun addBottomSlider()
+    {
+        val config = SlidrConfig.Builder()
+                .position(SlidrPosition.TOP)
+                .sensitivity(1.0f)
+                .distanceThreshold(0.3f)
+                .edge(true)
+                .edgeSize(0.8f)
+                .scrimStartAlpha(0.5f)
+                .scrimEndAlpha(0.0f)
+                .build()
+
+        ps_act_slider.onNext(config)
     }
 }

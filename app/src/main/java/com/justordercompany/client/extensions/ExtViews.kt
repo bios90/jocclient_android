@@ -1,6 +1,8 @@
 package com.justordercompany.client.extensions
 
 import android.animation.Animator
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.text.Html
@@ -8,9 +10,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.view.animation.LinearInterpolator
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.justordercompany.client.R
 import com.justordercompany.client.ui.custom_views.FlipCardAnimation
@@ -131,4 +131,39 @@ fun CheckBox.getBs(): BehaviorSubject<Boolean>
         })
 
     return bs
+}
+
+fun RadioGroup.setCheckedAtPosition(position: Int)
+{
+    (this.getChildAt(position) as RadioButton).isChecked = true
+}
+
+fun RadioGroup.getCheckedPosition(): Int?
+{
+    if (this.childCount == 0)
+    {
+        return null
+    }
+
+    for (a in 0 until this.childCount)
+    {
+        val rb = this.getChildAt(a) as RadioButton
+        if (rb.isChecked)
+        {
+            return a
+        }
+    }
+
+    return null
+}
+
+fun View.toBitmap():Bitmap
+{
+    this.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+    val bitmap = Bitmap.createBitmap(this.getMeasuredWidth(), this.getMeasuredHeight(),
+        Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bitmap)
+    this.layout(0, 0, this.getMeasuredWidth(), this.getMeasuredHeight())
+    this.draw(canvas)
+    return bitmap
 }

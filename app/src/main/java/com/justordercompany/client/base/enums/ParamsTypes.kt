@@ -13,5 +13,10 @@ enum class PmCafeSort
     @SerializedName("rating")
     RATING,
     @SerializedName("distance")
-    DISTANCE
+    DISTANCE;
+
+    fun getNameForRequest():String
+    {
+        return name.toLowerCase()
+    }
 }

@@ -32,4 +32,16 @@
     <string name="gallery">Галлерея</string>
     <string name="camera">Камера</string>
     <string name="for_full_work_need_permissions">Для полноценной работы приложения необходимо предоставить разрешения</string>
+    <string name="coffee">Кофе</string>
+    <string name="orders">Заказы</string>
+    <string name="Replies">Отзывы</string>
+    <string name="filter">Фильтр</string>
+    <string name="average_cup_price">Средняя цена за стакан</string>
+    <string name="cafe_type">Тип заведения</string>
+    <string name="rating">Рейтинг</string>
+    <string name="from">От</string>
+    <string name="all">Все</string>
+    <string name="coffee_spot">Кофе точка</string>
+    <string name="cafe">Кафе</string>
+    <string name="apply">Применить</string>
 </resources>

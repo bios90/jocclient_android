@@ -1,15 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+        <import type="com.justordercompany.client.R" />
+        <import type="android.graphics.drawable.GradientDrawable" />
+        <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
+    </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.justordercompany.client.ui.custom_views.ViewPagerNotScrollable
             android:id="@+id/vp_main"
-            android:layout_above="@id/lal_bottom_nav"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_above="@id/lal_bottom_nav" />
+
+        <TextView
+            android:clickable="true"
+            android:id="@+id/tv_filter"
+            android:background="@{BuilderBg.getSimpleDrawableRipple(26f,R.color.orange,R.color.gray4)}"
+            style="@style/TvFawLight.Xl"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_above="@id/lal_bottom_nav"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="12dp"
+            android:text="@string/faw_slider_h"
+            android:textColor="@color/white" />
 
         <include
             android:id="@+id/lal_bottom_nav"

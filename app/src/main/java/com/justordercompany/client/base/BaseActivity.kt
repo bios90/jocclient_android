@@ -1,9 +1,12 @@
 package com.justordercompany.client.base
 
 import android.app.Activity
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.iid.FirebaseInstanceId
 import com.justordercompany.client.R
 import com.justordercompany.client.di.activity.ComponentActivity
 import com.justordercompany.client.di.activity.ModuleActivity
@@ -13,10 +16,22 @@ import com.justordercompany.client.logic.utils.images.ImageCameraManager
 import com.justordercompany.client.logic.utils.MessagesManager
 import com.justordercompany.client.logic.utils.MyVmFactory
 import com.justordercompany.client.logic.utils.PermissionManager
+import com.justordercompany.client.logic.utils.files.FileManager
+import com.justordercompany.client.logic.utils.files.MyFileItem
 import com.justordercompany.client.ui.dialogs.DialogBottomSheetRounded
+import com.yalantis.ucrop.UCrop
 import io.reactivex.disposables.CompositeDisposable
 import java.lang.RuntimeException
 import javax.inject.Inject
+import android.content.Intent
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import com.r0adkll.slidr.Slidr
+import com.r0adkll.slidr.model.SlidrConfig
+import com.r0adkll.slidr.model.SlidrListener
+import com.r0adkll.slidr.model.SlidrPosition
+
 
 abstract class BaseActivity : AppCompatActivity()
 {
@@ -40,6 +55,7 @@ abstract class BaseActivity : AppCompatActivity()
     val composite_diposable = CompositeDisposable()
 
     private var base_vms: ArrayList<BaseViewModel> = arrayListOf()
+    var overlays: ArrayList<View> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -73,6 +89,24 @@ abstract class BaseActivity : AppCompatActivity()
                     },
                     {
                         it.printStackTrace()
+                    })
+                .disposeBy(composite_diposable)
+
+        base_vm.ps_to_toggle_overlay
+                .mainThreaded()
+                .subscribe(
+                    { show_time ->
+                        overlays.forEach(
+                            {
+                                if (show_time.first)
+                                {
+                                    it.animateFadeOut(show_time.second)
+                                }
+                                else
+                                {
+                                    it.animateFadeIn(show_time.second)
+                                }
+                            })
                     })
                 .disposeBy(composite_diposable)
 
@@ -173,6 +207,22 @@ abstract class BaseActivity : AppCompatActivity()
                     })
                 .disposeBy(composite_diposable)
 
+        base_vm.ps_ucrop_action
+                .mainThreaded()
+                .subscribe(
+                    {
+                        it.startLambda(this)
+
+                    })
+                .disposeBy(composite_diposable)
+
+        base_vm.ps_act_slider
+                .mainThreaded()
+                .subscribe(
+                    {
+                        Slidr.attach(this,it)
+                    }).disposeBy(composite_diposable)
+
         base_vm.viewAttached()
     }
 
@@ -197,5 +247,43 @@ abstract class BaseActivity : AppCompatActivity()
         base_vms.clear()
         composite_diposable.dispose()
         super.onDestroy()
+    }
+
+    fun getFirebaseToken(action: (String) -> Unit)
+    {
+        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener(this,
+            { instanceIdResult ->
+                val token = instanceIdResult.token
+                Log.e("BaseActivity", "getFirebaseToken: Retrieved and got token $token")
+                action(token)
+            })
+    }
+
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+    {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == UCrop.REQUEST_CROP)
+        {
+            Log.e("BaseActivity", "onActivityResult: Result ok!!")
+        }
+        else if (resultCode == UCrop.RESULT_ERROR)
+        {
+            Log.e("BaseActivity", "onActivityResult: Result errrroro!")
+        }
+    }
+
+    fun applySliderBottomWithUpadte()
+    {
+        val config = SlidrConfig.Builder()
+                .position(SlidrPosition.TOP)
+                .sensitivity(1.0f)
+                .distanceThreshold(0.3f)
+                .edge(true)
+                .edgeSize(0.3f)
+                .scrimStartAlpha(0.0f)
+                .scrimEndAlpha(0.0f)
+                .build()
+
+        Slidr.attach(this,config)
     }
 }

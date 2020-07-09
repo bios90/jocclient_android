@@ -31,6 +31,7 @@ class VmTabProfile : BaseViewModel()
     val bs_phone: BehaviorSubject<Optional<String>> = BehaviorSubject.createDefault(String.getNullString().asOptional())
     val bs_code: BehaviorSubject<Optional<String>> = BehaviorSubject.createDefault(String.getNullString().asOptional())
     val bs_offert_checked: BehaviorSubject<Boolean> = BehaviorSubject.createDefault(false)
+    val bs_user_to_display: BehaviorSubject<Optional<ModelUser>> = BehaviorSubject.create()
 
     init
     {
@@ -41,11 +42,6 @@ class VmTabProfile : BaseViewModel()
     override fun viewAttached()
     {
         checkForLogin()
-
-        runActionWithDelay(3000,
-            {
-                bus_main_events.ps_user_logged.onNext(Any())
-            })
     }
 
     fun setEvents()
@@ -53,25 +49,42 @@ class VmTabProfile : BaseViewModel()
         bus_main_events.ps_user_logged
                 .subscribe(
                     {
-
                         userLogged()
+                    })
+                .disposeBy(composite_disposable)
+
+        bus_main_events.ps_user_profile_updated
+                .subscribe(
+                    {
+                        Networking().loadUser(
+                            {
+                                bs_user_to_display.onNext(it.asOptional())
+                            })
                     })
                 .disposeBy(composite_disposable)
     }
 
     private fun checkForLogin()
     {
-        val is_logged = SharedPrefsManager.getCurrentUser() != null
-        ps_auth_dialog_visibility.onNext(is_logged)
+        ps_auth_dialog_visibility.onNext(SharedPrefsManager.getCurrentUser() == null)
+//        ps_auth_dialog_visibility.onNext(true)
+
+        if (SharedPrefsManager.getUserToken() != null)
+        {
+            Networking().loadUser(
+                {
+                    bs_user_to_display.onNext(it.asOptional())
+                })
+        }
     }
 
     private fun userLogged()
     {
-//        val user = SharedPrefsManager.getCurrentUser() ?: return
+        val user = SharedPrefsManager.getCurrentUser() ?: return
         ps_auth_dialog_visibility.onNext(false)
 
-//        if (user.isEmpty())
-//        {
+        if (user.isEmpty())
+        {
             val title = getStringMy(R.string.profile)
             val text = getStringMy(R.string.profile_is_empty_fill_now)
 
@@ -93,7 +106,7 @@ class VmTabProfile : BaseViewModel()
                     .setBtnCancel(btn_cancel)
 
             ps_to_show_dialog.onNext(builder)
-//        }
+        }
     }
 
 
@@ -126,7 +139,7 @@ class VmTabProfile : BaseViewModel()
                 return
             }
 
-            val fb_token = SharedPrefsManager.getString(SharedPrefsManager.Key.FB_TOKEN) ?: return
+            val fb_token = SharedPrefsManager.getString(SharedPrefsManager.Key.FB_TOKEN)
 
             Networking().makeAuth(phone, fb_token,
                 {
@@ -168,13 +181,19 @@ class VmTabProfile : BaseViewModel()
             ps_to_show_dialog.onNext(builder)
         }
 
+        override fun clickedEditUser()
+        {
+            val builder = BuilderIntent()
+                    .setActivityToStart(ActProfileEdit::class.java)
 
+            ps_intent_builded.onNext(builder)
+        }
     }
 
 
     inner class Networking
     {
-        fun makeAuth(phone: String, fb_token: String, action_success: () -> Unit)
+        fun makeAuth(phone: String, fb_token: String?, action_success: () -> Unit)
         {
             api_auth.makeAuth(phone, fb_token)
                     .mainThreaded()
@@ -192,6 +211,25 @@ class VmTabProfile : BaseViewModel()
         fun makeCodeConfirm(phone: String, code: String, action_success: (ModelUser) -> Unit)
         {
             api_auth.confirmPhone(phone, code)
+                    .mainThreaded()
+                    .addMyParser<RespUserSingle>(RespUserSingle::class.java)
+                    .addProgress(this@VmTabProfile)
+                    .addScreenDisabling(this@VmTabProfile)
+                    .addErrorCatcher(this@VmTabProfile)
+                    .addParseChecker(
+                        {
+                            return@addParseChecker it.user != null
+                        })
+                    .subscribeMy(
+                        {
+                            action_success(it.user!!)
+                        })
+                    .disposeBy(composite_disposable)
+        }
+
+        fun loadUser(action_success: (ModelUser) -> Unit)
+        {
+            api_auth.getUser()
                     .mainThreaded()
                     .addMyParser<RespUserSingle>(RespUserSingle::class.java)
                     .addProgress(this@VmTabProfile)

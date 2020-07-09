@@ -2,15 +2,23 @@ package com.justordercompany.client.ui.screens.act_main.tabs.profile
 
 import android.text.SpannedString
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleObserver
 import com.justordercompany.client.R
 import com.justordercompany.client.base.enums.TypeAuthMode
 import com.justordercompany.client.databinding.LaMainProfileBinding
 import com.justordercompany.client.extensions.*
+import com.justordercompany.client.logic.models.ModelUser
+import com.justordercompany.client.logic.utils.images.GlideManager
 import com.justordercompany.client.logic.utils.strings.MySpan
 import com.justordercompany.client.ui.screens.act_main.ActMain
 import com.justordercompany.client.ui.screens.act_main.tabs.ActMainTab
+import android.widget.Toast
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.Lifecycle
+
 
 class TabProfile(val act_main: ActMain) : ActMainTab
 {
@@ -22,9 +30,10 @@ class TabProfile(val act_main: ActMain) : ActMainTab
     {
         bnd_profile = DataBindingUtil.inflate(act_main.layoutInflater, R.layout.la_main_profile, null, false)
         vm_tab_progfile = act_main.my_vm_factory.getViewModel(VmTabProfile::class.java)
-        act_main.setBaseVmActions(vm_tab_progfile)
-        setListeners()
         setEvents()
+        setListeners()
+        act_main.setBaseVmActions(vm_tab_progfile)
+        act_main.lifecycle.addObserver(MyLifecycleObserver())
 
         bnd_profile.larAuthDialog.tvOffert.text = getOffertText()
     }
@@ -43,7 +52,12 @@ class TabProfile(val act_main: ActMain) : ActMainTab
 
         connectBoth(bnd_profile.larAuthDialog.etPhone.getBsText(), vm_tab_progfile.bs_phone, composite_disposable)
         connectBoth(bnd_profile.larAuthDialog.etCode.getBsText(), vm_tab_progfile.bs_code, composite_disposable)
-        connectBoth(bnd_profile.larAuthDialog.chOffert.getBs(),vm_tab_progfile.bs_offert_checked,composite_disposable)
+        connectBoth(bnd_profile.larAuthDialog.chOffert.getBs(), vm_tab_progfile.bs_offert_checked, composite_disposable)
+
+        bnd_profile.tvEdit.setOnClickListener(
+            {
+                vm_tab_progfile.ViewListener().clickedEditUser()
+            })
     }
 
     fun setEvents()
@@ -67,7 +81,7 @@ class TabProfile(val act_main: ActMain) : ActMainTab
 
                 val action =
                         {
-                            if(mode == TypeAuthMode.CODE)
+                            if (mode == TypeAuthMode.CODE)
                             {
                                 bnd_profile.larAuthDialog.laCode.visibility = View.VISIBLE
                                 bnd_profile.larAuthDialog.laPhone.visibility = View.GONE
@@ -84,6 +98,14 @@ class TabProfile(val act_main: ActMain) : ActMainTab
                 bnd_profile.larAuthDialog.lalAnim.animateFlip(action)
             })
                 .disposeBy(composite_disposable)
+
+        vm_tab_progfile.bs_user_to_display
+                .subscribe(
+                    {
+                        val user = it.value ?: return@subscribe
+                        bindUser(user)
+                    })
+                .disposeBy(composite_disposable)
     }
 
     override fun getView(): View
@@ -91,7 +113,17 @@ class TabProfile(val act_main: ActMain) : ActMainTab
         return bnd_profile.root
     }
 
-    private fun getOffertText():SpannedString
+    private fun bindUser(user: ModelUser)
+    {
+        bnd_profile.tvName.text = "Name later!!"
+        bnd_profile.tvPhone.text = user.phone
+        user.image?.url_m?.let(
+            {
+                GlideManager.loadImageSimpleCircle(it, bnd_profile.imgAvatar)
+            })
+    }
+
+    private fun getOffertText(): SpannedString
     {
         val span_1 = MySpan()
                 .setColor(getColorMy(R.color.gray6))
@@ -103,6 +135,20 @@ class TabProfile(val act_main: ActMain) : ActMainTab
                 .setFontRes(R.font.exo_bold)
                 .setText("офферты")
 
-        return TextUtils.concat(span_1.build(),span_2.build()) as SpannedString
+        return TextUtils.concat(span_1.build(), span_2.build()) as SpannedString
+    }
+
+    inner class MyLifecycleObserver : LifecycleObserver
+    {
+        @OnLifecycleEvent(Lifecycle.Event.ON_START)
+        fun onStart()
+        {
+
+        }
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+        fun onStop()
+        {
+        }
     }
 }
