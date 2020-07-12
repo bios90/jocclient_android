@@ -13,6 +13,8 @@ import com.justordercompany.client.logic.utils.*
 import com.justordercompany.client.logic.utils.builders.*
 import com.justordercompany.client.logic.utils.files.MyFileItem
 import com.justordercompany.client.logic.utils.images.ImageCameraManager
+import com.justordercompany.client.networking.apis.ApiAuth
+import com.justordercompany.client.networking.apis.ApiCafe
 import com.r0adkll.slidr.Slidr
 import com.r0adkll.slidr.model.SlidrConfig
 import com.r0adkll.slidr.model.SlidrPosition
@@ -22,6 +24,12 @@ import javax.inject.Inject
 
 interface BaseViewModelInterface
 {
+    //apis
+    val api_auth: ApiAuth
+    val api_cafe: ApiCafe
+    val base_networker:BaseNetworker
+
+    //others
     var location_manager: LocationManager
     var bus_main_events: BusMainEvents
     val composite_disposable: CompositeDisposable
@@ -36,7 +44,7 @@ interface BaseViewModelInterface
     val ps_pick_action: PublishSubject<ImageCameraManager.TypePick>
     val ps_ucrop_action: PublishSubject<BuilderCropMy>
     val ps_to_toggle_overlay: PublishSubject<Pair<Boolean, Int>>
-    val ps_act_slider:PublishSubject<SlidrConfig>
+    val ps_act_slider: PublishSubject<SlidrConfig>
 
     fun clickedBack()
     {
@@ -53,6 +61,14 @@ abstract class BaseViewModel : ViewModel(), BaseViewModelInterface
 
     @Inject
     override lateinit var bus_main_events: BusMainEvents
+
+    @Inject
+    override lateinit var api_auth: ApiAuth
+
+    @Inject
+    override lateinit var api_cafe: ApiCafe
+
+    override val base_networker: BaseNetworker = BaseNetworker(this)
 
     override val composite_disposable: CompositeDisposable = CompositeDisposable()
     override val ps_intent_builded: PublishSubject<BuilderIntent> = PublishSubject.create()

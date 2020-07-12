@@ -280,7 +280,7 @@ abstract class BaseActivity : AppCompatActivity()
                 .distanceThreshold(0.3f)
                 .edge(true)
                 .edgeSize(0.3f)
-                .scrimStartAlpha(0.0f)
+                .scrimStartAlpha(0.5f)
                 .scrimEndAlpha(0.0f)
                 .build()
 

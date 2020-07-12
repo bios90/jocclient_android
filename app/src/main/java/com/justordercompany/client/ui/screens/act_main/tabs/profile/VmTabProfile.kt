@@ -23,9 +23,6 @@ import javax.inject.Inject
 
 class VmTabProfile : BaseViewModel()
 {
-    @Inject
-    lateinit var api_auth: ApiAuth
-
     val ps_auth_dialog_visibility: PublishSubject<Boolean> = PublishSubject.create()
     val bs_auth_mode: BehaviorSubject<TypeAuthMode> = BehaviorSubject.createDefault(TypeAuthMode.PHONE)
     val bs_phone: BehaviorSubject<Optional<String>> = BehaviorSubject.createDefault(String.getNullString().asOptional())

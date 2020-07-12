@@ -38,6 +38,8 @@ android {
 dependencies {
 
     //Other
+    implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
+    implementation 'com.github.deano2390:FlowTextView:2.0.5'
     implementation 'com.r0adkll:slidableactivity:2.0.5'
     implementation 'com.github.ome450901:SimpleRatingBar:1.5.0'
     implementation 'com.github.Innovattic:range-seek-bar:v1.0.3'

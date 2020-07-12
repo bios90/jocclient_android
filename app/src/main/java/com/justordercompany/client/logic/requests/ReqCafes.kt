@@ -3,6 +3,7 @@ package com.justordercompany.client.logic.requests
 import com.justordercompany.client.base.enums.PmCafeSort
 import com.justordercompany.client.base.enums.PmSortDirection
 import com.justordercompany.client.logic.models.FilterData
+import com.justordercompany.client.logic.models.ModelCafe
 import com.justordercompany.client.networking.apis.ApiAuth
 import com.justordercompany.client.networking.apis.ApiCafe
 import io.reactivex.Observable
@@ -18,6 +19,7 @@ class ReqCafes
     var filter: FilterData? = null
     var order: PmCafeSort = PmCafeSort.DISTANCE
     var sort: PmSortDirection = PmSortDirection.ASC
+    var action_success: ((ArrayList<ModelCafe>) -> Unit)? = null
 
     fun getRequest(api_cafe: ApiCafe): Observable<Response<ResponseBody>>
     {

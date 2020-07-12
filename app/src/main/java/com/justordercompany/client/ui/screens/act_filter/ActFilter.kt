@@ -74,8 +74,8 @@ class ActFilter : BaseActivity()
                 .disposeBy(composite_diposable)
 
         vm_act_filter.bs_rating
-                .mainThreaded()
                 .throttleLast(100,TimeUnit.MILLISECONDS)
+                .mainThreaded()
                 .subscribe(
                     {
                         if (bnd_act_filter.ratingBar.rating != it)

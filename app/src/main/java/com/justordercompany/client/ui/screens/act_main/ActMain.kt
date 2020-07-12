@@ -1,13 +1,9 @@
 package com.justordercompany.client.ui.screens.act_main
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.iid.FirebaseInstanceId
-import com.google.firebase.iid.InstanceIdResult
 import com.justordercompany.client.R
 import com.justordercompany.client.base.adapters.AdapterVpBase
 import com.justordercompany.client.base.BaseActivity

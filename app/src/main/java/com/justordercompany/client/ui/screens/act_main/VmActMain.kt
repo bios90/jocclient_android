@@ -67,6 +67,10 @@ class VmActMain : BaseViewModel()
                         val dialog = MessagesManager.getBuilderPermissionsBlockedFinally(text_blocked)
                         ps_to_show_dialog.onNext(dialog)
                     })
+                .setActionAvailable(
+                    {
+                        location_manager.startGeoTracker()
+                    })
 
         ps_request_permissions.onNext(builder_perm_request)
     }

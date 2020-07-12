@@ -3,6 +3,8 @@ package com.justordercompany.client.base.adapters
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
+import com.justordercompany.client.R
+import com.justordercompany.client.extensions.getStringMy
 
 class AdapterVpBase : PagerAdapter()
 {
@@ -34,5 +36,19 @@ class AdapterVpBase : PagerAdapter()
     {
         this.views = views
         notifyDataSetChanged()
+    }
+
+    override fun getPageTitle(position: Int): CharSequence?
+    {
+        if (position == 0)
+        {
+            return getStringMy(R.string.by_distance)
+        }
+        else if (position == 1)
+        {
+            return getStringMy(R.string.by_rating)
+        }
+
+        return null
     }
 }

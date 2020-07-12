@@ -71,6 +71,10 @@
         <item name="android:textSize">@dimen/size_xxl</item>
     </style>
 
+    <style name="TvBold.Xxxl" parent="TvBold">
+        <item name="android:textSize">@dimen/size_xxxl</item>
+    </style>
+
     <style name="TvLight">
         <item name="android:hyphenationFrequency">none</item>
         <item name="android:gravity">center</item>
@@ -161,6 +165,14 @@
 
     <style name="TvFawReg.Xl">
         <item name="android:textSize">@dimen/size_faw_xl</item>
+    </style>
+
+    <style name="TvFawReg.Xxl">
+        <item name="android:textSize">@dimen/size_faw_xxl</item>
+    </style>
+
+    <style name="TvFawReg.Xxxl">
+        <item name="android:textSize">@dimen/size_faw_xxxl</item>
     </style>
 
 

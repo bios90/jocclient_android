@@ -2,7 +2,6 @@ package com.justordercompany.client.ui.screens.act_main.tabs.profile
 
 import android.text.SpannedString
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleObserver
@@ -14,13 +13,12 @@ import com.justordercompany.client.logic.models.ModelUser
 import com.justordercompany.client.logic.utils.images.GlideManager
 import com.justordercompany.client.logic.utils.strings.MySpan
 import com.justordercompany.client.ui.screens.act_main.ActMain
-import com.justordercompany.client.ui.screens.act_main.tabs.ActMainTab
-import android.widget.Toast
+import com.justordercompany.client.ui.screens.act_main.tabs.TabView
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.Lifecycle
 
 
-class TabProfile(val act_main: ActMain) : ActMainTab
+class TabProfile(val act_main: ActMain) : TabView
 {
     val composite_disposable = act_main.composite_diposable
     val bnd_profile: LaMainProfileBinding

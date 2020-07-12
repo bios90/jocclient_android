@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:orientation="vertical"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="20dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="false">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_logo"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:elevation="20dp"
+                android:src="@drawable/img_cofee_test"
+                app:civ_circle_background_color="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:textColor="@color/gray7"
+                style="@style/TvBold.Xl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_toLeftOf="@id/tv_price"
+                android:layout_toRightOf="@id/img_logo"
+                android:gravity="left"
+                android:text="Какачино" />
+
+            <TextView
+                android:layout_below="@id/tv_name"
+                android:textColor="@color/gray5"
+                style="@style/TvReg.S"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="6dp"
+                android:layout_toLeftOf="@id/tv_price"
+                android:layout_toRightOf="@id/img_logo"
+                android:gravity="left"
+                android:text="Это классика в кофейном мире. Эспрессо, пропаренное молоко, большое количество шелковистой воздушной молочной пены."/>
+
+            <TextView
+                android:id="@+id/tv_price"
+                style="@style/TvBold.L"
+                android:layout_width="76dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="@color/green"
+                android:textColor="@color/white"
+                tools:text="120 р" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -51,4 +51,11 @@
     <string name="apply">Применить</string>
     <string name="m">м</string>
     <string name="km">км</string>
+    <string name="visit">Перейти</string>
+    <string name="replies">Отзывы</string>
+    <string name="sum">"Сумма : "</string>
+    <string name="make_order">Оформить</string>
+    <string name="quick_order">Быстрый заказ</string>
+    <string name="by_distance">По расстоянию</string>
+    <string name="by_rating">By rating</string>
 </resources>

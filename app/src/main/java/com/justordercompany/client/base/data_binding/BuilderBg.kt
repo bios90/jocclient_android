@@ -248,6 +248,21 @@ class BuilderBg
         }
 
         @JvmStatic
+        fun getGradGreen(radius: Float = 4f, orientation: GradientDrawable.Orientation = GradientDrawable.Orientation.BL_TR): Drawable
+        {
+            val colors = arrayListOf(getColorMy(R.color.green_dark), getColorMy(R.color.green_light))
+            return BuilderBg()
+                    .isGradient(true)
+                    .setGradOrientation(orientation)
+                    .setGradColors(colors)
+                    .setCorners(radius)
+                    .isDpMode(true)
+                    .isRipple(true)
+                    .setRippleColor(getColorMy(R.color.gray6))
+                    .get()
+        }
+
+        @JvmStatic
         fun getRoundedCorners(color: Int, top_left: Float, top_right: Float, bottom_right: Float, bottom_left: Float): Drawable
         {
             return BuilderBg()

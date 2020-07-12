@@ -13,11 +13,10 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:fitsSystemWindows="true"
         android:id="@+id/lac_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:fitsSystemWindows="true">
 
         <RelativeLayout
             android:id="@+id/lar_content"
@@ -70,7 +69,7 @@
 
                 <TextView
                     android:id="@+id/tv_arrow"
-                    style="@style/TvFawLight.L"
+                    style="@style/TvFawReg.L"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -119,7 +118,7 @@
 
             <TextView
                 android:id="@+id/tv_clock"
-                style="@style/TvFawLight.L"
+                style="@style/TvFawReg.L"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_about"
@@ -140,7 +139,7 @@
                 tools:text="9:30 - 21:00" />
 
             <TextView
-                android:id="@+id/tv_send"
+                android:id="@+id/tv_visit"
                 style="@style/TvBold.M"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
@@ -150,18 +149,18 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@{BuilderBg.getGradOrange(4f,GradientDrawable.Orientation.BL_TR)}"
-                android:text="@string/send"
+                android:text="@string/visit"
                 android:textColor="@color/white" />
 
         </RelativeLayout>
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/lal_overlay"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@{BuilderBg.getRoundedCorners(R.color.white,12f,12f,0f,0f)}"
             android:orientation="horizontal"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="@id/lar_content" />
 

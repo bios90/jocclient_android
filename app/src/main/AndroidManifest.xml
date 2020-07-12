@@ -44,6 +44,7 @@
         <activity
             android:name=".ui.screens.act_cafe_popup.ActCafePopup"
             android:theme="@style/Slider" />
+        <activity android:name=".ui.screens.act_cafe_menu.ActCafeMenu" />
 
         <service android:name=".networking.FbMessagingService">
             <intent-filter>

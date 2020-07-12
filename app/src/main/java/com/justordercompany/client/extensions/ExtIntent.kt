@@ -102,22 +102,29 @@ fun Intent.myPutExtra(name: String, obj: Any?)
     }
 }
 
-fun Intent.getIntExtraMy(name:String):Int?
+fun Intent.getIntExtraMy(name: String): Int?
 {
-    val num = this.getIntExtra(name,-999999)
-    if(num == -999999)
+    val num = this.getIntExtra(name, -999999)
+    if (num == -999999)
     {
         return null
     }
     return num
 }
-fun Intent.getLongExtraMy(name:String):Long?
+
+fun Intent.getLongExtraMy(name: String): Long?
 {
-    val num = this.getLongExtra(name,-999999L)
-    if(num == -999999L)
+    val num = this.getLongExtra(name, -999999L)
+    if (num == -999999L)
     {
         return null
     }
     return num
 }
+
+fun Intent.getBoolExtraMy(name: String): Boolean
+{
+    return this.getBooleanExtra(name, false)
+}
+
 

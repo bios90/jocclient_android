@@ -8,5 +8,6 @@
     <string name="faw_slider_h" translatable="false">&#xf1de;</string>
     <string name="faw_arrow" translatable="false">&#xf124;</string>
     <string name="faw_clock" translatable="false">&#xf017;</string>
+    <string name="faw_chevron_right" translatable="false">&#xf054;</string>
 
 </resources>

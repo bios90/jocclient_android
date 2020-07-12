@@ -6,10 +6,13 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.maps.model.LatLng
 import com.justordercompany.client.R
 import com.justordercompany.client.base.AppClass
+import com.justordercompany.client.extensions.disposeBy
 import com.justordercompany.client.extensions.getStringMy
 import com.patloew.rxlocation.RxLocation
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.subjects.BehaviorSubject
 
 class LocationManager
 {
@@ -34,6 +37,11 @@ class LocationManager
         {
             val distance = getDistanceInMeters(l1, l2)
 
+            return getDistanceText(distance)
+        }
+
+        fun getDistanceText(distance: Int): String
+        {
             if (distance < 1000)
             {
                 return "$distance ${getStringMy(R.string.m)}"
@@ -43,6 +51,9 @@ class LocationManager
             return "$text ${getStringMy(R.string.km)}"
         }
     }
+
+    val bs_location: BehaviorSubject<Location> = BehaviorSubject.create()
+    private val composite_disposable_location = CompositeDisposable()
 
     fun getLocationSingle(): Single<Location>
     {
@@ -55,10 +66,33 @@ class LocationManager
     {
         val rx_location = RxLocation(AppClass.app)
         val locationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(1000)
+                .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
+                .setInterval(30000)
+                .setSmallestDisplacement(50f)
 
         return rx_location.location().updates(locationRequest)
+    }
+
+
+    fun startGeoTracker()
+    {
+        getLocationUpdates()
+                .subscribe(
+                    {
+                        bs_location.onNext(it)
+                    })
+                .disposeBy(composite_disposable_location)
+
+    }
+
+    fun stopGeoTracker()
+    {
+        composite_disposable_location.clear()
+    }
+
+    fun getLocation(action_success: (Location) -> Unit)
+    {
+
     }
 }
 

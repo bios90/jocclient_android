@@ -18,9 +18,6 @@ import javax.inject.Inject
 
 class VmActProfileEdit : BaseViewModel()
 {
-    @Inject
-    lateinit var api_auth: ApiAuth
-
     var bs_image: BehaviorSubject<Optional<ObjWithImageUrl>> = BehaviorSubject.create()
     var bs_name: BehaviorSubject<Optional<String>> = BehaviorSubject.createDefault(String.getNullString().asOptional())
     var bs_email: BehaviorSubject<Optional<String>> = BehaviorSubject.createDefault(String.getNullString().asOptional())

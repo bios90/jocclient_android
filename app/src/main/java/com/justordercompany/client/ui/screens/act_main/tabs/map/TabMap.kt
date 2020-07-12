@@ -14,11 +14,10 @@ import com.justordercompany.client.extensions.*
 import com.justordercompany.client.logic.models.ModelCafe
 import com.justordercompany.client.logic.utils.PermissionManager
 import com.justordercompany.client.ui.dialogs.DialogBottomCafe
-import com.justordercompany.client.ui.dialogs.DialogBottomSheetRounded
 import com.justordercompany.client.ui.screens.act_main.ActMain
-import com.justordercompany.client.ui.screens.act_main.tabs.ActMainTab
+import com.justordercompany.client.ui.screens.act_main.tabs.TabView
 
-class TabMap(val act_main: ActMain) : ActMainTab
+class TabMap(val act_main: ActMain) : TabView
 {
     val composite_disposable = act_main.composite_diposable
     val bnd_map: LaMainMapBinding

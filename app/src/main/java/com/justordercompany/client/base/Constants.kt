@@ -4,6 +4,7 @@ class Constants
 {
     companion object
     {
+        const val LIST_CAFE_LOAD_DISTACNE = 1000
         const val SHARED_PREFS = "Shared_Prefs"
         const val EXTENSION_PNG = "png"
         const val EXTENSION_JPEG = "jpeg"
@@ -19,7 +20,7 @@ class Constants
 
         const val test_mode = true
         const val API_VERSION = "v1"
-//        val BEARER_TOKEN = "930b1a5d-4a13-4f57-942d-a8135c27bb56"
+        //        val BEARER_TOKEN = "930b1a5d-4a13-4f57-942d-a8135c27bb56"
         val BEARER_TOKEN = "psgeJ94WvoAAVtULBQBOSiUOAytGy4DS"
         val URL_BASE: String
             get()
@@ -46,6 +47,7 @@ class Constants
     object Extras
     {
         const val EXTRA_FILTER = "Extra_Filter"
-        const val EXTRA_CAFE_ID = "Extra_Filter"
+        const val EXTRA_CAFE_ID = "Extra_Cafe_Id"
+        const val EXTRA_CLICKED_VISIT = "Extra_Clicked_Visit"
     }
 }

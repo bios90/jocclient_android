@@ -50,6 +50,11 @@ class ActCafePopup : BaseActivity()
     private fun setListeners()
     {
         overlays.add(bnd_act_popup.lalOverlay)
+
+        bnd_act_popup.tvVisit.setOnClickListener(
+            {
+                vm_cafe_popup.ViewListener().clickedVisit()
+            })
     }
 
     private fun setEvents()

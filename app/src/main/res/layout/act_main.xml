@@ -21,7 +21,7 @@
             android:clickable="true"
             android:id="@+id/tv_filter"
             android:background="@{BuilderBg.getSimpleDrawableRipple(26f,R.color.orange,R.color.gray4)}"
-            style="@style/TvFawLight.Xl"
+            style="@style/TvFawReg.Xl"
             android:layout_width="52dp"
             android:layout_height="52dp"
             android:layout_above="@id/lal_bottom_nav"

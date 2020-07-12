@@ -90,6 +90,11 @@ fun getColorMy(id: Int): Int
     return ContextCompat.getColor(AppClass.app, id)
 }
 
+fun getDimenMy(id: Int): Float
+{
+    return AppClass.app.resources.getDimension(id)
+}
+
 fun dp2pxInt(dp: Int): Int
 {
     return dp2px(dp.toFloat()).toInt()

@@ -7,6 +7,7 @@
     <dimen name="size_l">15dp</dimen>
     <dimen name="size_xl">17dp</dimen>
     <dimen name="size_xxl">20dp</dimen>
+    <dimen name="size_xxxl">26dp</dimen>
 
 
     <dimen name="size_faw_xxs">9dp</dimen>
@@ -16,4 +17,5 @@
     <dimen name="size_faw_l">17dp</dimen>
     <dimen name="size_faw_xl">19dp</dimen>
     <dimen name="size_faw_xxl">22dp</dimen>
+    <dimen name="size_faw_xxxl">28dp</dimen>
 </resources>

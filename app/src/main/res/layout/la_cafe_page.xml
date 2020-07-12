@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
+
+        <import type="android.graphics.drawable.GradientDrawable" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@{BuilderBg.getGradOrange(0f,GradientDrawable.Orientation.BL_TR)}">
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        style="@style/TvBold.Xxxl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="12dp"
+                        android:textColor="@color/white"
+                        tools:text="Starbacks" />
+
+                    <com.willy.ratingbar.ScaleRatingBar
+                        android:id="@+id/rating_bar"
+                        style="@style/RatingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_below="@id/tv_name"
+                        android:layout_marginLeft="12dp"
+                        android:clipToPadding="false"
+                        app:srb_clickable="false"
+                        app:srb_drawableEmpty="@drawable/star_empty_white"
+                        app:srb_drawableFilled="@drawable/star_filled_white"
+                        app:srb_rating="4"
+                        app:srb_scrollable="false"
+                        app:srb_starHeight="16dp"
+                        app:srb_starPadding="1dp"
+                        app:srb_starWidth="18dp" />
+
+                    <uk.co.deanwild.flowtextview.FlowTextView
+                        android:id="@+id/ftv_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginRight="12dp"
+                        android:minHeight="80dp">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img_logo"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_alignParentRight="true"
+                            android:elevation="20dp"
+                            android:src="@drawable/img_logo_test"
+                            app:civ_circle_background_color="@color/white" />
+
+                    </uk.co.deanwild.flowtextview.FlowTextView>
+
+                    <HorizontalScrollView
+                        android:id="@+id/scroll_images"
+                        android:layout_width="match_parent"
+                        android:layout_height="112dp"
+                        android:layout_below="@id/ftv_text">
+
+                        <LinearLayout
+                            android:id="@+id/la_for_images"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal" />
+
+                    </HorizontalScrollView>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/scroll_images"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:id="@+id/tv_clock"
+                            style="@style/TvFawReg.M"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/faw_clock"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/tv_time"
+                            style="@style/TvReg.S"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="4dp"
+                            android:layout_toRightOf="@id/tv_clock"
+                            android:textColor="@color/white"
+                            tools:text="9:00 - 22:00" />
+
+                        <TextView
+                            android:id="@+id/tv_adress"
+                            style="@style/TvReg.M"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@color/white"
+                            tools:text="Красная пресня, 23" />
+
+                        <TextView
+                            android:id="@+id/tv_location_arrow"
+                            style="@style/TvFawReg.M"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="@string/faw_location_arrow"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/tv_distance"
+                            style="@style/TvReg.S"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="4dp"
+                            android:layout_toLeftOf="@id/tv_location_arrow"
+                            android:textColor="@color/white"
+                            tools:text="212 m" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="68dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@{BuilderBg.getGradGreen(0f,GradientDrawable.Orientation.BL_TR)}">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/img_day_logo"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="12dp"
+                        android:elevation="20dp"
+                        android:src="@drawable/img_logo_test" />
+
+
+                    <TextView
+                        android:id="@+id/tv_day_arrow_right"
+                        style="@style/TvFawReg.Xxl"
+                        android:layout_width="22dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="12dp"
+                        android:text="@string/faw_chevron_right"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_day_name"
+                        style="@style/TvBold.L"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_toLeftOf="@id/tv_day_arrow_right"
+                        android:layout_toRightOf="@id/img_day_logo"
+                        android:gravity="left"
+                        android:textColor="@color/white"
+                        tools:text="Какачино" />
+
+                    <TextView
+                        android:id="@+id/tv_day_description"
+                        style="@style/TvReg.S"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_day_name"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_toLeftOf="@id/tv_day_arrow_right"
+                        android:layout_toRightOf="@id/img_day_logo"
+                        android:gravity="left"
+                        android:textColor="@color/white"
+                        tools:text="Новогодняя акция во всех кофейнях Starbucks. Капучинно на вынос 99 р." />
+
+                </RelativeLayout>
+
+                <TextView
+                    style="@style/TvBold.Xl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="12dp"
+                    android:gravity="left"
+                    android:text="@string/replies"
+                    android:textColor="@color/gray6" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+</layout>

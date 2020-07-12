@@ -22,6 +22,8 @@
     <color name="gray8_trans_50">#80222222</color>
 
     <color name="green">#2AB398</color>
+    <color name="green_dark">#11998E</color>
+    <color name="green_light">#43CEA2</color>
     <color name="red">#F51C1C</color>
 
     <color name="orange">#F94912</color>
