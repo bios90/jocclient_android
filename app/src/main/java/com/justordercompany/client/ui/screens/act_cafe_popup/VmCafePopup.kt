@@ -20,7 +20,6 @@ import javax.inject.Inject
 
 class VmCafePopup : BaseViewModel()
 {
-
     val bs_cafe_id: BehaviorSubject<Int> = BehaviorSubject.create()
     val bs_cafe: BehaviorSubject<ModelCafe> = BehaviorSubject.create()
     val ps_cafe_distance_text: PublishSubject<String> = PublishSubject.create()

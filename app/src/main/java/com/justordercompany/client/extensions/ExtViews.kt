@@ -1,10 +1,8 @@
 package com.justordercompany.client.extensions
 
 import android.animation.Animator
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.LinearGradient
-import android.graphics.Shader
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.RippleDrawable
 import android.text.Html
 import android.text.TextUtils
 import android.util.Log
@@ -12,9 +10,22 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import com.justordercompany.client.R
+import androidx.core.content.ContextCompat
+import com.justordercompany.client.base.AppClass
 import com.justordercompany.client.ui.custom_views.FlipCardAnimation
 import io.reactivex.subjects.BehaviorSubject
+import android.view.ViewGroup
+import com.justordercompany.client.R
+import android.view.MotionEvent
+import android.os.SystemClock
+import android.graphics.*
+import android.util.DisplayMetrics
+import android.content.Context
+import android.graphics.drawable.GradientDrawable
+import android.view.WindowManager
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
+
 
 //Alert Dialog
 fun AlertDialog.makeTransparentBg()
@@ -157,7 +168,7 @@ fun RadioGroup.getCheckedPosition(): Int?
     return null
 }
 
-fun View.toBitmap():Bitmap
+fun View.toBitmap(): Bitmap
 {
     this.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
     val bitmap = Bitmap.createBitmap(this.getMeasuredWidth(), this.getMeasuredHeight(),
@@ -167,3 +178,174 @@ fun View.toBitmap():Bitmap
     this.draw(canvas)
     return bitmap
 }
+
+fun View.setHeight(heightToSet: Int)
+{
+    this.getLayoutParams().height = heightToSet
+    this.requestLayout()
+}
+
+fun getStatusBarHeight(): Int
+{
+    var result = 0
+    val resources = AppClass.app.resources
+    val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+    if (resourceId > 0)
+    {
+        result = resources.getDimensionPixelSize(resourceId)
+    }
+    return result
+}
+
+fun View.setMargins(l: Int, t: Int, r: Int, b: Int)
+{
+    if (this.getLayoutParams() is ViewGroup.MarginLayoutParams)
+    {
+        val p = this.getLayoutParams() as ViewGroup.MarginLayoutParams
+        p.setMargins(l, t, r, b)
+        this.requestLayout()
+    }
+}
+
+fun getDrawableMy(id: Int): Drawable
+{
+    return ContextCompat.getDrawable(AppClass.app, id)!!
+}
+
+fun getRippleDrawableMy(id: Int): RippleDrawable
+{
+    return ContextCompat.getDrawable(AppClass.app, id) as RippleDrawable
+}
+
+fun View.simulateSwipeLeft()
+{
+    val downTime = SystemClock.uptimeMillis()
+    val x = 500.0f
+    val y = 0.0f
+    val metaState = 0
+
+    val event_down = MotionEvent.obtain(
+        downTime,
+        downTime + 10,
+        MotionEvent.ACTION_DOWN,
+        x,
+        y,
+        metaState
+    )
+
+    val event_move = MotionEvent.obtain(
+        downTime + 10,
+        downTime + 100,
+        MotionEvent.ACTION_MOVE,
+        x - 250,
+        y,
+        metaState
+    )
+
+    val event_up = MotionEvent.obtain(
+        downTime + 110,
+        downTime + 120,
+        MotionEvent.ACTION_UP,
+        x - 250,
+        y,
+        metaState
+    )
+
+    this.dispatchTouchEvent(event_down)
+    this.dispatchTouchEvent(event_move)
+    this.dispatchTouchEvent(event_up)
+}
+
+fun View.simulateSwipeRight()
+{
+    val downTime = SystemClock.uptimeMillis()
+    val x = 0.0f
+    val y = 0.0f
+    val metaState = 0
+
+    val event_down = MotionEvent.obtain(
+        downTime,
+        downTime + 10,
+        MotionEvent.ACTION_DOWN,
+        x,
+        y,
+        metaState
+    )
+
+    val event_move = MotionEvent.obtain(
+        downTime + 10,
+        downTime + 100,
+        MotionEvent.ACTION_MOVE,
+        x + 250,
+        y,
+        metaState
+    )
+
+    val event_up = MotionEvent.obtain(
+        downTime + 110,
+        downTime + 120,
+        MotionEvent.ACTION_UP,
+        x + 250,
+        y,
+        metaState
+    )
+
+    this.dispatchTouchEvent(event_down)
+    this.dispatchTouchEvent(event_move)
+    this.dispatchTouchEvent(event_up)
+}
+
+fun getScreenWidth(): Int
+{
+    val displayMetrics = DisplayMetrics()
+    val window_manager = AppClass.app.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    window_manager.getDefaultDisplay().getMetrics(displayMetrics)
+    val width = displayMetrics.widthPixels
+    return width
+}
+
+fun getScreenHeight(): Int
+{
+    val displayMetrics = DisplayMetrics()
+    val window_manager = AppClass.app.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    window_manager.getDefaultDisplay().getMetrics(displayMetrics)
+    val height = displayMetrics.heightPixels
+    return height
+}
+
+fun View.isVisibleOnScreen(): Boolean
+{
+    if (!this.isShown())
+    {
+        return false
+    }
+    val actualPosition = Rect()
+    this.getGlobalVisibleRect(actualPosition)
+    val screen = Rect(0, 0, getScreenWidth(), getScreenHeight())
+    return actualPosition.intersect(screen)
+}
+
+fun RecyclerView.addDivider(color: Int, size: Int, orientation: Int = DividerItemDecoration.VERTICAL)
+{
+    val drw = GradientDrawable()
+    drw.shape = GradientDrawable.RECTANGLE
+
+    val itemDecorator: DividerItemDecoration
+    if (orientation == DividerItemDecoration.VERTICAL)
+    {
+        drw.setSize(0, size)
+        itemDecorator = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
+    }
+    else
+    {
+        drw.setSize(size, 0)
+        itemDecorator = DividerItemDecoration(this.context, DividerItemDecoration.HORIZONTAL)
+    }
+
+    drw.setColor(color)
+
+    itemDecorator.setDrawable(drw)
+    this.addItemDecoration(itemDecorator)
+}
+
+

@@ -20,7 +20,7 @@ enum class LoadBehavior
     }
 }
 
-class RecyclerLoadInfo<T>
+class FeedDisplayInfo<T>
     (
         val items: List<T> = arrayListOf(),
         var load_behavior: LoadBehavior = LoadBehavior.NONE

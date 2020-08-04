@@ -14,6 +14,18 @@ class RespBaseWithData(
         @SerializedName("data") var data: Map<String, String?>
 ) : BaseResponse()
 {
+    fun getInt(key: String): Int?
+    {
+        val str = data.get(key) ?: return null
+        return str.toIntOrNull()
+    }
+
+    fun getString(key: String): String?
+    {
+        val str = data.get(key) ?: return null
+        return str
+    }
+
     fun <T> getObjFromData(key: String, obj_class: Class<T>): T?
     {
         val str = data.get(key) ?: return null

@@ -6,9 +6,11 @@ import com.google.gson.GsonBuilder
 import com.justordercompany.client.R
 import com.justordercompany.client.base.Constants
 import com.justordercompany.client.extensions.getStringMy
+import com.justordercompany.client.networking.GsonDateDeSerializer
 import com.justordercompany.client.networking.MyInterceptor
 import com.justordercompany.client.networking.apis.ApiAuth
 import com.justordercompany.client.networking.apis.ApiCafe
+import com.justordercompany.client.networking.apis.ApiOrders
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -18,6 +20,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.security.cert.X509Certificate
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import javax.net.ssl.HostnameVerifier
@@ -33,6 +36,7 @@ class ModuleNetworking
     fun getGson(): Gson
     {
         val gson = GsonBuilder()
+//                .registerTypeAdapter(Date::class.java, GsonDateDeSerializer())
                 .setDateFormat(getStringMy(R.string.format_for_server))
                 .create()
 
@@ -41,14 +45,14 @@ class ModuleNetworking
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(interceptor: MyInterceptor,log_interceptor: HttpLoggingInterceptor): OkHttpClient
+    fun provideOkHttpClient(interceptor: MyInterceptor, log_interceptor: HttpLoggingInterceptor): OkHttpClient
     {
         val httpClientBuilder = OkHttpClient.Builder()
         httpClientBuilder.addInterceptor(interceptor)
         httpClientBuilder.addInterceptor(log_interceptor)
-        httpClientBuilder.callTimeout(120,TimeUnit.SECONDS)
+        httpClientBuilder.callTimeout(120, TimeUnit.SECONDS)
         httpClientBuilder.readTimeout(120, TimeUnit.SECONDS)
-        httpClientBuilder.writeTimeout(120,TimeUnit.SECONDS)
+        httpClientBuilder.writeTimeout(120, TimeUnit.SECONDS)
         httpClientBuilder.connectTimeout(120, TimeUnit.SECONDS)
 
         return httpClientBuilder.build()
@@ -67,14 +71,14 @@ class ModuleNetworking
 
     @Singleton
     @Provides
-    fun provideMyInterceptor():MyInterceptor
+    fun provideMyInterceptor(): MyInterceptor
     {
         return MyInterceptor()
     }
 
     @Singleton
     @Provides
-    fun provideRetrofit(gson: Gson,client:OkHttpClient):Retrofit
+    fun provideRetrofit(gson: Gson, client: OkHttpClient): Retrofit
     {
         return Retrofit.Builder()
                 .baseUrl(Constants.Urls.URL_BASE)
@@ -87,16 +91,23 @@ class ModuleNetworking
 
     @Singleton
     @Provides
-    fun provideApiAuth(retrofit: Retrofit):ApiAuth
+    fun provideApiAuth(retrofit: Retrofit): ApiAuth
     {
         return retrofit.create(ApiAuth::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideApiCafes(retrofit: Retrofit):ApiCafe
+    fun provideApiCafes(retrofit: Retrofit): ApiCafe
     {
         return retrofit.create(ApiCafe::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideApiOrders(retrofit: Retrofit): ApiOrders
+    {
+        return retrofit.create(ApiOrders::class.java)
     }
 
 }

@@ -27,43 +27,7 @@ fun Response<ResponseBody>?.getBodyAsStr(): String?
     return this?.errorBody()?.string()
 }
 
-@Suppress("UNCHECKED_CAST")
-fun <T> Observable<Response<ResponseBody>>.addMyParser(obj_class: Class<out Any>): Observable<T>
-{
-    return this
-            .doOnSubscribe(
-                {
-                    if (!isNetworkAvailable())
-                    {
-                        throw NoInternetException()
-                    }
-                })
-            .flatMap(
-                {
-                    val response_as_str = it.getBodyAsStr()
 
-                    val base_response = response_as_str.toObjOrNullGson(BaseResponse::class.java)
-
-                    if (base_response == null)
-                    {
-                        throw ParsingError()
-                    }
-
-                    val error = base_response.getError()
-                    if (error != null)
-                    {
-                        throw error
-                    }
-
-                    val obj = response_as_str.toObjOrNullGson(obj_class) as? T
-                    if (obj == null)
-                    {
-                        throw UnknownServerError()
-                    }
-
-                    return@flatMap Observable.just(obj)
-                })
-}
 
 fun <T> String?.toObjOrNullGson(obj_class: Class<T>): T?
 {

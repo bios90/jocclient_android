@@ -25,10 +25,16 @@
     <color name="green_dark">#11998E</color>
     <color name="green_light">#43CEA2</color>
     <color name="red">#F51C1C</color>
+    <color name="red_dark">#DB0F0F</color>
 
     <color name="orange">#F94912</color>
     <color name="orange_dark">#F51C1C</color>
     <color name="orange_light">#FE8605</color>
     <color name="orange_trans_50">#80F94912</color>
+
+    <color name="gray_grad_dark">#665B5B</color>
+    <color name="gray_grad_light">#B3A9A9</color>
+    <color name="yellow_grad_dark">#F7971E</color>
+    <color name="yellow_grad_light">#FFD200</color>
 
 </resources>

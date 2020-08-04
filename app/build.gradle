@@ -38,6 +38,12 @@ android {
 dependencies {
 
     //Other
+    implementation 'joda-time:joda-time:2.10.4'
+    implementation 'com.yandex.money:checkout:3.0.2'
+    implementation 'cn.aigestudio.wheelpicker:WheelPicker:1.1.3'
+    implementation 'com.github.volobot-admin:String-Picker-Android:v1.3'
+    implementation 'jp.wasabeef:recyclerview-animators:3.0.0'
+    implementation 'com.github.anzaizai:EasySwipeMenuLayout:1.1.4'
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
     implementation 'com.github.deano2390:FlowTextView:2.0.5'
     implementation 'com.r0adkll:slidableactivity:2.0.5'

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.justordercompany.client.R" />
+
+        <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
+
+        <import type="android.graphics.drawable.GradientDrawable" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/gl_2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="parent" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="-12dp"
+            android:background="@{BuilderBg.getSimpleDrawable(12f,R.color.white)}"
+            android:paddingBottom="12dp"
+            app:layout_constraintBottom_toTopOf="@id/gl_2">
+
+            <View
+                android:id="@+id/gl_1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true" />
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/lal_google_pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="12dp"
+                android:background="@{BuilderBg.getGradGreen(8f,GradientDrawable.Orientation.BL_TR)}"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    style="@style/TvFawBrand"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:text="@string/faw_google_pay"
+                    android:textColor="@color/white"
+                    android:textSize="36dp" />
+
+                <TextView
+                    style="@style/TvReg.Xl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/google_pay"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_below="@id/lal_google_pay"
+                android:id="@+id/lal_credit_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="12dp"
+                android:background="@{BuilderBg.getGradOrange(4f,GradientDrawable.Orientation.BL_TR)}"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    style="@style/TvFawSolid.L"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:text="@string/faw_credit_card"
+                    android:textColor="@color/white"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:layout_marginLeft="12dp"
+                    style="@style/TvReg.Xl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bank_card"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_saved_cards_title"
+                style="@style/TvReg.Xl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lal_credit_card"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="12dp"
+                android:text="@string/saved_cards"
+                android:textColor="@color/gray7" />
+
+            <TextView
+                style="@style/TvReg.S"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_saved_cards_title"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:text="После проведения платежа с сохранением карты здесь будут сохраненные карты для быстрой оплаты"
+                android:textColor="@color/gray4" />
+
+
+        </RelativeLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

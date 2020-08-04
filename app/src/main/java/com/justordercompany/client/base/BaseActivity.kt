@@ -24,6 +24,8 @@ import io.reactivex.disposables.CompositeDisposable
 import java.lang.RuntimeException
 import javax.inject.Inject
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.graphics.Color
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
@@ -51,6 +53,7 @@ abstract class BaseActivity : AppCompatActivity()
     var is_light_status_bar: Boolean = false
     var color_nav_bar: Int = getColorMy(R.color.white)
     var is_light_nav_bar: Boolean = false
+    var is_full_screen: Boolean = false
 
     val composite_diposable = CompositeDisposable()
 
@@ -60,7 +63,29 @@ abstract class BaseActivity : AppCompatActivity()
     override fun onCreate(savedInstanceState: Bundle?)
     {
         applyStatusNavColors()
+        makePortrait()
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onResume()
+    {
+        super.onResume()
+        AppClass.top_activity = this
+    }
+
+    override fun onPause()
+    {
+        clearTopActivity()
+        super.onPause()
+    }
+
+    private fun clearTopActivity()
+    {
+        val current_top = AppClass.top_activity
+        if (this.equals(current_top))
+        {
+            AppClass.top_activity = null
+        }
     }
 
     fun getAppComponent(): ComponentApplication
@@ -220,7 +245,7 @@ abstract class BaseActivity : AppCompatActivity()
                 .mainThreaded()
                 .subscribe(
                     {
-                        Slidr.attach(this,it)
+                        Slidr.attach(this, it)
                     }).disposeBy(composite_diposable)
 
         base_vm.viewAttached()
@@ -236,6 +261,13 @@ abstract class BaseActivity : AppCompatActivity()
 
     fun applyStatusNavColors()
     {
+        if (is_full_screen)
+        {
+            //Do not forget to make  android:fitsSystemWindows="false" root layout
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            window.statusBarColor = Color.TRANSPARENT
+        }
+
         this.setStatusBarColor(color_status_bar)
         this.setStatusLightDark(is_light_status_bar)
         this.setNavBarColor(color_nav_bar)
@@ -246,6 +278,7 @@ abstract class BaseActivity : AppCompatActivity()
     {
         base_vms.clear()
         composite_diposable.dispose()
+        clearTopActivity()
         super.onDestroy()
     }
 
@@ -272,7 +305,7 @@ abstract class BaseActivity : AppCompatActivity()
         }
     }
 
-    fun applySliderBottomWithUpadte()
+    fun applySliderBottom()
     {
         val config = SlidrConfig.Builder()
                 .position(SlidrPosition.TOP)
@@ -284,6 +317,42 @@ abstract class BaseActivity : AppCompatActivity()
                 .scrimEndAlpha(0.0f)
                 .build()
 
-        Slidr.attach(this,config)
+        Slidr.attach(this, config)
+    }
+
+    protected fun makePortrait()
+    {
+        try
+        {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
+        catch (e: Exception)
+        {
+
+        }
+    }
+
+    protected fun makeLanscape()
+    {
+        try
+        {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        }
+        catch (e: Exception)
+        {
+
+        }
+    }
+
+    protected fun makeOrintationChangable()
+    {
+        try
+        {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
+        }
+        catch (e: Exception)
+        {
+
+        }
     }
 }

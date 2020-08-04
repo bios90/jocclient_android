@@ -19,146 +19,177 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/lar_top"
             android:layout_width="match_parent"
             android:layout_height="212dp"
-            android:background="@drawable/bg_overlapped">
+            android:background="@drawable/bg_overlapped"
+            android:translationZ="1dp">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/img_avatar"
-                android:layout_width="86dp"
-                android:layout_height="86dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp"
-                android:elevation="20dp"
-                app:civ_circle_background_color="@color/white" />
-
-            <TextView
-                android:id="@+id/tv_name"
-                style="@style/TvBold.Xxl"
+            <View
+                android:id="@+id/view_fake_status"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="42dp"
-                android:layout_marginRight="16dp"
-                android:layout_toRightOf="@id/img_avatar"
-                android:gravity="left"
-                android:textColor="@color/white"
-                tools:text="Mike Penz" />
+                android:layout_height="0dp" />
 
-            <TextView
-                android:id="@+id/tv_phone"
-                style="@style/TvLight.M"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_name"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_toRightOf="@id/img_avatar"
-                android:gravity="left"
-                android:textColor="@color/white"
-                tools:text="+7915272324" />
+                android:layout_height="match_parent"
+                android:layout_below="@id/view_fake_status">
 
-            <TextView
-                android:id="@+id/tv_edit"
-                style="@style/TvFawReg.L"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:background="@{BuilderBg.getSquareRippleTransGray()}"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:text="@string/faw_pencil"
-                android:textColor="@color/white" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_avatar"
+                    android:layout_width="86dp"
+                    android:layout_height="86dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="24dp"
+                    android:elevation="20dp"
+                    app:civ_circle_background_color="@color/white" />
 
+                <TextView
+                    android:id="@+id/tv_name"
+                    style="@style/TvBold.Xxl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="42dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_toRightOf="@id/img_avatar"
+                    android:gravity="left"
+                    android:textColor="@color/white"
+                    tools:text="Mike Penz" />
 
-            <LinearLayout
-                android:layout_marginTop="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/img_avatar">
+                <TextView
+                    android:id="@+id/tv_phone"
+                    style="@style/TvLight.M"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_name"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_toRightOf="@id/img_avatar"
+                    android:gravity="left"
+                    android:textColor="@color/white"
+                    tools:text="+7915272324" />
+
+                <TextView
+                    android:id="@+id/tv_edit"
+                    style="@style/TvFawReg.L"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@{BuilderBg.getSquareRippleTransGray()}"
+                    android:text="@string/faw_pencil"
+                    android:textColor="@color/white" />
 
                 <LinearLayout
-                    android:id="@+id/lal_coffee"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@{BuilderBg.getSquareRippleTransGray()}"
-                    android:layout_weight="10"
-                    android:orientation="vertical">
+                    android:layout_below="@id/img_avatar"
+                    android:layout_marginTop="12dp">
 
-                    <TextView
-                        style="@style/TvReg.L"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:id="@+id/lal_coffee"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/coffee"
-                        android:textColor="@color/white" />
+                        android:layout_weight="10"
+                        android:background="@{BuilderBg.getSquareRippleTransGray()}"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_count_coffee"
-                        style="@style/TvBold.Xxl"
-                        android:layout_width="match_parent"
+                        <TextView
+                            style="@style/TvReg.L"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/coffee"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/tv_count_coffee"
+                            style="@style/TvBold.Xxl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="37"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lal_orders"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="37"
-                        android:textColor="@color/white" />
+                        android:layout_weight="10"
+                        android:background="@{BuilderBg.getSquareRippleTransGray()}"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/TvReg.L"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/orders"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/tv_count_orders"
+                            style="@style/TvBold.Xxl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="17"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/lal_replies"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="10"
+                        android:background="@{BuilderBg.getSquareRippleTransGray()}"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/TvReg.L"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Replies"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/tv_count_replies"
+                            style="@style/TvBold.Xxl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="9"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/lal_orders"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@{BuilderBg.getSquareRippleTransGray()}"
-                    android:layout_weight="10"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/TvReg.L"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/orders"
-                        android:textColor="@color/white" />
-
-                    <TextView
-                        android:id="@+id/tv_count_orders"
-                        style="@style/TvBold.Xxl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="17"
-                        android:textColor="@color/white" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/lal_replies"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@{BuilderBg.getSquareRippleTransGray()}"
-                    android:layout_weight="10"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/TvReg.L"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Replies"
-                        android:textColor="@color/white" />
-
-                    <TextView
-                        android:id="@+id/tv_count_replies"
-                        style="@style/TvBold.Xxl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="9"
-                        android:textColor="@color/white" />
-
-                </LinearLayout>
-
-
-            </LinearLayout>
+            </RelativeLayout>
 
 
         </RelativeLayout>
 
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/srl_orders"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/lar_top"
+            android:layout_marginTop="-22dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rec_orders"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingLeft="8dp"
+                android:paddingTop="22dp"
+                android:paddingRight="8dp" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <include
 

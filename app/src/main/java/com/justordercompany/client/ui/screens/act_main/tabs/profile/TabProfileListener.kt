@@ -5,4 +5,5 @@ interface TabProfileListener
     fun clickedAuthLogin()
     fun clickedOffertRules()
     fun clickedEditUser()
+    fun swipedToRefresh()
 }

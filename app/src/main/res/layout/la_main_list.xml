@@ -6,8 +6,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <View
+            android:outlineProvider="none"
+            android:translationZ="21dp"
+            android:background="@color/white"
+            android:id="@+id/view_fake_status"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+
         <com.ogaclejapan.smarttablayout.SmartTabLayout
             android:id="@+id/tabs"
+            android:layout_below="@id/view_fake_status"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@color/white"

@@ -206,6 +206,12 @@
         <item name="android:textSize">@dimen/size_faw_xl</item>
     </style>
 
+    <style name="TvFawBrand">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/gray6</item>
+        <item name="android:fontFamily">@font/fa_brands</item>
+    </style>
+
     <style name="AlerterTitle" parent="TvBold.Xl">
         <item name="android:gravity">left</item>
         <item name="android:textColor">@color/white</item>

@@ -92,7 +92,7 @@ class TabMap(val act_main: ActMain) : TabView
                         .subscribe(
                             {
                                 this.google_map.isMyLocationEnabled = true
-                                this.google_map.uiSettings.isMyLocationButtonEnabled = true
+//                                this.google_map.uiSettings.isMyLocationButtonEnabled = true
                             },
                             {
                                 it.printStackTrace()

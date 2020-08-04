@@ -41,10 +41,22 @@
         <activity
             android:name=".ui.screens.act_filter.ActFilter"
             android:theme="@style/Theme.Transparent" />
+
         <activity
             android:name=".ui.screens.act_cafe_popup.ActCafePopup"
             android:theme="@style/Slider" />
+
         <activity android:name=".ui.screens.act_cafe_menu.ActCafeMenu" />
+
+        <activity
+            android:name=".ui.screens.act_product_setting.ActProductSetting"
+            android:theme="@style/Slider" />
+        <activity
+            android:name=".ui.screens.act_order_dialog.ActOrderDialog"
+            android:theme="@style/Slider" />
+        <activity
+            android:name=".ui.screens.act_pay_type_dialog.ActPayTypeDialog"
+            android:theme="@style/Slider" />
 
         <service android:name=".networking.FbMessagingService">
             <intent-filter>

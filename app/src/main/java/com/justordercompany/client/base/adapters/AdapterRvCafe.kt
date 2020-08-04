@@ -1,16 +1,21 @@
 package com.justordercompany.client.base.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.justordercompany.client.R
 import com.justordercompany.client.base.LoadBehavior
-import com.justordercompany.client.base.RecyclerLoadInfo
+import com.justordercompany.client.base.FeedDisplayInfo
 import com.justordercompany.client.base.diff.DiffCafes
+import com.justordercompany.client.databinding.ItemCafeBinding
 import com.justordercompany.client.logic.models.ModelCafe
 import com.justordercompany.client.logic.utils.LocationManager
 import com.justordercompany.client.logic.utils.images.GlideManager
@@ -19,12 +24,13 @@ import com.willy.ratingbar.ScaleRatingBar
 class AdapterRvCafe : RecyclerView.Adapter<AdapterRvCafe.CardCafe>()
 {
     private var cafes: ArrayList<ModelCafe> = arrayListOf()
+    var listener: ((ModelCafe) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardCafe
     {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.item_cafe, parent, false)
-        return CardCafe(view)
+        val bnd_cafe: ItemCafeBinding = DataBindingUtil.inflate(inflater, R.layout.item_cafe, parent, false)
+        return CardCafe(bnd_cafe.root)
     }
 
     override fun getItemCount(): Int
@@ -36,9 +42,14 @@ class AdapterRvCafe : RecyclerView.Adapter<AdapterRvCafe.CardCafe>()
     {
         val cafe = cafes.get(position)
         holder.bindCafe(cafe)
+
+        holder.cv_root.setOnClickListener(
+            {
+                listener?.invoke(cafe)
+            })
     }
 
-    fun setItems(rec_info: RecyclerLoadInfo<ModelCafe>)
+    fun setItems(rec_info: FeedDisplayInfo<ModelCafe>)
     {
         if (rec_info.load_behavior == LoadBehavior.FULL_RELOAD)
         {
@@ -55,6 +66,7 @@ class AdapterRvCafe : RecyclerView.Adapter<AdapterRvCafe.CardCafe>()
 
     class CardCafe(view: View) : RecyclerView.ViewHolder(view)
     {
+        val cv_root: CardView
         val img_logo: ImageView
         val tv_name: TextView
         val tv_adress: TextView
@@ -64,6 +76,7 @@ class AdapterRvCafe : RecyclerView.Adapter<AdapterRvCafe.CardCafe>()
 
         init
         {
+            cv_root = view.findViewById(R.id.cv_root)
             img_logo = view.findViewById(R.id.img_logo)
             tv_name = view.findViewById(R.id.tv_name)
             tv_adress = view.findViewById(R.id.tv_adress)

@@ -52,8 +52,8 @@ class DialogBottomCafe : BottomSheetDialogFragment()
             })
 
         bnd_dialog.tvDistance.text = "2429384"
-        bnd_dialog.tvAbout.text = "aksfbjkafhb jkdfhbgjhdfbla lsadbflsa bhsbdf jahksbjhblhabfgk"
+        bnd_dialog.tvAbout.text = cafe.description
 
-        bnd_dialog.tvTime.text = "25:00 - 26:00"
+        bnd_dialog.tvTime.text = cafe.working_hours_str
     }
 }

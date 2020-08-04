@@ -3,13 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
+        <import type="com.justordercompany.client.R" />
+    </data>
+
     <androidx.cardview.widget.CardView
+        android:id="@+id/cv_root"
+        android:background="@{BuilderBg.getSimpleDrawableRipple(4f,R.color.white,R.color.gray2)}"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:orientation="vertical"
-        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="4dp"
         app:cardElevation="20dp"
         app:cardPreventCornerOverlap="true"
@@ -131,8 +137,8 @@
 
             </RelativeLayout>
 
-
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
+
 </layout>

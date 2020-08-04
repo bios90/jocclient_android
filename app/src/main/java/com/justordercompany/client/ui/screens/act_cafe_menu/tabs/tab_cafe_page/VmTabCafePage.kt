@@ -9,7 +9,7 @@ import com.justordercompany.client.logic.utils.toLatLng
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 
-class VmCafePage : BaseViewModel()
+class VmTabCafePage : BaseViewModel()
 {
     val bs_cafe: BehaviorSubject<ModelCafe> = BehaviorSubject.create()
     val ps_cafe_distance_text: PublishSubject<String> = PublishSubject.create()

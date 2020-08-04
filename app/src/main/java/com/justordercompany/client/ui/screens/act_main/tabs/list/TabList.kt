@@ -7,14 +7,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.justordercompany.client.R
-import com.justordercompany.client.base.RecyclerLoadInfo
+import com.justordercompany.client.base.FeedDisplayInfo
 import com.justordercompany.client.base.adapters.AdapterRvCafe
 import com.justordercompany.client.base.adapters.AdapterVpBase
 import com.justordercompany.client.databinding.LaMainListBinding
-import com.justordercompany.client.extensions.disposeBy
-import com.justordercompany.client.extensions.dp2pxInt
-import com.justordercompany.client.extensions.getColorMy
-import com.justordercompany.client.extensions.mainThreaded
+import com.justordercompany.client.extensions.*
+import com.justordercompany.client.logic.models.ModelCafe
 import com.justordercompany.client.ui.screens.act_main.ActMain
 import com.justordercompany.client.ui.screens.act_main.tabs.TabView
 
@@ -32,8 +30,11 @@ class TabList(val act_main: ActMain) : TabView
     {
         bnd_list = DataBindingUtil.inflate(act_main.layoutInflater, R.layout.la_main_list, null, false)
         vm_tab_list = act_main.my_vm_factory.getViewModel(VmTabList::class.java)
+        act_main.setBaseVmActions(vm_tab_list)
         setAdapters()
         setEvents()
+
+        bnd_list.viewFakeStatus.setHeight(getStatusBarHeight())
     }
 
     fun setEvents()
@@ -47,8 +48,8 @@ class TabList(val act_main: ActMain) : TabView
                         val by_rating = it.items.sortedBy({ it.rating })
                         val by_distance = it.items.sortedBy({ it.distance })
 
-                        adapter_rec_rating.setItems(RecyclerLoadInfo(by_rating,it.load_behavior))
-                        adapter_rec_distance.setItems(RecyclerLoadInfo(by_distance,it.load_behavior))
+                        adapter_rec_rating.setItems(FeedDisplayInfo(by_rating,it.load_behavior))
+                        adapter_rec_distance.setItems(FeedDisplayInfo(by_distance,it.load_behavior))
                     })
                 .disposeBy(act_main.composite_diposable)
     }
@@ -74,6 +75,12 @@ class TabList(val act_main: ActMain) : TabView
         rec_by_rating.clipToPadding = false
         rec_by_rating.clipChildren = false
 
+        val action_cafe_clicked:(ModelCafe)->Unit =
+                {
+                    vm_tab_list.ViewListener().clickedCafe(it)
+                }
+        adapter_rec_distance.listener = action_cafe_clicked
+        adapter_rec_rating.listener = action_cafe_clicked
 
         adapter.setViews(arrayListOf(rec_by_distance, rec_by_rating))
         bnd_list.tabs.setViewPager(bnd_list.vpLists)

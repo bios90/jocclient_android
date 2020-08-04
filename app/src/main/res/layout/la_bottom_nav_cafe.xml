@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.justordercompany.client.R" />
+
+        <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/lal_root"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/white"
+        android:elevation="32dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/lal_cafe_info"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:background="@{BuilderBg.getSquareRippleTransOrange()}"
+            android:gravity="center">
+
+            <TextView
+                style="@style/TvFawReg.Xl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/faw_info_circle"
+                android:textColor="@color/gray5" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lal_hot_drinks"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:background="@{BuilderBg.getSquareRippleTransOrange()}"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TvFawReg.Xl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/faw_cup_hot"
+                android:textColor="@color/gray5" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lal_cold_drinks"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:background="@{BuilderBg.getSquareRippleTransOrange()}"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TvFawReg.Xl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/faw_cup_cold"
+                android:textColor="@color/gray5" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lal_snacks"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:background="@{BuilderBg.getSquareRippleTransOrange()}"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TvFawReg.Xl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/faw_cookie"
+                android:textColor="@color/gray5" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lal_basket"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:background="@{BuilderBg.getSquareRippleTransOrange()}">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_basket"
+                style="@style/TvFawReg.Xl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/faw_shopping_bag"
+                android:textColor="@color/gray5" />
+
+            <TextView
+                android:id="@+id/tv_basket_count"
+                style="@style/TvBold.Xs"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_above="@id/tv_basket"
+                android:layout_marginLeft="-5dp"
+                android:layout_marginBottom="-5dp"
+                android:layout_toRightOf="@id/tv_basket"
+                android:background="@{BuilderBg.getSimpleDrawable(8,R.color.green)}"
+                android:textColor="@color/white" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</layout>

@@ -2,6 +2,7 @@ package com.justordercompany.client.ui.screens.act_main.tabs.profile
 
 import android.text.SpannedString
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleObserver
@@ -16,54 +17,77 @@ import com.justordercompany.client.ui.screens.act_main.ActMain
 import com.justordercompany.client.ui.screens.act_main.tabs.TabView
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.Lifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.justordercompany.client.base.adapters.AdapterRvOrders
 
 
 class TabProfile(val act_main: ActMain) : TabView
 {
     val composite_disposable = act_main.composite_diposable
     val bnd_profile: LaMainProfileBinding
-    val vm_tab_progfile: VmTabProfile
+    val vm_tab_profile: VmTabProfile
+    val adapter = AdapterRvOrders()
 
     init
     {
         bnd_profile = DataBindingUtil.inflate(act_main.layoutInflater, R.layout.la_main_profile, null, false)
-        vm_tab_progfile = act_main.my_vm_factory.getViewModel(VmTabProfile::class.java)
+        vm_tab_profile = act_main.my_vm_factory.getViewModel(VmTabProfile::class.java)
+
         setEvents()
         setListeners()
-        act_main.setBaseVmActions(vm_tab_progfile)
+        setOrderRecycler()
+        act_main.setBaseVmActions(vm_tab_profile)
         act_main.lifecycle.addObserver(MyLifecycleObserver())
 
         bnd_profile.larAuthDialog.tvOffert.text = getOffertText()
+        bnd_profile.viewFakeStatus.setHeight(getStatusBarHeight())
+        bnd_profile.larTop.setHeight(dp2pxInt(212) + getStatusBarHeight())
+    }
+
+    fun setOrderRecycler()
+    {
+        bnd_profile.recOrders.adapter = adapter
+        bnd_profile.recOrders.layoutManager = LinearLayoutManager(act_main)
+        bnd_profile.recOrders.addDivider(getColorMy(R.color.transparent), dp2pxInt(8f))
+        bnd_profile.srlOrders.setColorSchemeResources(R.color.orange_dark, R.color.orange, R.color.orange_light)
     }
 
     fun setListeners()
     {
         bnd_profile.larAuthDialog.tvSend.setOnClickListener(
             {
-                vm_tab_progfile.ViewListener().clickedAuthLogin()
+                vm_tab_profile.ViewListener().clickedAuthLogin()
             })
 
         bnd_profile.larAuthDialog.tvOffert.setOnClickListener(
             {
-                vm_tab_progfile.ViewListener().clickedOffertRules()
+                vm_tab_profile.ViewListener().clickedOffertRules()
             })
 
-        connectBoth(bnd_profile.larAuthDialog.etPhone.getBsText(), vm_tab_progfile.bs_phone, composite_disposable)
-        connectBoth(bnd_profile.larAuthDialog.etCode.getBsText(), vm_tab_progfile.bs_code, composite_disposable)
-        connectBoth(bnd_profile.larAuthDialog.chOffert.getBs(), vm_tab_progfile.bs_offert_checked, composite_disposable)
+        connectBoth(bnd_profile.larAuthDialog.etPhone.getBsText(), vm_tab_profile.bs_phone, composite_disposable)
+        connectBoth(bnd_profile.larAuthDialog.etCode.getBsText(), vm_tab_profile.bs_code, composite_disposable)
+        connectBoth(bnd_profile.larAuthDialog.chOffert.getBs(), vm_tab_profile.bs_offert_checked, composite_disposable)
 
         bnd_profile.tvEdit.setOnClickListener(
             {
-                vm_tab_progfile.ViewListener().clickedEditUser()
+                vm_tab_profile.ViewListener().clickedEditUser()
             })
+
+        bnd_profile.srlOrders.setOnRefreshListener(
+            {
+                vm_tab_profile.ViewListener().swipedToRefresh()
+            })
+
     }
 
     fun setEvents()
     {
-        vm_tab_progfile.ps_auth_dialog_visibility
+        vm_tab_profile.ps_auth_dialog_visibility
                 .mainThreaded()
                 .subscribe(
                     {
+
+                        Log.e("TabProfile", "setEvents: Got here $it")
                         if (it)
                         {
                             bnd_profile.larAuthDialog.root.animateFadeOut()
@@ -74,7 +98,7 @@ class TabProfile(val act_main: ActMain) : TabView
                         }
                     }).disposeBy(composite_disposable)
 
-        vm_tab_progfile.bs_auth_mode.subscribe(
+        vm_tab_profile.bs_auth_mode.subscribe(
             { mode ->
 
                 val action =
@@ -97,11 +121,20 @@ class TabProfile(val act_main: ActMain) : TabView
             })
                 .disposeBy(composite_disposable)
 
-        vm_tab_progfile.bs_user_to_display
+        vm_tab_profile.bs_user_to_display
                 .subscribe(
                     {
                         val user = it.value ?: return@subscribe
                         bindUser(user)
+                    })
+                .disposeBy(composite_disposable)
+
+        vm_tab_profile.bs_orders
+                .mainThreaded()
+                .subscribe(
+                    {
+                        bnd_profile.srlOrders.isRefreshing = false
+                        adapter.setItems(it)
                     })
                 .disposeBy(composite_disposable)
     }

@@ -3,9 +3,11 @@ package com.justordercompany.client.base
 import android.util.Log
 import com.justordercompany.client.extensions.*
 import com.justordercompany.client.logic.models.ModelCafe
+import com.justordercompany.client.logic.models.ModelOrder
+import com.justordercompany.client.logic.requests.FeedLoadInfo
+import com.justordercompany.client.logic.requests.FeedLoadInfoPaged
 import com.justordercompany.client.logic.requests.ReqCafes
-import com.justordercompany.client.logic.responses.RespCafeSingle
-import com.justordercompany.client.logic.responses.RespCafes
+import com.justordercompany.client.logic.responses.*
 
 class BaseNetworker(private val base_vm: BaseViewModel)
 {
@@ -46,6 +48,93 @@ class BaseNetworker(private val base_vm: BaseViewModel)
                     {
                         action_error?.invoke(it)
                         Log.e("BaseNetworker", "**** Got error on loading cafes list ****")
+                    })
+                .disposeBy(base_vm.composite_disposable)
+    }
+
+    fun makeOrder(date: String, comment: String?, items: String, action_success: (Int) -> Unit, action_error: ((Throwable) -> Unit)? = null)
+    {
+        base_vm.api_orders.createOrder(date, comment, items)
+                .mainThreaded()
+                .addMyParser<RespBaseWithData>(RespBaseWithData::class.java)
+                .addProgress(base_vm)
+                .addScreenDisabling(base_vm)
+                .addErrorCatcher(base_vm)
+                .addParseChecker(
+                    {
+
+                        return@addParseChecker it.getInt("id") != null
+                    })
+                .subscribeMy(
+                    {
+                        action_success(it.getInt("id")!!)
+                    },
+                    {
+                        action_error?.invoke(it)
+                    })
+                .disposeBy(base_vm.composite_disposable)
+    }
+
+    fun payOrder(token: String, order_id: Int, action_success: (RespBaseWithData) -> Unit, action_error: ((Throwable) -> Unit)? = null)
+    {
+        base_vm.api_orders.makePay(order_id, token)
+                .mainThreaded()
+                .addMyParser<RespBaseWithData>(RespBaseWithData::class.java)
+                .addProgress(base_vm)
+                .addScreenDisabling(base_vm)
+                .addErrorCatcher(base_vm)
+                .subscribeMy(
+                    {
+                        action_success(it)
+                    },
+                    {
+                        action_error?.invoke(it)
+                    })
+                .disposeBy(base_vm.composite_disposable)
+    }
+
+    fun getOrderInfo(order_id: Int, action_success: (ModelOrder) -> Unit, action_error: ((Throwable) -> Unit)? = null, default_progress: Boolean = true)
+    {
+        val builder = base_vm.api_orders.getOrderInfo(order_id)
+                .mainThreaded()
+                .addMyParser<RespOrderSingle>(RespOrderSingle::class.java)
+
+        if (default_progress)
+        {
+            builder.addProgress(base_vm)
+        }
+
+        builder.addScreenDisabling(base_vm)
+                .addErrorCatcher(base_vm)
+                .addParseChecker({ it.order != null })
+                .subscribeMy(
+                    {
+                        action_success(it.order!!)
+                    },
+                    {
+                        action_error?.invoke(it)
+                    })
+                .disposeBy(base_vm.composite_disposable)
+    }
+
+    fun loadOrders(info: FeedLoadInfoPaged<ModelOrder>)
+    {
+        base_vm.api_orders.getUserOrders(info.page)
+                .mainThreaded()
+                .addMyParser<RespOrders>(RespOrders::class.java)
+                .addProgress(base_vm)
+                .addScreenDisabling(base_vm)
+                .addParseChecker(
+                    {
+                        return@addParseChecker it.orders != null
+                    })
+                .addErrorCatcher(base_vm)
+                .subscribeMy(
+                    {
+                        info.action_success(it.orders!!)
+                    },
+                    {
+//                        action_error?.invoke(it)
                     })
                 .disposeBy(base_vm.composite_disposable)
     }

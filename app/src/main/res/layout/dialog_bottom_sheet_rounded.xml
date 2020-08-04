@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="com.justordercompany.client.R" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,7 +14,8 @@
             android:id="@+id/la_btns"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@drawable/divider_vertical"
+            my_divider_size="@{1f}"
+            my_divider_color="@{R.color.gray1}"
             android:orientation="vertical"
             android:showDividers="middle" />
 

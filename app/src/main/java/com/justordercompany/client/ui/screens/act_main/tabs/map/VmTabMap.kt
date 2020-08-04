@@ -101,7 +101,10 @@ class VmTabMap : BaseViewModel()
                                         .setActivityToStart(ActCafeMenu::class.java)
                                         .addParam(Constants.Extras.EXTRA_CAFE_ID, cafe_id)
 
-                                ps_intent_builded.onNext(builder)
+                                runActionWithDelay(300,
+                                    {
+                                        ps_intent_builded.onNext(builder)
+                                    })
                             }
                         })
                     .setSlider(BuilderIntent.TypeSlider.BOTTOM_UP)

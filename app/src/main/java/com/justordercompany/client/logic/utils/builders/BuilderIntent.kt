@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.github.florent37.inlineactivityresult.kotlin.startForResult
+import com.justordercompany.client.base.BaseViewModel
 import com.justordercompany.client.base.enums.TypeActivityAnim
 import com.justordercompany.client.extensions.myPutExtra
 import java.lang.RuntimeException
@@ -77,6 +78,11 @@ class BuilderIntent()
     {
         this.slider = slider
         return this
+    }
+
+    fun sendInVm(base_vm: BaseViewModel)
+    {
+        base_vm.ps_intent_builded.onNext(this)
     }
 
     fun startActivity(activity_from: AppCompatActivity)

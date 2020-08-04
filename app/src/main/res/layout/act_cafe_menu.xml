@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+    <data>
+
+        <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
+
+        <import type="android.graphics.drawable.GradientDrawable" />
+    </data>
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false">
 
-        <androidx.viewpager.widget.ViewPager
+        <View
+            android:id="@+id/la_fake_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@{BuilderBg.getGradOrange(0f,GradientDrawable.Orientation.LEFT_RIGHT)}" />
+
+        <com.justordercompany.client.ui.custom_views.ViewPagerNotScrollable
             android:id="@+id/vp_cafe"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_above="@id/lal_bottom_nav"
+            android:layout_below="@id/la_fake_status" />
+
+        <include
+            android:id="@+id/lal_bottom_nav"
+            layout="@layout/la_bottom_nav_cafe"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_alignParentBottom="true" />
 
     </RelativeLayout>
+
 </layout>

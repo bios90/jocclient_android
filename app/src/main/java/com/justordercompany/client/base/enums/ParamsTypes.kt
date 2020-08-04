@@ -5,7 +5,12 @@ import com.google.gson.annotations.SerializedName
 enum class PmSortDirection
 {
     ASC,
-    DESC
+    DESC;
+
+    fun getServerStr():String
+    {
+        return this.toString().toLowerCase()
+    }
 }
 
 enum class PmCafeSort

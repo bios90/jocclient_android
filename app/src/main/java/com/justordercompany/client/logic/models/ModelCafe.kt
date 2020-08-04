@@ -2,6 +2,7 @@ package com.justordercompany.client.logic.models
 
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.annotations.SerializedName
+import com.justordercompany.client.base.enums.TypeProduct
 import com.justordercompany.client.logic.utils.LocationManager
 
 class ModelCafe(
@@ -15,8 +16,14 @@ class ModelCafe(
         var logo: BaseImage? = null,
         var rating: Float? = null,
         var address: String? = null,
-        var menu: ArrayList<ModelMenuCategory>? = null,
-        var distance: Int? = null
+        var menu: ModelMenu? = null,
+        var distance: Int? = null,
+        @SerializedName("working_hours")
+        var working_hours_str: String? = null,
+        @SerializedName("description")
+        var description: String? = null,
+        @SerializedName("photo")
+        var images: ArrayList<BaseImage>? = null
 ) : ObjectWithId
 {
     fun getLatLng(): LatLng?
@@ -47,4 +54,60 @@ fun List<ModelCafe>.countDistanceFrom(lat_lng: LatLng)
         {
             it.countDistanceFrom(lat_lng)
         })
+}
+
+fun ModelCafe.hasHotDrinks(): Boolean
+{
+    return this.menu?.hot_drinks != null && this.menu!!.hot_drinks!!.size > 0
+}
+
+fun ModelCafe.hasColdDrinks(): Boolean
+{
+    return this.menu?.cold_drinks != null && this.menu!!.cold_drinks!!.size > 0
+}
+
+fun ModelCafe.hasSnacks(): Boolean
+{
+    return this.menu?.snacks != null && this.menu!!.snacks!!.size > 0
+}
+
+fun ModelCafe.getProductsOfType(type: TypeProduct): ArrayList<ModelProduct>?
+{
+    when (type)
+    {
+        TypeProduct.HOT -> return menu?.hot_drinks
+        TypeProduct.COLD -> return menu?.cold_drinks
+        TypeProduct.SNACK -> return menu?.snacks
+    }
+}
+
+fun ModelCafe.hasThreeMenuCategs(): Boolean
+{
+    return this.hasHotDrinks() && this.hasColdDrinks() && this.hasSnacks()
+}
+
+fun ModelCafe.hasTwoMenuCategs(): Boolean
+{
+    if (this.hasThreeMenuCategs())
+    {
+        return false
+    }
+
+    val have_two = (hasHotDrinks() && hasColdDrinks())
+            || (hasHotDrinks() && hasSnacks())
+            || (hasColdDrinks() && hasSnacks())
+
+    return have_two
+}
+
+fun ModelCafe.hasOneMenuCategs(): Boolean
+{
+    if (this.hasThreeMenuCategs() || this.hasTwoMenuCategs())
+    {
+        return false
+    }
+
+    val have_one = this.hasHotDrinks() || this.hasColdDrinks() || this.hasSnacks()
+
+    return have_one
 }

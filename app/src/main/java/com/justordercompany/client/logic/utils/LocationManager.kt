@@ -76,9 +76,11 @@ class LocationManager
 
     fun startGeoTracker()
     {
+        Log.e("LocationManager", "startGeoTracker: Geo tracking started!")
         getLocationUpdates()
                 .subscribe(
                     {
+                        Log.e("LocationManager", "startGeoTracker: Will pass new got location!!!")
                         bs_location.onNext(it)
                     })
                 .disposeBy(composite_disposable_location)
@@ -88,11 +90,6 @@ class LocationManager
     fun stopGeoTracker()
     {
         composite_disposable_location.clear()
-    }
-
-    fun getLocation(action_success: (Location) -> Unit)
-    {
-
     }
 }
 

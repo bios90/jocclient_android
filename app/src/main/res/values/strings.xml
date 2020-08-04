@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Joc</string>
     <string name="MAPS_API_KEY" templateMergeStrategy="preserve" translatable="false">AIzaSyAHoROJoCnsD4-7gkV4uPWo0j4DwyyLRU4</string>
-    <string name="format_for_server" translatable="false">yyyy-MM-dd HH:mm:ss</string>
+    <string name="format_for_server" translatable="false">dd.MM.yyyy HH:mm</string>
+    <string name="format_for_server_without_seconds" translatable="false">yyyy-MM-dd HH:mm</string>
     <string name="format_for_display_short" translatable="false">dd MMM yyyy</string>
     <string name="format_for_result" translatable="false">dd MMM yyyy - HH:mm</string>
     <string name="format_for_photo_file" translatable="false">yyyy-MM-dd-HH-mm-ss-SSS</string>
@@ -58,4 +59,25 @@
     <string name="quick_order">Быстрый заказ</string>
     <string name="by_distance">По расстоянию</string>
     <string name="by_rating">By rating</string>
+    <string name="hot_drinks">Hot drinks</string>
+    <string name="cold_drinks">Cold drinks</string>
+    <string name="snacks">Закуски</string>
+    <string name="basket">Корзина</string>
+    <string name="weight">Объем</string>
+    <string name="milk">Молоко</string>
+    <string name="addables">Добавки</string>
+    <string name="sugar_free">Без сахара</string>
+    <string name="sugar">Сахар</string>
+    <string name="add">Добавить</string>
+    <string name="product_added_to_basket">Продукт добавлен в корзину</string>
+    <string name="making_time">Время приготовления</string>
+    <string name="comment_for_order">Комментарий к заказу</string>
+    <string name="make_pay">Оплатить</string>
+    <string name="basket_is_empty">Корзина пуста</string>
+    <string name="google_pay">Google pay</string>
+    <string name="bank_card">Банковская карта</string>
+    <string name="saved_cards">Сохраненные карты</string>
+    <string name="order_in_app_joc">Оплата заказа в приложении JustOrderCompany</string>
+    <string name="payment">Оплата</string>
+    <string name="time_plus_dots">Время :</string>
 </resources>

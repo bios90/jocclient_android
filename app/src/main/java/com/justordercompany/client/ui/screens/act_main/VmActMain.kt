@@ -32,7 +32,11 @@ class VmActMain : BaseViewModel()
 
     override fun viewAttached()
     {
-        checkGeoPermissions()
+        //Made because some glithces on some devices
+        runActionWithDelay(500,
+            {
+                checkGeoPermissions()
+            })
     }
 
 
@@ -45,11 +49,20 @@ class VmActMain : BaseViewModel()
                         ps_scroll_to_tab.onNext(it)
                     })
                 .disposeBy(composite_disposable)
+
+        bus_main_events.bs_order_made
+                .mainThreaded()
+                .subscribe(
+                    {
+                        bus_main_events.bs_current_tab.onNext(TypeTab.PROFILE)
+                    })
+                .disposeBy(composite_disposable)
     }
 
 
     private fun checkGeoPermissions()
     {
+        Log.e("VmActMain", "checkGeoPermissions: Called check geo perms!!!")
         val text_blocked = getStringMy(R.string.need_permissions_geo)
 
         val builder_perm_request = BuilderPermRequest()
@@ -69,6 +82,7 @@ class VmActMain : BaseViewModel()
                     })
                 .setActionAvailable(
                     {
+                        Log.e("VmActMain", "Will sgartr geo tracking!!!")
                         location_manager.startGeoTracker()
                     })
 

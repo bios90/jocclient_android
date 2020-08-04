@@ -15,6 +15,7 @@ import com.justordercompany.client.logic.utils.files.MyFileItem
 import com.justordercompany.client.logic.utils.images.ImageCameraManager
 import com.justordercompany.client.networking.apis.ApiAuth
 import com.justordercompany.client.networking.apis.ApiCafe
+import com.justordercompany.client.networking.apis.ApiOrders
 import com.r0adkll.slidr.Slidr
 import com.r0adkll.slidr.model.SlidrConfig
 import com.r0adkll.slidr.model.SlidrPosition
@@ -27,6 +28,7 @@ interface BaseViewModelInterface
     //apis
     val api_auth: ApiAuth
     val api_cafe: ApiCafe
+    val api_orders: ApiOrders
     val base_networker:BaseNetworker
 
     //others
@@ -67,6 +69,9 @@ abstract class BaseViewModel : ViewModel(), BaseViewModelInterface
 
     @Inject
     override lateinit var api_cafe: ApiCafe
+
+    @Inject
+    override lateinit var api_orders: ApiOrders
 
     override val base_networker: BaseNetworker = BaseNetworker(this)
 
@@ -144,5 +149,11 @@ abstract class BaseViewModel : ViewModel(), BaseViewModelInterface
                 .build()
 
         ps_act_slider.onNext(config)
+    }
+
+    fun showRedAlerter(text:String,title:String = "")
+    {
+        val builder = BuilderAlerter.getRedBuilder(text,title)
+        ps_to_show_alerter.onNext(builder)
     }
 }

@@ -34,7 +34,9 @@ class ActFilter : BaseActivity()
 
     fun setNavStatus()
     {
-
+        is_full_screen = true
+        color_status_bar = getColorMy(R.color.transparent)
+        is_light_status_bar = true
     }
 
     fun setEvents()

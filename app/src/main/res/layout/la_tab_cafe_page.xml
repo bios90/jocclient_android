@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="com.justordercompany.client.R" />
+
         <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
 
         <import type="android.graphics.drawable.GradientDrawable" />
@@ -13,21 +15,29 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:orientation="vertical">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:clipToPadding="false"
                 android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@{BuilderBg.getGradOrange(0f,GradientDrawable.Orientation.BL_TR)}">
+                    android:background="@{BuilderBg.getGradOrange(0f,GradientDrawable.Orientation.LEFT_RIGHT)}"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
 
                     <TextView
                         android:id="@+id/tv_name"
@@ -80,13 +90,23 @@
                         android:id="@+id/scroll_images"
                         android:layout_width="match_parent"
                         android:layout_height="112dp"
-                        android:layout_below="@id/ftv_text">
+                        android:layout_below="@id/ftv_text"
+                        android:layout_marginTop="12dp"
+                        android:clipChildren="false"
+                        android:clipToPadding="false">
 
                         <LinearLayout
                             android:id="@+id/la_for_images"
+                            my_divider_color="@{R.color.transparent}"
+                            my_divider_size="@{8f}"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal" />
+                            android:clipChildren="false"
+                            android:clipToPadding="false"
+                            android:orientation="horizontal"
+                            android:paddingLeft="12dp"
+                            android:paddingRight="12dp"
+                            android:showDividers="middle" />
 
                     </HorizontalScrollView>
 
@@ -95,28 +115,36 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/scroll_images"
                         android:layout_marginLeft="12dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginRight="12dp"
                         android:layout_marginBottom="12dp">
 
-                        <TextView
-                            android:id="@+id/tv_clock"
-                            style="@style/TvFawReg.M"
+                        <LinearLayout
+                            android:gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="@string/faw_clock"
-                            android:textColor="@color/white" />
+                            android:layout_below="@id/tv_adress"
+                            android:layout_marginTop="4dp">
 
-                        <TextView
-                            android:id="@+id/tv_time"
-                            style="@style/TvReg.S"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="4dp"
-                            android:layout_toRightOf="@id/tv_clock"
-                            android:textColor="@color/white"
-                            tools:text="9:00 - 22:00" />
+                            <TextView
+                                android:id="@+id/tv_clock"
+                                style="@style/TvFawReg.M"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/faw_clock"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/tv_time"
+                                style="@style/TvReg.S"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:textColor="@color/white"
+                                tools:text="9:00 - 22:00" />
+
+                        </LinearLayout>
+
 
                         <TextView
                             android:id="@+id/tv_adress"
@@ -127,26 +155,32 @@
                             android:textColor="@color/white"
                             tools:text="Красная пресня, 23" />
 
-                        <TextView
-                            android:id="@+id/tv_location_arrow"
-                            style="@style/TvFawReg.M"
+                        <LinearLayout
+                            android:gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_adress"
                             android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:text="@string/faw_location_arrow"
-                            android:textColor="@color/white" />
+                            android:layout_marginTop="4dp">
 
-                        <TextView
-                            android:id="@+id/tv_distance"
-                            style="@style/TvReg.S"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="4dp"
-                            android:layout_toLeftOf="@id/tv_location_arrow"
-                            android:textColor="@color/white"
-                            tools:text="212 m" />
+                            <TextView
+                                android:id="@+id/tv_location_arrow"
+                                style="@style/TvFawReg.M"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/faw_location_arrow"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/tv_distance"
+                                style="@style/TvReg.S"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:textColor="@color/white"
+                                tools:text="212 m" />
+
+                        </LinearLayout>
 
                     </RelativeLayout>
 

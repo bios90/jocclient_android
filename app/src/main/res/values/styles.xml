@@ -16,13 +16,22 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="android:ambientShadowAlpha">0.07</item>
+        <item name="android:spotShadowAlpha">0.07</item>
     </style>
 
     <style name="Slider" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:ambientShadowAlpha">0.07</item>
+        <item name="android:spotShadowAlpha">0.07</item>
     </style>
+
+<!--    <style name="AppTheme.FullScreen">-->
+<!--        <item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
+<!--        <item name="android:windowTranslucentStatus">false</item>-->
+<!--    </style>-->
 
     <style name="RatingBar">
         <item name="android:layout_width">wrap_content</item>

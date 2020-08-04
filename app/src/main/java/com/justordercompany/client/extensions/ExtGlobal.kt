@@ -17,6 +17,7 @@ import android.provider.Settings
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
+import android.view.View
 import android.view.WindowManager
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
@@ -48,15 +49,15 @@ fun runActionWithDelay(delay: Int, action: () -> Unit, error_action: (() -> Unit
                 })
 }
 
-fun runRepeatingAction(interval: Int, action: () -> Unit, max_repeat: Int = 40): Disposable
+fun runRepeatingAction(interval: Int, action: (Int) -> Unit, max_repeat: Int = 40, inital_delay: Int = 0): Disposable
 {
-    return Observable.interval(interval.toLong(), TimeUnit.MILLISECONDS)
+    return Observable.interval(inital_delay.toLong(), interval.toLong(), TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
             .take(max_repeat.toLong())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                    action()
+                    action(it.toInt())
                 })
 }
 
@@ -290,5 +291,29 @@ fun Dialog.setNavigationBarColor(color: Int)
         windowBackground.setLayerInsetTop(1, metrics.heightPixels)
 
         window.setBackgroundDrawable(windowBackground)
+    }
+}
+
+fun getCurrentHour(): Int
+{
+    val time = Calendar.getInstance()
+    return time.get(Calendar.HOUR_OF_DAY)
+}
+
+fun getCurrentMinute(): Int
+{
+    val time = Calendar.getInstance()
+    return time.get(Calendar.MINUTE)
+}
+
+fun Boolean.toVisibility(): Int
+{
+    if (this)
+    {
+        return View.VISIBLE
+    }
+    else
+    {
+        return View.GONE
     }
 }

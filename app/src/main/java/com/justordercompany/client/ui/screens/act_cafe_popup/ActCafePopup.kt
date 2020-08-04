@@ -1,7 +1,6 @@
 package com.justordercompany.client.ui.screens.act_cafe_popup
 
 import android.os.Bundle
-import android.util.Log
 import androidx.databinding.DataBindingUtil
 import com.justordercompany.client.R
 import com.justordercompany.client.base.BaseActivity
@@ -10,14 +9,7 @@ import com.justordercompany.client.databinding.ActCafePopupBinding
 import com.justordercompany.client.extensions.*
 import com.justordercompany.client.logic.models.ModelCafe
 import com.justordercompany.client.logic.utils.images.GlideManager
-import com.r0adkll.slidr.Slidr
-import com.r0adkll.slidr.model.SlidrConfig
-import com.r0adkll.slidr.model.SlidrListener
-import com.r0adkll.slidr.model.SlidrPosition
 import java.lang.RuntimeException
-import android.view.WindowManager
-import android.view.Gravity
-
 
 
 class ActCafePopup : BaseActivity()
@@ -29,7 +21,7 @@ class ActCafePopup : BaseActivity()
     {
         setNavStatus()
         super.onCreate(savedInstanceState)
-        applySliderBottomWithUpadte()
+        applySliderBottom()
         bnd_act_popup = DataBindingUtil.setContentView(this, R.layout.act_cafe_popup)
         getActivityComponent().inject(this)
         vm_cafe_popup = my_vm_factory.getViewModel(VmCafePopup::class.java)
@@ -90,9 +82,9 @@ class ActCafePopup : BaseActivity()
                 bnd_act_popup.ratingBar.rating = it
             })
 
-        bnd_act_popup.tvAbout.text = "aksfbjkafhb jkdfhbgjhdfbla lsadbflsa bhsbdf jahksbjhblhabfgk"
+        bnd_act_popup.tvAbout.text = cafe.description
 
-        bnd_act_popup.tvTime.text = "25:00 - 26:00"
+        bnd_act_popup.tvTime.text = cafe.working_hours_str
     }
 
     private fun checkExtra()

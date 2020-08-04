@@ -187,6 +187,19 @@ class BuilderBg
         }
 
         @JvmStatic
+        fun getSimpleGradient(radius: Float, color_1: Int, color_2: Int, orientation: GradientDrawable.Orientation = GradientDrawable.Orientation.BL_TR): Drawable
+        {
+            val colors = arrayListOf(getColorMy(color_1), getColorMy(color_2))
+            return BuilderBg()
+                    .isGradient(true)
+                    .setGradOrientation(orientation)
+                    .setGradColors(colors)
+                    .setCorners(radius)
+                    .isDpMode(true)
+                    .get()
+        }
+
+        @JvmStatic
         fun getRounded4White(): Drawable
         {
             return BuilderBg()
@@ -263,12 +276,36 @@ class BuilderBg
         }
 
         @JvmStatic
+        fun getGradBlackTrans(): Drawable
+        {
+            val colors = arrayListOf(getColorMy(R.color.black_trans_50), getColorMy(R.color.transparent))
+            return BuilderBg()
+                    .isGradient(true)
+                    .setGradOrientation(GradientDrawable.Orientation.BOTTOM_TOP)
+                    .setGradColors(colors)
+                    .isDpMode(true)
+                    .get()
+        }
+
+        @JvmStatic
         fun getRoundedCorners(color: Int, top_left: Float, top_right: Float, bottom_right: Float, bottom_left: Float): Drawable
         {
             return BuilderBg()
                     .isDpMode(true)
                     .setBgColor(getColorMy(color))
                     .setCornerRadiuses(top_left, top_right, bottom_right, bottom_left)
+                    .get()
+        }
+
+        @JvmStatic
+        fun getStrokedEtBg(): Drawable
+        {
+            return BuilderBg()
+                    .isDpMode(true)
+                    .setBgColor(getColorMy(R.color.white))
+                    .setCorners(4f)
+                    .setStrokeColor(getColorMy(R.color.gray4))
+                    .setStrokeWidth(1f)
                     .get()
         }
     }

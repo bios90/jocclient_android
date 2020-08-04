@@ -48,15 +48,15 @@ fun Intent.myPutExtra(name: String, obj: Any?)
     {
         this.putExtra(name, obj)
     }
+    else if (obj is Serializable)
+    {
+        this.putExtra(name, obj)
+    }
     else if (obj is Parcelable)
     {
         this.putExtra(name, obj)
     }
     else if (obj is Array<*>)
-    {
-        this.putExtra(name, obj)
-    }
-    else if (obj is Serializable)
     {
         this.putExtra(name, obj)
     }
@@ -123,6 +123,11 @@ fun Intent.getLongExtraMy(name: String): Long?
 }
 
 fun Intent.getBoolExtraMy(name: String): Boolean
+{
+    return this.getBooleanExtra(name, false)
+}
+
+fun Intent.checkIntentExtraBool(name: String): Boolean
 {
     return this.getBooleanExtra(name, false)
 }

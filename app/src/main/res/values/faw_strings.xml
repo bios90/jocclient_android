@@ -9,5 +9,13 @@
     <string name="faw_arrow" translatable="false">&#xf124;</string>
     <string name="faw_clock" translatable="false">&#xf017;</string>
     <string name="faw_chevron_right" translatable="false">&#xf054;</string>
+    <string name="faw_info_circle" translatable="false">&#xf05a;</string>
+    <string name="faw_cup_hot" translatable="false">&#xf7b6;</string>
+    <string name="faw_cup_cold" translatable="false">&#xf804;</string>
+    <string name="faw_cookie" translatable="false">&#xf563;</string>
+    <string name="faw_shopping_bag" translatable="false">&#xf290;</string>
+    <string name="faw_trash" translatable="false">&#xf1f8;</string>
+    <string name="faw_google_pay" translatable="false">&#xe079;</string>
+    <string name="faw_credit_card" translatable="false">&#xf09d;</string>
 
 </resources>

@@ -1,6 +1,9 @@
 package com.justordercompany.client.extensions
 
+import android.util.Log
 import com.justordercompany.client.networking.NoInternetException
+import com.justordercompany.client.networking.ParsingError
+import com.justordercompany.client.networking.ServerError
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -40,6 +43,45 @@ fun <T> Single<T>.mainThreaded(): Single<T>
             .observeOn(AndroidSchedulers.mainThread())
 }
 
+@Suppress("UNCHECKED_CAST")
+fun <T> Observable<Response<ResponseBody>>.addMyParser(obj_class: Class<out Any>): Observable<T>
+{
+    return this
+            .doOnSubscribe(
+                {
+                    if (!isNetworkAvailable())
+                    {
+                        throw NoInternetException()
+                    }
+                })
+            .flatMap(
+                {
+
+
+                    val reponse_as_str = it.getBodyAsStr()
+
+                    val error = reponse_as_str?.toObjOrNullGson(ServerError::class.java)
+                    if (error != null && error.message != null)
+                    {
+                        Log.e("throwing", "Will throw SErverError")
+                        throw error
+                    }
+                    else
+                    {
+                        Log.e("throwing", "Error is null $error")
+                    }
+
+                    val obj = reponse_as_str?.toObjOrNullGson(obj_class) as? T
+
+                    if (obj == null)
+                    {
+                        throw ParsingError()
+                    }
+
+                    return@flatMap Observable.just(obj)
+                })
+}
+
 fun BehaviorSubject<Optional<String>>.acceptIfNotMatches(opt_str: Optional<String>)
 {
     val current_br_text = this.value?.value
@@ -58,15 +100,15 @@ fun BehaviorSubject<Optional<String>>.acceptIfNotMatches(opt_str: Optional<Strin
     this.onNext(opt_str)
 }
 
-fun <T> connectBoth(first: BehaviorSubject<T>, second: BehaviorSubject<T>,cd: CompositeDisposable?)
+fun <T> connectBoth(first: BehaviorSubject<T>, second: BehaviorSubject<T>, cd: CompositeDisposable?)
 {
-    val disposable_1 =first.distinctUntilChanged()
+    val disposable_1 = first.distinctUntilChanged()
             .subscribe(
-        {
-           second.onNext(it)
-        })
+                {
+                    second.onNext(it)
+                })
 
-    val disposable_2 =second.distinctUntilChanged()
+    val disposable_2 = second.distinctUntilChanged()
             .subscribe(
                 {
                     first.onNext(it)
@@ -77,6 +119,34 @@ fun <T> connectBoth(first: BehaviorSubject<T>, second: BehaviorSubject<T>,cd: Co
             disposable_1.disposeBy(cd)
             disposable_2.disposeBy(cd)
         })
+}
+
+fun <T> BehaviorSubject<ArrayList<T>>.addItem(item: T)
+{
+    var items = this.value
+    if (items == null)
+    {
+        items = arrayListOf()
+    }
+    items.add(item)
+    this.onNext(items)
+}
+
+fun <T> BehaviorSubject<ArrayList<T>>.removeItem(item: T):Boolean
+{
+    var items = this.value
+    if (items == null)
+    {
+        items = arrayListOf()
+    }
+
+    val removed = items.remove(item)
+    if(removed)
+    {
+        this.onNext(items)
+    }
+
+    return removed
 }
 
 

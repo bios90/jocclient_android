@@ -9,10 +9,7 @@ import com.justordercompany.client.base.adapters.AdapterVpBase
 import com.justordercompany.client.base.BaseActivity
 import com.justordercompany.client.base.enums.TypeTab
 import com.justordercompany.client.databinding.ActMainBinding
-import com.justordercompany.client.extensions.disposeBy
-import com.justordercompany.client.extensions.getColorMy
-import com.justordercompany.client.extensions.makeTextGradient
-import com.justordercompany.client.extensions.removeGradient
+import com.justordercompany.client.extensions.*
 import com.justordercompany.client.local_data.SharedPrefsManager
 import com.justordercompany.client.ui.screens.act_main.tabs.list.TabList
 import com.justordercompany.client.ui.screens.act_main.tabs.map.TabMap
@@ -52,10 +49,11 @@ class ActMain : BaseActivity()
 
     private fun setNavStatus()
     {
-        color_status_bar = getColorMy(R.color.orange)
-        is_light_status_bar = true
+        color_status_bar = getColorMy(R.color.transparent)
+        is_light_status_bar = false
         color_nav_bar = getColorMy(R.color.white)
         is_light_nav_bar = false
+        is_full_screen = true
     }
 
     fun setPager()
@@ -100,6 +98,20 @@ class ActMain : BaseActivity()
             {
                 changeColorsOfTabs(it)
                 vp_main.setCurrentItem(it.getPos(), true)
+
+                if(it == TypeTab.PROFILE)
+                {
+                    bnd_act_main.tvFilter.animateFadeIn(250)
+                    is_light_status_bar = true
+                }
+                else
+                {
+                    bnd_act_main.tvFilter.animateFadeOut(250,false)
+                    is_light_status_bar = false
+                }
+
+                applyStatusNavColors()
+
             })
                 .disposeBy(composite_diposable)
     }
