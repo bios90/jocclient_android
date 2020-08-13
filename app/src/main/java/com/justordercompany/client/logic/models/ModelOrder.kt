@@ -20,18 +20,25 @@ class ModelOrder
         var date: Date? = null,
 //        var paid_at: String? = null,
         var comment: String? = null,
-        var cafe_id: Int? = null,
-        var products: ArrayList<ModelProduct>? = null
+        var cafe: ModelCafe? = null,
+        var sum: Double? = null,
+        @SerializedName("products")
+        var items: ArrayList<ModelBasketItem>? = null
 ) : Serializable, ObjectWithDates, ObjectWithId
 {
-    fun getProductNamesList():String?
+    fun getProductNamesList(): String?
     {
-        if(products == null || products!!.size == 0)
+        if (items == null || items!!.size == 0)
         {
             return null
         }
 
-        val names = products!!.map({ it.name }).filterNotNull()
-        return StringManager.listOfStringToSingle(names,", ")
+        val names = items!!.map({ it.product?.name }).filterNotNull()
+        return StringManager.listOfStringToSingle(names, ", ")
+    }
+
+    fun canBeCancelled(): Boolean
+    {
+        return this.status == TypeOrderStatus.NEW || this.status == TypeOrderStatus.PAID
     }
 }

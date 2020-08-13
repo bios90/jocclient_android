@@ -4,8 +4,6 @@ import android.animation.Animator
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.RippleDrawable
 import android.text.Html
-import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.view.animation.LinearInterpolator
 import android.widget.*
@@ -24,7 +22,9 @@ import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.view.WindowManager
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.justordercompany.client.base.enums.TypeScrollEvent
 
 
 //Alert Dialog
@@ -197,6 +197,18 @@ fun getStatusBarHeight(): Int
     return result
 }
 
+fun getNavbarHeight(): Int
+{
+    var result = 0
+    val resources = AppClass.app.resources
+    val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
+    if (resourceId > 0)
+    {
+        result = resources.getDimensionPixelSize(resourceId)
+    }
+    return result
+}
+
 fun View.setMargins(l: Int, t: Int, r: Int, b: Int)
 {
     if (this.getLayoutParams() is ViewGroup.MarginLayoutParams)
@@ -346,6 +358,53 @@ fun RecyclerView.addDivider(color: Int, size: Int, orientation: Int = DividerIte
 
     itemDecorator.setDrawable(drw)
     this.addItemDecoration(itemDecorator)
+}
+
+fun RecyclerView.getRecyclerScrollEvents(): BehaviorSubject<TypeScrollEvent>
+{
+    val bs: BehaviorSubject<TypeScrollEvent> = BehaviorSubject.create()
+    this.addOnScrollListener(object : RecyclerView.OnScrollListener()
+    {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int)
+        {
+            super.onScrolled(recyclerView, dx, dy)
+
+            val manager = recyclerView.layoutManager as LinearLayoutManager
+            val position = manager.findFirstVisibleItemPosition()
+
+            if (dy > 0)
+            {
+                if (position > 0)
+                {
+                    bs.onNext(TypeScrollEvent.DOWN)
+                }
+            }
+            else
+            {
+                if (position > 0)
+                {
+                    bs.onNext(TypeScrollEvent.UP)
+                }
+            }
+
+            if (position == 0)
+            {
+                bs.onNext(TypeScrollEvent.AT_THE_TOP)
+            }
+        }
+
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int)
+        {
+            super.onScrollStateChanged(recyclerView, newState)
+
+            if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE)
+            {
+                bs.onNext(TypeScrollEvent.AT_THE_BOTTOM)
+            }
+        }
+    })
+
+    return bs
 }
 
 

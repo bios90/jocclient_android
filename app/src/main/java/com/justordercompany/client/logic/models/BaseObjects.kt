@@ -1,11 +1,26 @@
 package com.justordercompany.client.logic.models
 
 import java.util.*
+import kotlin.collections.ArrayList
 
 interface ObjectWithId
 {
-    var id:Int?
+    var id: Int?
 }
+
+fun <T : ObjectWithId> ArrayList<out ObjectWithId>.findById(id: Int): T?
+{
+    this.forEach(
+        { obj ->
+            if (obj.id == id)
+            {
+                return@findById obj as? T
+            }
+        })
+
+    return null
+}
+
 
 interface ObjectWithDates
 {
@@ -16,5 +31,5 @@ interface ObjectWithDates
 
 interface ObjWithImageUrl
 {
-    var image_url:String?
+    var image_url: String?
 }

@@ -8,17 +8,19 @@ import com.justordercompany.client.ui.screens.act_order_dialog.ActOrderDialog
 import com.justordercompany.client.ui.screens.act_pay_type_dialog.ActPayTypeDialog
 import com.justordercompany.client.ui.screens.act_product_setting.ActProductSetting
 import com.justordercompany.client.ui.screens.act_profile_edit.ActProfileEdit
+import com.justordercompany.client.ui.screens.act_review_dialog.ActReviewDialog
 import dagger.Subcomponent
 
 @Subcomponent(modules = [ModuleActivity::class])
 interface ComponentActivity
 {
-    fun inject(act_main:ActMain)
-    fun inject(act_main:ActProfileEdit)
-    fun inject(act_main:ActFilter)
-    fun inject(act_main:ActCafePopup)
-    fun inject(act_main:ActCafeMenu)
-    fun inject(act_main:ActProductSetting)
-    fun inject(act_main:ActOrderDialog)
-    fun inject(act_main:ActPayTypeDialog)
+    fun inject(act:ActMain)
+    fun inject(act:ActProfileEdit)
+    fun inject(act:ActFilter)
+    fun inject(act:ActCafePopup)
+    fun inject(act:ActCafeMenu)
+    fun inject(act:ActProductSetting)
+    fun inject(act:ActOrderDialog)
+    fun inject(act:ActPayTypeDialog)
+    fun inject(act:ActReviewDialog)
 }

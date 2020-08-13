@@ -189,7 +189,7 @@ class ActProductSetting : BaseActivity()
         item.weight?.let(
             { weight ->
 
-                val pos = item.product.weights?.indexOf(weight)
+                val pos = item.product?.weights?.indexOf(weight)
                 Log.e("ActProductSetting", "bindBasketItem: pos is $pos")
                 if (pos != null && bubble_view_weights != null)
                 {
@@ -220,7 +220,7 @@ class ActProductSetting : BaseActivity()
         item.milk?.let(
             { milk ->
 
-                val pos = item.product.milks?.indexOf(milk)
+                val pos = item.product?.milks?.indexOf(milk)
                 if (pos != null && bubble_view_milks != null)
                 {
                     bubble_view_milks!!.vm_bubble.bs_selected_pos.onNext(arrayListOf(pos))
@@ -234,9 +234,9 @@ class ActProductSetting : BaseActivity()
         item.addables?.let(
             {
                 Log.e("ActProductSetting", "bindBasketItem: Addables not and count is ${it.size}")
-                val poses = item.product.getPosesOfAddables(it).toCollection(ArrayList())
+                val poses = item.product?.getPosesOfAddables(it)?.toCollection(ArrayList())
                 Log.e("ActProductSetting", "bindBasketItem: Poses are $poses")
-                if (bubble_view_addables != null)
+                if (bubble_view_addables != null && poses != null)
                 {
                     bubble_view_addables!!.vm_bubble.bs_selected_pos.onNext(poses)
                     val price = it.getPriceSum()

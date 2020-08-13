@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
+
+        <import type="com.justordercompany.client.R" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray8_trans_50"
+        android:gravity="center"
+        android:padding="22dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@{BuilderBg.getRounded4White()}"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/TvBold.Xl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="left"
+                android:textColor="@color/gray7"
+                tools:text="Заказ 12314" />
+
+            <TextView
+                android:id="@+id/tv_text"
+                style="@style/TvReg.M"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="left"
+                android:textColor="@color/gray7"
+                tools:text="Starbucks - 22 июня 15:53 - ул Есенина 15 - сумма 599" />
+
+            <com.justordercompany.client.ui.custom_views.MyEtWithObserv
+                android:id="@+id/et_et"
+                style="@style/EditText.Multiline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@{BuilderBg.getSimpleDrawable(2f,R.color.gray1)}" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="16dp">
+
+                <com.willy.ratingbar.ScaleRatingBar
+                    android:id="@+id/rating_bar"
+                    style="@style/RatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:clipToPadding="false"
+                    android:padding="6dp"
+                    app:srb_rating="5"
+                    app:srb_stepSize="1.0"
+                    app:srb_starHeight="28dp"
+                    app:srb_starPadding="4dp"
+                    app:srb_starWidth="30dp" />
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tv_rating"
+                    style="@style/TvReg.L"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="5.0"
+                    android:textColor="@color/gray8" />
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/gray3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_cancel"
+                    style="@style/TvReg.L"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="10"
+                    android:background="@{BuilderBg.getSquareRippleTransGray()}"
+                    android:text="@string/cancel"
+                    android:textColor="@color/gray8" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:background="@color/gray3" />
+
+                <TextView
+                    android:id="@+id/tv_ok"
+                    style="@style/TvReg.L"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="10"
+                    android:background="@{BuilderBg.getSquareRippleTransGray()}"
+                    android:text="@string/save"
+                    android:textColor="@color/gray8" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</layout>

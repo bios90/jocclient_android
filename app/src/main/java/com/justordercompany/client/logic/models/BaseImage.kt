@@ -9,4 +9,8 @@ class BaseImage(
         var url_s: String? = null,
         var url_m: String? = null,
         var url_l: String? = null)
-    : Serializable
+    : Serializable, ObjWithImageUrl
+{
+    override var image_url: String? = null
+        get() = url_l
+}

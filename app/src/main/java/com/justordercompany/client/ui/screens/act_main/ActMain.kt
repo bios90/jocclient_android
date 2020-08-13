@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import com.google.firebase.messaging.RemoteMessage
 import com.justordercompany.client.R
 import com.justordercompany.client.base.adapters.AdapterVpBase
 import com.justordercompany.client.base.BaseActivity
@@ -11,6 +12,7 @@ import com.justordercompany.client.base.enums.TypeTab
 import com.justordercompany.client.databinding.ActMainBinding
 import com.justordercompany.client.extensions.*
 import com.justordercompany.client.local_data.SharedPrefsManager
+import com.justordercompany.client.logic.utils.NotificationManager
 import com.justordercompany.client.ui.screens.act_main.tabs.list.TabList
 import com.justordercompany.client.ui.screens.act_main.tabs.map.TabMap
 import com.justordercompany.client.ui.screens.act_main.tabs.profile.TabProfile
@@ -40,6 +42,10 @@ class ActMain : BaseActivity()
         setListeners()
         setEvents()
 
+        runActionWithDelay(4000,
+            {
+                NotificationManager.notify(RemoteMessage(Bundle()))
+            })
         //Ressaving if got some problems
         getFirebaseToken(
             {
@@ -54,6 +60,7 @@ class ActMain : BaseActivity()
         color_nav_bar = getColorMy(R.color.white)
         is_light_nav_bar = false
         is_full_screen = true
+        is_below_nav_bar = false
     }
 
     fun setPager()

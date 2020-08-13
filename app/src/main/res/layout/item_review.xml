@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
+
+        <import type="com.justordercompany.client.R" />
+    </data>
+
+    <RelativeLayout
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:elevation="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@{BuilderBg.getSimpleDrawableRipple(4f,R.color.white,R.color.gray0)}"
+        android:paddingBottom="12dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_logo"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:elevation="20dp"
+            android:src="@drawable/img_logo_test"
+            app:civ_circle_background_color="@color/white" />
+
+        <com.willy.ratingbar.ScaleRatingBar
+            android:id="@+id/rating_bar"
+            style="@style/RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="12dp"
+            android:layout_weight="25"
+            android:clipToPadding="false"
+            app:srb_clickable="false"
+            app:srb_scrollable="false"
+            app:srb_starHeight="17dp"
+            app:srb_starPadding="0.5dp"
+            app:srb_starWidth="19dp" />
+
+        <TextView
+            style="@style/TvBold.Xl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@id/rating_bar"
+            android:layout_toRightOf="@id/img_logo"
+            android:gravity="left"
+            android:textColor="@color/gray6"
+            tools:text="Mike Penz" />
+
+        <TextView
+            android:id="@+id/tv_author_name"
+            style="@style/TvBold.Xl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@id/rating_bar"
+            android:layout_toRightOf="@id/img_logo"
+            android:gravity="left"
+            android:textColor="@color/gray7"
+            tools:text="Mike Penz" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            style="@style/TvReg.M"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_author_name"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="-3dp"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@id/rating_bar"
+            android:layout_toRightOf="@id/img_logo"
+            android:gravity="left"
+            android:textColor="@color/gray4"
+            tools:text="22 decabrya 2010" />
+
+        <TextView
+            android:id="@+id/tv_text"
+            style="@style/TvReg.M"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_date"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="12dp"
+            android:layout_toRightOf="@id/img_logo"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:maxLines="4"
+            android:textColor="@color/gray6"
+            tools:text="Inimicus omittantur id mel, audiam copiosae mandamus pro te. Cu saperet erroribus has. Vis elitr prompta quaeque te, per nonumy appetere repudiare id, vidit paulo duo no. Et nam nonumy meliore, ludus graeco in est, in hinc molestiae consetetur sed. Consul " />
+
+    </RelativeLayout>
+
+</layout>

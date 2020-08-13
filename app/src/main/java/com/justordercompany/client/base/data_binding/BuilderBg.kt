@@ -308,6 +308,20 @@ class BuilderBg
                     .setStrokeWidth(1f)
                     .get()
         }
+
+        @JvmStatic
+        fun getSimpleEmptyRipple(radius: Float, color: Int): Drawable
+        {
+            return BuilderBg()
+                    .isDpMode(true)
+                    .setStrokeWidth(1f)
+                    .setStrokeColor(getColorMy(R.color.white))
+                    .setCorners(radius)
+                    .setBgColor(getColorMy(R.color.transparent))
+                    .isRipple(true)
+                    .setRippleColor(getColorMy(R.color.white))
+                    .get()
+        }
     }
 }
 

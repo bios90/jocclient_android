@@ -12,7 +12,7 @@ class Constants
         const val FOLDER_APP_ROOT = "joc_client"
         const val FOLDER_TEMP_FILES = FOLDER_APP_ROOT + "/temp_files"
 
-        const val COUNT_ADD_ON_LOAD = 32
+        const val COUNT_ADD_ON_LOAD = 10
     }
 
 
@@ -47,6 +47,7 @@ class Constants
         const val URL_ORDER_PAY = "api/${API_VERSION}/order/payment/{id}"
         const val URL_ORDER_GET_INFO = "api/${API_VERSION}/order/info/{id}"
         const val URL_ORDER_GET_USER_ORDERS = "api/${API_VERSION}/order/list"
+        const val URL_ORDER_MAKE_REVIEW = "api/${API_VERSION}/cafe/review/{id}"
     }
 
     object Extras
@@ -58,6 +59,7 @@ class Constants
         const val EXTRA_BASKET_ITEM = "Extra_Basket_Item"
         const val EXTRA_PAY_WITH_CARD = "Extra_Pay_With_Card"
         const val EXTRA_PAY_WITH_GOOGLE_PAY = "Extra_Pay_Google_Pay"
+        const val EXTRA_ORDER_ID = "Extra_Order_Id"
     }
 
     object Payments

@@ -33,6 +33,12 @@ import com.r0adkll.slidr.Slidr
 import com.r0adkll.slidr.model.SlidrConfig
 import com.r0adkll.slidr.model.SlidrListener
 import com.r0adkll.slidr.model.SlidrPosition
+import android.os.Build
+import android.view.WindowManager
+import com.justordercompany.client.logic.models.ObjWithImageUrl
+import com.justordercompany.client.logic.utils.images.GlideManager
+import com.stfalcon.imageviewer.StfalconImageViewer
+import io.reactivex.subjects.PublishSubject
 
 
 abstract class BaseActivity : AppCompatActivity()
@@ -54,6 +60,7 @@ abstract class BaseActivity : AppCompatActivity()
     var color_nav_bar: Int = getColorMy(R.color.white)
     var is_light_nav_bar: Boolean = false
     var is_full_screen: Boolean = false
+    var is_below_nav_bar: Boolean = false
 
     val composite_diposable = CompositeDisposable()
 
@@ -248,6 +255,14 @@ abstract class BaseActivity : AppCompatActivity()
                         Slidr.attach(this, it)
                     }).disposeBy(composite_diposable)
 
+        base_vm.ps_to_show_images_slider
+                .mainThreaded()
+                .subscribe(
+                    {
+                        showImagesCarousel(it)
+                    })
+                .disposeBy(composite_diposable)
+
         base_vm.viewAttached()
     }
 
@@ -264,13 +279,24 @@ abstract class BaseActivity : AppCompatActivity()
         if (is_full_screen)
         {
             //Do not forget to make  android:fitsSystemWindows="false" root layout
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            if (is_below_nav_bar)
+            {
+                window.decorView.systemUiVisibility =
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            }
+            else
+            {
+                window.decorView.systemUiVisibility =
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+
+            }
             window.statusBarColor = Color.TRANSPARENT
+            window.navigationBarColor = Color.TRANSPARENT
         }
 
         this.setStatusBarColor(color_status_bar)
-        this.setStatusLightDark(is_light_status_bar)
         this.setNavBarColor(color_nav_bar)
+        this.setStatusLightDark(is_light_status_bar)
         this.setNavBarLightDark(is_light_nav_bar)
     }
 
@@ -354,5 +380,22 @@ abstract class BaseActivity : AppCompatActivity()
         {
 
         }
+    }
+
+    private fun showImagesCarousel(data: Pair<ArrayList<out ObjWithImageUrl>, Int?>)
+    {
+        val image_strs = data.first.map({ it.image_url }).filterNotNull()
+
+        Log.e("BaseActivity", "showImagesCarousel: in size is ${data.first.size} and filtered size is ${image_strs.size}")
+
+        val pos = data.second ?: 0
+        val viewer = StfalconImageViewer.Builder<String>(this, image_strs,
+            { view, url ->
+                GlideManager.loadImageSimple(url, view)
+            })
+                .withHiddenStatusBar(false)
+                .allowSwipeToDismiss(true)
+                .withStartPosition(pos)
+                .show()
     }
 }

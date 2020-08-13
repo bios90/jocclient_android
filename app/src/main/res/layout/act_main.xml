@@ -2,15 +2,18 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <import type="com.justordercompany.client.R" />
+
         <import type="android.graphics.drawable.GradientDrawable" />
+
         <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
     </data>
 
     <RelativeLayout
-        android:fitsSystemWindows="false"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false">
 
         <com.justordercompany.client.ui.custom_views.ViewPagerNotScrollable
             android:id="@+id/vp_main"
@@ -19,9 +22,7 @@
             android:layout_above="@id/lal_bottom_nav" />
 
         <TextView
-            android:clickable="true"
             android:id="@+id/tv_filter"
-            android:background="@{BuilderBg.getSimpleDrawableRipple(26f,R.color.orange,R.color.gray4)}"
             style="@style/TvFawReg.Xl"
             android:layout_width="52dp"
             android:layout_height="52dp"
@@ -29,6 +30,8 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="12dp"
             android:layout_marginBottom="12dp"
+            android:background="@{BuilderBg.getSimpleDrawableRipple(26f,R.color.orange,R.color.gray4)}"
+            android:clickable="true"
             android:text="@string/faw_slider_h"
             android:textColor="@color/white" />
 
@@ -38,6 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentBottom="true" />
+
 
     </RelativeLayout>
 

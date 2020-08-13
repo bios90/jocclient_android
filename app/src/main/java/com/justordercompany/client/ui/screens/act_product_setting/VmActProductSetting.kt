@@ -85,7 +85,7 @@ class VmActProductSetting : BaseViewModel()
             {
                 return
             }
-            item.addables = addables
+            item.addables = addables.toCollection(ArrayList())
             bs_busket_item.onNext(item)
         }
 

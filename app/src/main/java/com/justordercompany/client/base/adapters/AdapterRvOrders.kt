@@ -20,6 +20,7 @@ import com.justordercompany.client.logic.models.ModelBasketItem
 import com.justordercompany.client.logic.models.ModelOrder
 import com.justordercompany.client.logic.utils.DateManager
 import com.justordercompany.client.logic.utils.areAtSameDay
+import com.justordercompany.client.logic.utils.formatAsMoney
 import com.justordercompany.client.logic.utils.formatToString
 import com.justordercompany.client.logic.utils.images.GlideManager
 import com.justordercompany.client.logic.utils.strings.getRandomString
@@ -27,6 +28,7 @@ import com.justordercompany.client.logic.utils.strings.getRandomString
 class AdapterRvOrders : RecyclerView.Adapter<CardOrder>()
 {
     private var items: ArrayList<ModelOrder> = arrayListOf()
+    var listener: ((ModelOrder) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardOrder
     {
@@ -48,15 +50,15 @@ class AdapterRvOrders : RecyclerView.Adapter<CardOrder>()
         val previous_date = items.getOrNull(position - 1)?.date
         if (previous_date != null && order.date != null)
         {
-            Log.e("AdapterRvOrders", "onBindViewHolder: Dates not null!!!")
             need_to_show_date = !areAtSameDay(previous_date, order.date!!)
-        }
-        else
-        {
-            Log.e("AdapterRvOrders", "onBindViewHolder: Dates nulllll")
         }
 
         holder.bindOrder(order, need_to_show_date)
+
+        holder.bnd_order.cvRoot.setOnClickListener(
+            {
+                listener?.invoke(order)
+            })
     }
 
     fun setItems(rec_info: FeedDisplayInfo<ModelOrder>)
@@ -79,14 +81,17 @@ class CardOrder(val bnd_order: ItemOrderHistoryBinding) : RecyclerView.ViewHolde
 {
     fun bindOrder(order: ModelOrder, show_date: Boolean)
     {
-        //Todo remake for Real!!
-        val img_url = "https://picsum.photos/${(100..500).random()}"
-        GlideManager.loadImageSimpleCircle(img_url, bnd_order.imgLogo)
+        order.cafe?.logo?.url_m?.let(
+            {
+                GlideManager.loadImageSimpleCircle(it, bnd_order.imgLogo)
+            })
 
-        bnd_order.tvName.text = String.getRandomString(10)
-        bnd_order.tvAdress.text = String.getRandomString(20)
-        bnd_order.tvSum.text = "${(100..500).random()} р"
-        ///
+        bnd_order.tvName.text = order.cafe?.name
+        bnd_order.tvAdress.text = order.cafe?.address
+        order.sum?.let(
+            {
+                bnd_order.tvSum.text = "${it.formatAsMoney()} р"
+            })
 
         bnd_order.tvDate.text = order.date?.formatToString()
         bnd_order.tvDate.visibility = show_date.toVisibility()

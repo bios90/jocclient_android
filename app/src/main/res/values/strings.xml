@@ -80,4 +80,11 @@
     <string name="order_in_app_joc">Оплата заказа в приложении JustOrderCompany</string>
     <string name="payment">Оплата</string>
     <string name="time_plus_dots">Время :</string>
+    <string name="repeat">Повторить</string>
+    <string name="make_cancel">Отменить</string>
+    <string name="review">Отзыв</string>
+    <string name="notify_chanel_joc">Уведомления из приложения JOC</string>
+    <string name="searching_your_location">Ищем ваше местоположение</string>
+    <string name="settings">Настройки</string>
+    <string name="location_blocked_go_to_settings">Доступ к местоположению заблокирован =(\nОн необходим для отображения ближайших кофеен</string>
 </resources>

@@ -120,11 +120,11 @@
                         android:layout_marginBottom="12dp">
 
                         <LinearLayout
-                            android:gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/tv_adress"
-                            android:layout_marginTop="4dp">
+                            android:layout_marginTop="4dp"
+                            android:gravity="center">
 
                             <TextView
                                 android:id="@+id/tv_clock"
@@ -156,12 +156,12 @@
                             tools:text="Красная пресня, 23" />
 
                         <LinearLayout
-                            android:gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/tv_adress"
                             android:layout_alignParentRight="true"
-                            android:layout_marginTop="4dp">
+                            android:layout_marginTop="4dp"
+                            android:gravity="center">
 
                             <TextView
                                 android:id="@+id/tv_location_arrow"
@@ -245,6 +245,7 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/tv_reviews_title"
                     style="@style/TvBold.Xl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -255,9 +256,18 @@
                     android:text="@string/replies"
                     android:textColor="@color/gray6" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:id="@+id/rec_reviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp" />
+
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
 
     </RelativeLayout>
+
 </layout>

@@ -44,7 +44,7 @@
                 style="@style/TvFawReg.Xl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/faw_location_arrow"
+                android:text="@string/faw_globe_europe"
                 android:textColor="@color/gray5" />
 
         </LinearLayout>
@@ -61,7 +61,7 @@
                 style="@style/TvFawReg.Xl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/faw_globe_europe"
+                android:text="@string/faw_location_arrow"
                 android:textColor="@color/gray5" />
 
         </LinearLayout>

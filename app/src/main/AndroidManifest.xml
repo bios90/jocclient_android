@@ -57,6 +57,9 @@
         <activity
             android:name=".ui.screens.act_pay_type_dialog.ActPayTypeDialog"
             android:theme="@style/Slider" />
+        <activity android:name=".ui.screens.act_review_dialog.ActReviewDialog"
+            android:theme="@style/Theme.Transparent"/>
+        <activity android:name=".ui.screens.DummyPendingIntentActivity" />
 
         <service android:name=".networking.FbMessagingService">
             <intent-filter>

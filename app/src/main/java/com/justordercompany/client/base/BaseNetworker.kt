@@ -5,7 +5,6 @@ import com.justordercompany.client.extensions.*
 import com.justordercompany.client.logic.models.ModelCafe
 import com.justordercompany.client.logic.models.ModelOrder
 import com.justordercompany.client.logic.requests.FeedLoadInfo
-import com.justordercompany.client.logic.requests.FeedLoadInfoPaged
 import com.justordercompany.client.logic.requests.ReqCafes
 import com.justordercompany.client.logic.responses.*
 
@@ -112,29 +111,49 @@ class BaseNetworker(private val base_vm: BaseViewModel)
                         action_success(it.order!!)
                     },
                     {
+                        it.printStackTrace()
                         action_error?.invoke(it)
                     })
                 .disposeBy(base_vm.composite_disposable)
     }
 
-    fun loadOrders(info: FeedLoadInfoPaged<ModelOrder>)
+    fun loadOrders(info: FeedLoadInfo<ModelOrder>)
     {
-        base_vm.api_orders.getUserOrders(info.page)
+        base_vm.api_orders.getUserOrders(info.offset, info.limit)
                 .mainThreaded()
                 .addMyParser<RespOrders>(RespOrders::class.java)
                 .addProgress(base_vm)
                 .addScreenDisabling(base_vm)
-                .addParseChecker(
-                    {
-                        return@addParseChecker it.orders != null
-                    })
                 .addErrorCatcher(base_vm)
                 .subscribeMy(
                     {
+                        if (it.orders == null)
+                        {
+                            it.orders = arrayListOf()
+                        }
                         info.action_success(it.orders!!)
                     },
                     {
+                        it.printStackTrace()
 //                        action_error?.invoke(it)
+                    })
+                .disposeBy(base_vm.composite_disposable)
+    }
+
+    fun makeOrderReview(cafe_id: Int, order_id: Int, text: String?, rating: Int, action_success: () -> Unit, action_error: ((Throwable) -> Unit)? = null)
+    {
+        base_vm.api_orders.makeReview(order_id, order_id, text, rating)
+                .mainThreaded()
+                .addMyParser<RespBaseWithData>(RespBaseWithData::class.java)
+                .addProgress(base_vm)
+                .addScreenDisabling(base_vm)
+                .addErrorCatcher(base_vm)
+                .subscribeMy(
+                    {
+                        action_success()
+                    },
+                    {
+                        action_error?.invoke(it)
                     })
                 .disposeBy(base_vm.composite_disposable)
     }

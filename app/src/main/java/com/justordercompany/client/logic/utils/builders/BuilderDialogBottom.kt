@@ -6,7 +6,7 @@ class BuilderDialogBottom
 {
     val btns: ArrayList<BtnAction> = ArrayList()
     var show_cancel: Boolean = true
-    var cancel_on_touch_outside: Boolean = false
+    var cancel_on_touch_outside: Boolean = true
     var dim_background: Boolean = true
 
     fun addBtn(btn: BtnAction) = apply(

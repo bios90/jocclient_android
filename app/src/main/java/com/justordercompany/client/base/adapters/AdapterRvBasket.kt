@@ -113,12 +113,12 @@ class AdapterRvBasket : RecyclerView.Adapter<AdapterRvBasket.CardBasketItem>()
 
         fun bindItem(item: ModelBasketItem)
         {
-            item.product.image?.url_m?.let(
+            item.product?.image?.url_m?.let(
                 {
                     GlideManager.loadImageSimpleCircle(it, img_logo)
                 })
 
-            tv_name.text = item.product.name
+            tv_name.text = item.product?.name
             tv_price.text = "${item.getSum().formatAsMoney()} р."
             tv_weight.text = item.weight?.value
             tv_sugar.text = item.sugar?.toString()

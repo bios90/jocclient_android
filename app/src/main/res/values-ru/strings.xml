@@ -49,7 +49,7 @@
     <string name="make_order">Оформить</string>
     <string name="quick_order">Быстрый заказ</string>
     <string name="by_distance">По расстоянию</string>
-    <string name="by_rating">By rating</string>
+    <string name="by_rating">По рейтингу</string>
     <string name="hot_drinks">Hot drinks</string>
     <string name="cold_drinks">Cold drinks</string>
     <string name="snacks">Закуски</string>
@@ -71,4 +71,6 @@
     <string name="order_in_app_joc">Оплата заказа в приложении JustOrderCompany</string>
     <string name="payment">Оплата</string>
     <string name="time_plus_dots">Время:</string>
+    <string name="make_cancel">Отменить</string>
+    <string name="review">Отзыв</string>
 </resources>

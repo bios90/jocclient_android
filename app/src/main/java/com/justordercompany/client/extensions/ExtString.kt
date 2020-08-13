@@ -4,3 +4,4 @@ fun String.Companion.getNullString():String?
 {
     return null
 }
+

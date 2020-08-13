@@ -9,19 +9,19 @@ import java.lang.RuntimeException
 
 class ModelBasketItem
     (
-        val product: ModelProduct,
+        var product: ModelProduct? = null,
         var sugar: Int? = null,
         var weight: ModelAddableValue? = null,
         var milk: ModelAddableValue? = null,
-        var addables: List<ModelAddableValue>? = null,
+        var addables: ArrayList<ModelAddableValue>? = null,
         var id_str: String = String.getRandomString()
 ) : Serializable
 {
     fun getSum(): Double
     {
-        if (product.type == TypeProduct.SNACK)
+        if (product?.type == TypeProduct.SNACK)
         {
-            return product.price!!
+            return product?.price!!
         }
 
         var price = 0.0

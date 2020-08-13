@@ -29,10 +29,18 @@ interface ApiOrders
 
     @GET(Constants.Urls.URL_ORDER_GET_USER_ORDERS)
     fun getUserOrders(
-            @Query("pagexxx") page: Int
-//            @Query("limit") limit: Int = Constants.COUNT_ADD_ON_LOAD,
+            @Query("offset") offset: Int,
+            @Query("limit") limit: Int = Constants.COUNT_ADD_ON_LOAD
 //            @Query("sort") sort: String = "createdAt",
 //            @Query("sort_direction") sort_direction: String = PmSortDirection.DESC.getServerStr(),
 //            @Query("status") status: String? = null
     ): Observable<Response<ResponseBody>>
+
+    @FormUrlEncoded
+    @PUT(Constants.Urls.URL_ORDER_MAKE_REVIEW)
+    fun makeReview(
+            @Path("id") cafe_id: Int,
+            @Field("order_id") order_id: Int,
+            @Field("text") text: String?,
+            @Field("rating") rating: Int): Observable<Response<ResponseBody>>
 }

@@ -1,5 +1,6 @@
 package com.justordercompany.client.logic.models
 
+import android.util.Log
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.annotations.SerializedName
 import com.justordercompany.client.base.enums.TypeProduct
@@ -23,7 +24,8 @@ class ModelCafe(
         @SerializedName("description")
         var description: String? = null,
         @SerializedName("photo")
-        var images: ArrayList<BaseImage>? = null
+        var images: ArrayList<BaseImage>? = null,
+        var reviews: ArrayList<ModelReview>? = null
 ) : ObjectWithId
 {
     fun getLatLng(): LatLng?
@@ -45,6 +47,23 @@ class ModelCafe(
 
         val cafe_lat_lng = LatLng(lat!!, lon!!)
         distance = LocationManager.getDistanceInMeters(lat_lng, cafe_lat_lng)
+    }
+
+    fun getAllImagesWithLogo():ArrayList<BaseImage>
+    {
+        val all_images:ArrayList<BaseImage> = arrayListOf()
+
+        this.logo?.let(
+            {
+                all_images.add(it)
+            })
+
+        if(!this.images.isNullOrEmpty())
+        {
+            all_images.addAll(this.images!!)
+        }
+
+        return all_images
     }
 }
 

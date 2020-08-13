@@ -9,6 +9,8 @@ import com.justordercompany.client.extensions.Optional
 import com.justordercompany.client.extensions.applyTransparency
 import com.justordercompany.client.extensions.getColorMy
 import com.justordercompany.client.extensions.getStringMy
+import com.justordercompany.client.logic.models.ObjWithImageUrl
+import com.justordercompany.client.logic.models.ObjectWithId
 import com.justordercompany.client.logic.utils.*
 import com.justordercompany.client.logic.utils.builders.*
 import com.justordercompany.client.logic.utils.files.MyFileItem
@@ -29,7 +31,7 @@ interface BaseViewModelInterface
     val api_auth: ApiAuth
     val api_cafe: ApiCafe
     val api_orders: ApiOrders
-    val base_networker:BaseNetworker
+    val base_networker: BaseNetworker
 
     //others
     var location_manager: LocationManager
@@ -47,6 +49,7 @@ interface BaseViewModelInterface
     val ps_ucrop_action: PublishSubject<BuilderCropMy>
     val ps_to_toggle_overlay: PublishSubject<Pair<Boolean, Int>>
     val ps_act_slider: PublishSubject<SlidrConfig>
+    val ps_to_show_images_slider: PublishSubject<Pair<ArrayList<out ObjWithImageUrl>,Int?>>
 
     fun clickedBack()
     {
@@ -88,6 +91,7 @@ abstract class BaseViewModel : ViewModel(), BaseViewModelInterface
     override val ps_ucrop_action: PublishSubject<BuilderCropMy> = PublishSubject.create()
     override val ps_to_toggle_overlay: PublishSubject<Pair<Boolean, Int>> = PublishSubject.create()
     override val ps_act_slider: PublishSubject<SlidrConfig> = PublishSubject.create()
+    override val ps_to_show_images_slider: PublishSubject<Pair<ArrayList<out ObjWithImageUrl>,Int?>> = PublishSubject.create()
 
     override fun viewAttached()
     {
@@ -128,7 +132,6 @@ abstract class BaseViewModel : ViewModel(), BaseViewModelInterface
                                         pick.action_success = action_picked
                                         ps_pick_action.onNext(pick)
                                     }))
-                                .setCancelOnTouchOutside(false)
 
                         ps_to_show_bottom_dialog.onNext(builder)
                     })
@@ -151,9 +154,9 @@ abstract class BaseViewModel : ViewModel(), BaseViewModelInterface
         ps_act_slider.onNext(config)
     }
 
-    fun showRedAlerter(text:String,title:String = "")
+    fun showRedAlerter(text: String, title: String = "")
     {
-        val builder = BuilderAlerter.getRedBuilder(text,title)
+        val builder = BuilderAlerter.getRedBuilder(text, title)
         ps_to_show_alerter.onNext(builder)
     }
 }

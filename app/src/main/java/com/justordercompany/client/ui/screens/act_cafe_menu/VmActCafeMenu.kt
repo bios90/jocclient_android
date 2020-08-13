@@ -4,10 +4,7 @@ import com.justordercompany.client.base.AppClass
 import com.justordercompany.client.base.BaseViewModel
 import com.justordercompany.client.base.enums.TypeTabCafe
 import com.justordercompany.client.extensions.disposeBy
-import com.justordercompany.client.logic.models.ModelCafe
-import com.justordercompany.client.logic.models.hasColdDrinks
-import com.justordercompany.client.logic.models.hasHotDrinks
-import com.justordercompany.client.logic.models.hasSnacks
+import com.justordercompany.client.logic.models.*
 import com.justordercompany.client.logic.utils.BasketManager
 import com.justordercompany.client.logic.utils.LocationManager
 import com.justordercompany.client.logic.utils.toLatLng
@@ -17,7 +14,9 @@ import java.lang.RuntimeException
 class VmActCafeMenu : BaseViewModel()
 {
     val bs_cafe_id: BehaviorSubject<Int> = BehaviorSubject.create()
+    val bs_order_id: BehaviorSubject<Int> = BehaviorSubject.create()
     val bs_cafe: BehaviorSubject<ModelCafe> = BehaviorSubject.create()
+    val bs_order: BehaviorSubject<ModelOrder> = BehaviorSubject.create()
     val bs_current_tab: BehaviorSubject<TypeTabCafe> = BehaviorSubject.create()
 
     init
@@ -34,12 +33,26 @@ class VmActCafeMenu : BaseViewModel()
                     { cafe ->
                         ps_to_toggle_overlay.onNext(Pair(false, 500))
                         bs_cafe.onNext(cafe)
+
+                        bs_order_id.value?.let(
+                            {
+                                base_networker.getOrderInfo(it,
+                                    {
+                                        bs_order.onNext(it)
+                                    })
+                            })
                     })
             })
                 .disposeBy(composite_disposable)
 
         bs_cafe.subscribe(
             {
+
+                val current_cafe_id = BasketManager.bs_cafe.value?.id
+                if(current_cafe_id != null && current_cafe_id != it.id)
+                {
+                    BasketManager.clearBasket()
+                }
 
                 if (it.hasHotDrinks())
                 {
@@ -59,6 +72,12 @@ class VmActCafeMenu : BaseViewModel()
                 }
 
                 BasketManager.bs_cafe.onNext(it)
+            })
+                .disposeBy(composite_disposable)
+
+        bs_order.subscribe(
+            {
+                BasketManager.setOrder(it)
             })
                 .disposeBy(composite_disposable)
     }

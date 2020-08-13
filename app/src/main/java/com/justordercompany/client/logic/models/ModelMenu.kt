@@ -31,4 +31,26 @@ class ModelMenu
                 it.type = TypeProduct.SNACK
             })
     }
+
+    fun getAllItems():ArrayList<ModelProduct>
+    {
+        val all_items:ArrayList<ModelProduct> = arrayListOf()
+
+        if(!hot_drinks.isNullOrEmpty())
+        {
+            all_items.addAll(hot_drinks!!)
+        }
+
+        if(!cold_drinks.isNullOrEmpty())
+        {
+            all_items.addAll(cold_drinks!!)
+        }
+
+        if(!snacks.isNullOrEmpty())
+        {
+            all_items.addAll(snacks!!)
+        }
+
+        return all_items
+    }
 }

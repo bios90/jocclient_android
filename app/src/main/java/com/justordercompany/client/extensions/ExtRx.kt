@@ -56,8 +56,6 @@ fun <T> Observable<Response<ResponseBody>>.addMyParser(obj_class: Class<out Any>
                 })
             .flatMap(
                 {
-
-
                     val reponse_as_str = it.getBodyAsStr()
 
                     val error = reponse_as_str?.toObjOrNullGson(ServerError::class.java)
@@ -132,6 +130,17 @@ fun <T> BehaviorSubject<ArrayList<T>>.addItem(item: T)
     this.onNext(items)
 }
 
+fun <T> BehaviorSubject<ArrayList<T>>.addItems(items_new: List<T>)
+{
+    var items = this.value
+    if (items == null)
+    {
+        items = arrayListOf()
+    }
+    items.addAll(items_new)
+    this.onNext(items)
+}
+
 fun <T> BehaviorSubject<ArrayList<T>>.removeItem(item: T):Boolean
 {
     var items = this.value
@@ -147,6 +156,11 @@ fun <T> BehaviorSubject<ArrayList<T>>.removeItem(item: T):Boolean
     }
 
     return removed
+}
+
+fun <T> BehaviorSubject<ArrayList<T>>.clear()
+{
+    this.onNext(arrayListOf())
 }
 
 

@@ -38,6 +38,9 @@ android {
 dependencies {
 
     //Other
+
+    implementation 'com.github.stfalcon:stfalcon-imageviewer:1.0.1'
+    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
     implementation 'joda-time:joda-time:2.10.4'
     implementation 'com.yandex.money:checkout:3.0.2'
     implementation 'cn.aigestudio.wheelpicker:WheelPicker:1.1.3'

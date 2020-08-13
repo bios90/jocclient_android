@@ -3,6 +3,7 @@ package com.justordercompany.client.ui.screens.act_cafe_menu.tabs.tab_cafe_page
 import com.justordercompany.client.base.AppClass
 import com.justordercompany.client.base.BaseViewModel
 import com.justordercompany.client.extensions.disposeBy
+import com.justordercompany.client.logic.models.BaseImage
 import com.justordercompany.client.logic.models.ModelCafe
 import com.justordercompany.client.logic.utils.LocationManager
 import com.justordercompany.client.logic.utils.toLatLng
@@ -39,6 +40,23 @@ class VmTabCafePage : BaseViewModel()
                         .disposeBy(composite_disposable)
             })
                 .disposeBy(composite_disposable)
+    }
+
+    inner class ViewListener:TabCafePageListener
+    {
+        override fun clickedImage(image: BaseImage)
+        {
+            val all_images = bs_cafe.value?.getAllImagesWithLogo() ?: return
+            val pos = all_images.indexOf(image)
+
+            ps_to_show_images_slider.onNext(Pair(all_images,pos))
+        }
+
+        override fun clickedLogo()
+        {
+            val all_images = bs_cafe.value?.getAllImagesWithLogo() ?: return
+            ps_to_show_images_slider.onNext(Pair(all_images,null))
+        }
     }
 
 }

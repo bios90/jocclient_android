@@ -10,6 +10,8 @@
     </data>
 
     <RelativeLayout
+        android:clickable="true"
+        android:translationZ="2dp"
         android:background="@color/gray8_trans_50"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

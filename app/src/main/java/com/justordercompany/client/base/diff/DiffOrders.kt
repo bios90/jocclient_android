@@ -1,7 +1,11 @@
 package com.justordercompany.client.base.diff
 
+import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
 import com.justordercompany.client.logic.models.ModelOrder
+import com.justordercompany.client.logic.utils.DateManager
+import com.justordercompany.client.logic.utils.areDatesEqualForDiff
+import com.justordercompany.client.logic.utils.formatToString
 
 class DiffOrders(val orders_old: List<ModelOrder>, val orders_new: List<ModelOrder>) : DiffUtil.Callback()
 {
@@ -34,12 +38,17 @@ class DiffOrders(val orders_old: List<ModelOrder>, val orders_new: List<ModelOrd
         val order_old = orders_old.get(oldItemPosition)
 
         //Todo make later check for cafe name adress and logo
-        if (order_new.date?.compareTo(order_old.date) != 0)
+        if (!areDatesEqualForDiff(order_new.date,order_old.date))
         {
             return false
         }
 
-        if (order_new.created?.compareTo(order_old.created) != 0)
+        if (!areDatesEqualForDiff(order_new.created,order_old.created))
+        {
+            return false
+        }
+
+        if (!areDatesEqualForDiff(order_new.updated,order_old.updated))
         {
             return false
         }

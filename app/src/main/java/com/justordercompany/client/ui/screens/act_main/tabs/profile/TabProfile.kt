@@ -50,6 +50,10 @@ class TabProfile(val act_main: ActMain) : TabView
         bnd_profile.recOrders.layoutManager = LinearLayoutManager(act_main)
         bnd_profile.recOrders.addDivider(getColorMy(R.color.transparent), dp2pxInt(8f))
         bnd_profile.srlOrders.setColorSchemeResources(R.color.orange_dark, R.color.orange, R.color.orange_light)
+        adapter.listener =
+                {
+                    vm_tab_profile.ViewListener().clickedOrder(it)
+                }
     }
 
     fun setListeners()
@@ -77,6 +81,14 @@ class TabProfile(val act_main: ActMain) : TabView
             {
                 vm_tab_profile.ViewListener().swipedToRefresh()
             })
+
+
+        bnd_profile.recOrders.getRecyclerScrollEvents()
+                .subscribe(
+                    {
+                        vm_tab_profile.ViewListener().scrolledToBottom()
+                    })
+                .disposeBy(composite_disposable)
 
     }
 

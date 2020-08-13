@@ -14,6 +14,7 @@ class DateManager
     companion object
     {
         val FORMAT_YYMMDD_FOR_DISPLAY = "dd MMMM yyyy"
+        val FORMAT_FOR_DISPLAY_WITH_TIME = "dd MMMM yyyy HH:mm"
         val FORMAT_YYMMDD_FOR_DISPLAY_SHORT = "dd MMM yyyy"
         val FORMAT_TIME = "HH:mm"
         val FORMAT_FILE_NAME = "dd-MM-yyyy_HH-mm-ss_SSS"
@@ -145,5 +146,36 @@ fun areAtSameDay(date_1: Date, date_2: Date): Boolean
     cal2.time = date_2
     val same_day = (cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR))
             && (cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR))
+    return same_day
+}
+
+fun areDatesEqualForDiff(date_1: Date?,date_2: Date?):Boolean
+{
+    if(date_1 == null && date_2 == null)
+    {
+        return true
+    }
+
+    if(date_1 == null || date_2 == null)
+    {
+        return false
+    }
+
+    return areAtSameDayHourMinuteSecond(date_1,date_2)
+}
+
+fun areAtSameDayHourMinuteSecond(date_1: Date, date_2: Date): Boolean
+{
+    val cal1 = Calendar.getInstance()
+    val cal2 = Calendar.getInstance()
+    cal1.time = date_1
+    cal2.time = date_2
+    val same_day =
+            (cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)
+                    && (cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR))
+                    && (cal1.get(Calendar.HOUR_OF_DAY) == cal2.get(Calendar.HOUR_OF_DAY))
+                    && (cal1.get(Calendar.MINUTE) == cal2.get(Calendar.MINUTE))
+                    && (cal1.get(Calendar.SECOND) == cal2.get(Calendar.SECOND)))
+
     return same_day
 }

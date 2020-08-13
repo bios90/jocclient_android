@@ -5,4 +5,5 @@ import com.justordercompany.client.logic.models.ModelCafe
 interface TabListListener
 {
     fun clickedCafe(cafe:ModelCafe)
+    fun clickedToSettings()
 }

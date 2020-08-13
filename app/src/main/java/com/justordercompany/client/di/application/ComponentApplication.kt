@@ -16,6 +16,7 @@ import com.justordercompany.client.ui.screens.act_order_dialog.VmActOrderDialog
 import com.justordercompany.client.ui.screens.act_pay_type_dialog.VmPayTypeDialog
 import com.justordercompany.client.ui.screens.act_product_setting.VmActProductSetting
 import com.justordercompany.client.ui.screens.act_profile_edit.VmActProfileEdit
+import com.justordercompany.client.ui.screens.act_review_dialog.VmActReviewDialog
 import dagger.Component
 import javax.inject.Singleton
 
@@ -38,4 +39,5 @@ interface ComponentApplication
     fun inject(vm: VmActProductSetting)
     fun inject(vm: VmActOrderDialog)
     fun inject(vm: VmPayTypeDialog)
+    fun inject(vm: VmActReviewDialog)
 }

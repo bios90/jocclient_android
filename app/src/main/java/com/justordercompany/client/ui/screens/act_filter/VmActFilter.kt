@@ -59,7 +59,7 @@ class VmActFilter : BaseViewModel()
 
         override fun clickedCancel()
         {
-
+            ps_to_finish.onNext(Optional(null))
         }
     }
 }

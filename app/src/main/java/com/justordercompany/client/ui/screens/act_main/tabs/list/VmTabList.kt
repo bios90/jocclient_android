@@ -1,10 +1,14 @@
 package com.justordercompany.client.ui.screens.act_main.tabs.list
 
 import com.justordercompany.client.base.*
+import com.justordercompany.client.base.enums.TypeLaListIntroMode
 import com.justordercompany.client.extensions.disposeBy
+import com.justordercompany.client.extensions.openAppSettings
 import com.justordercompany.client.logic.models.ModelCafe
 import com.justordercompany.client.logic.models.countDistanceFrom
 import com.justordercompany.client.logic.requests.ReqCafes
+import com.justordercompany.client.logic.utils.BuilderPermRequest
+import com.justordercompany.client.logic.utils.PermissionManager
 import com.justordercompany.client.logic.utils.builders.BuilderIntent
 import com.justordercompany.client.logic.utils.toLatLng
 import com.justordercompany.client.ui.screens.act_cafe_menu.ActCafeMenu
@@ -16,11 +20,13 @@ class VmTabList : BaseViewModel()
 {
     var bs_current_cafes: BehaviorSubject<FeedDisplayInfo<ModelCafe>> = BehaviorSubject.create()
     val ps_to_load_cafes: PublishSubject<ReqCafes> = PublishSubject.create()
+    val bs_intro_mode:BehaviorSubject<TypeLaListIntroMode> = BehaviorSubject.createDefault(TypeLaListIntroMode.SEARCHING)
 
     init
     {
         AppClass.app_component.inject(this)
         setEvents()
+        checkIfLocationBlocked()
     }
 
     fun setEvents()
@@ -30,6 +36,7 @@ class VmTabList : BaseViewModel()
                 .subscribe(
                     {
                         reloadCafes()
+                        bs_intro_mode.onNext(TypeLaListIntroMode.FOUND)
                     })
                 .disposeBy(composite_disposable)
 
@@ -53,6 +60,18 @@ class VmTabList : BaseViewModel()
                     })
                 .disposeBy(composite_disposable)
     }
+
+    fun checkIfLocationBlocked()
+    {
+        val builder = BuilderPermRequest()
+                .setPermissions(PermissionManager.permissions_location)
+                .setActionBlockedFinally(
+                    {
+                        bs_intro_mode.onNext(TypeLaListIntroMode.DISABLED)
+                    })
+        ps_request_permissions.onNext(builder)
+    }
+
 
     private fun reloadCafes()
     {
@@ -84,6 +103,11 @@ class VmTabList : BaseViewModel()
                     .setActivityToStart(ActCafeMenu::class.java)
                     .addParam(Constants.Extras.EXTRA_CAFE_ID, cafe_id)
             ps_intent_builded.onNext(builder)
+        }
+
+        override fun clickedToSettings()
+        {
+            openAppSettings()
         }
     }
 

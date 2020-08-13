@@ -221,5 +221,11 @@ class ActCafeMenu : BaseActivity()
             throw RuntimeException("**** Errr no cafe id passed ****")
         }
         vm_act_cafe_menu.bs_cafe_id.onNext(cafe_id)
+
+        val order_id = intent.getIntExtraMy(Constants.Extras.EXTRA_ORDER_ID)
+        if(order_id != null)
+        {
+            vm_act_cafe_menu.bs_order_id.onNext(order_id)
+        }
     }
 }

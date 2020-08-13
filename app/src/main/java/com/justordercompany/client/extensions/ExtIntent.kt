@@ -132,4 +132,10 @@ fun Intent.checkIntentExtraBool(name: String): Boolean
     return this.getBooleanExtra(name, false)
 }
 
+fun Intent.makeClearAllPrevious()
+{
+    this.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+}
+
+
 

@@ -192,7 +192,6 @@
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <include
-
             android:id="@+id/lar_auth_dialog"
             layout="@layout/act_auth"
             android:layout_width="match_parent"
