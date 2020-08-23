@@ -30,10 +30,10 @@ interface ApiOrders
     @GET(Constants.Urls.URL_ORDER_GET_USER_ORDERS)
     fun getUserOrders(
             @Query("offset") offset: Int,
-            @Query("limit") limit: Int = Constants.COUNT_ADD_ON_LOAD
+            @Query("limit") limit: Int = Constants.COUNT_ADD_ON_LOAD,
 //            @Query("sort") sort: String = "createdAt",
 //            @Query("sort_direction") sort_direction: String = PmSortDirection.DESC.getServerStr(),
-//            @Query("status") status: String? = null
+            @Query("status") status: String? = "paid,process,ready,done,canceled"
     ): Observable<Response<ResponseBody>>
 
     @FormUrlEncoded

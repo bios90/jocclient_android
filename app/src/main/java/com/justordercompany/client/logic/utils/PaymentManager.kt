@@ -6,11 +6,14 @@ import android.util.Log
 import com.github.florent37.inlineactivityresult.kotlin.startForResult
 import com.justordercompany.client.R
 import com.justordercompany.client.base.AppClass
+import com.justordercompany.client.base.BaseViewModel
 import com.justordercompany.client.base.Constants
 import com.justordercompany.client.extensions.getColorMy
 import com.justordercompany.client.extensions.getStringMy
+import com.justordercompany.client.extensions.toJsonMy
 import com.justordercompany.client.logic.models.ModelBasketItem
 import com.justordercompany.client.logic.models.getSumPrice
+import com.justordercompany.client.logic.models.toServerBasketItems
 import ru.yandex.money.android.sdk.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -63,6 +66,62 @@ class PaymentManager
                         fail_action?.invoke(result.data)
                     }
                 })
+        }
+
+        fun makePayWithMethod(base_vm: BaseViewModel, method: PaymentMethodType, order_id: Int, action_success: (Int) -> Unit)
+        {
+            val items = BasketManager.bs_items.value ?: return
+
+            PaymentManager.makePay(items, setOf(method),
+                {
+                    val token = it.paymentToken
+
+                    base_vm.base_networker.payOrder(token, order_id,
+                        {
+                            val confirmation_url = it.getString("confirmation_url")
+
+                            if (confirmation_url != null)
+                            {
+                                PaymentManager.make3dSecureIntent(confirmation_url,
+                                    {
+                                        action_success(order_id)
+                                    })
+                            }
+                            else
+                            {
+                                action_success(order_id)
+                            }
+                        })
+                })
+        }
+
+        fun createOrder(base_vm: BaseViewModel, date: Date, comment: String?, action_success: (Int) -> Unit)
+        {
+            val items = BasketManager.bs_items.value?.toServerBasketItems()
+
+            if (items == null || items.size == 0)
+            {
+                val text = getStringMy(R.string.basket_is_empty)
+                base_vm.showRedAlerter(text)
+                return
+            }
+
+            val items_str = items.toJsonMy() ?: return
+            val str_date = date.formatToString(DateManager.FORMAT_FOR_SERVER) ?: return
+
+            if (BasketManager.order_id != null)
+            {
+                makePayWithMethod(base_vm, PaymentMethodType.BANK_CARD, BasketManager.order_id!!, action_success)
+            }
+            else
+            {
+                base_vm.base_networker.makeOrder(str_date, comment, items_str,
+                    { order_id ->
+
+                        BasketManager.order_id = order_id
+                        makePayWithMethod(base_vm, PaymentMethodType.BANK_CARD, order_id, action_success)
+                    })
+            }
         }
     }
 

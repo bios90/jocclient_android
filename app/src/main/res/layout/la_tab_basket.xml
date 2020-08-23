@@ -4,6 +4,7 @@
     <data>
 
         <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
+
         <import type="android.graphics.drawable.GradientDrawable" />
     </data>
 
@@ -19,26 +20,26 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@{BuilderBg.getGradOrange(0f,GradientDrawable.Orientation.LEFT_RIGHT)}"
-            android:textColor="@color/white"
-            android:text="@string/basket" />
+            android:text="@string/basket"
+            android:textColor="@color/white" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:padding="8dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/tv_bottom"
-            android:layout_below="@id/tv_header"/>
+            android:layout_below="@id/tv_header"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:padding="8dp" />
 
         <LinearLayout
-            android:elevation="20dp"
             android:id="@+id/la_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@color/white"
+            android:elevation="20dp"
             android:orientation="vertical"
             android:paddingTop="16dp"
             android:paddingBottom="16dp">
@@ -91,6 +92,29 @@
                 android:text="@string/quick_order"
                 android:textColor="@color/white" />
 
+            <TextView
+                android:id="@+id/tv_register_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="16dp"
+                android:paddingTop="6dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="6dp"
+                android:text="@string/need_register_to_make_order" />
+
+            <TextView
+                android:id="@+id/tv_register"
+
+                style="@style/TvBold.Xl"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="12dp"
+                android:background="@{BuilderBg.getEmptyOrange(4f)}"
+                android:text="@string/register"
+                android:textColor="@color/orange" />
 
         </LinearLayout>
 

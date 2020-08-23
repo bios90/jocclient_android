@@ -278,20 +278,7 @@ abstract class BaseActivity : AppCompatActivity()
     {
         if (is_full_screen)
         {
-            //Do not forget to make  android:fitsSystemWindows="false" root layout
-            if (is_below_nav_bar)
-            {
-                window.decorView.systemUiVisibility =
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-            }
-            else
-            {
-                window.decorView.systemUiVisibility =
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-
-            }
-            window.statusBarColor = Color.TRANSPARENT
-            window.navigationBarColor = Color.TRANSPARENT
+            makeFullScreen(is_below_nav_bar)
         }
 
         this.setStatusBarColor(color_status_bar)

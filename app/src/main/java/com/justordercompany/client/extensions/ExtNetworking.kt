@@ -1,6 +1,7 @@
 package com.justordercompany.client.extensions
 
 import android.util.Log
+import com.google.firebase.messaging.RemoteMessage
 import com.justordercompany.client.base.AppClass
 import com.justordercompany.client.base.BaseViewModel
 import com.justordercompany.client.logic.responses.BaseResponse
@@ -123,4 +124,17 @@ fun <T> Observable<T>.subscribeMy(action_success: (T) -> Unit,action_error: ((Th
             Log.e("subscribeMy", "**** Got error in subscribeMy ****")
         })
 }
+
+fun RemoteMessage.getInt(key:String):Int?
+{
+    val data = this.getData() as Map<String, String>
+    return data.get(key)?.toIntOrNull()
+}
+
+fun RemoteMessage.getString(key:String):String?
+{
+    val data = this.getData() as Map<String, String>
+    return data.get(key)
+}
+
 

@@ -42,10 +42,6 @@ class ActMain : BaseActivity()
         setListeners()
         setEvents()
 
-        runActionWithDelay(4000,
-            {
-                NotificationManager.notify(RemoteMessage(Bundle()))
-            })
         //Ressaving if got some problems
         getFirebaseToken(
             {

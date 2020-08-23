@@ -1,5 +1,6 @@
 package com.justordercompany.client.extensions
 
+import android.graphics.Color
 import android.os.Build
 import android.view.View
 import android.view.WindowManager
@@ -56,4 +57,23 @@ fun AppCompatActivity.setNavBarLightDark(is_light: Boolean)
         flags = flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
     }
     window.decorView.systemUiVisibility = flags
+}
+
+fun AppCompatActivity.makeFullScreen(below_nav_bar:Boolean = true)
+{
+    //!!!Do not forget to make android:fitsSystemWindows="false"root layout!!!
+    if (below_nav_bar)
+    {
+        window.decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+    }
+    else
+    {
+        window.decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+
+    }
+
+    window.statusBarColor = Color.TRANSPARENT
+    window.navigationBarColor = Color.TRANSPARENT
 }

@@ -51,9 +51,10 @@ class AppClass : Application()
 
     fun test()
     {
-//        val user_str = "{\"first_name\":\"\",\"email\":\"\",\"last_name\":\"\",\"api_token\":\"psgeJ94WvoAAVtULBQBOSiUOAytGy4DS\",\"push_token\":\"fiNlsuQm8tU:APA91bGnu17a6TKQJ0INcxJXPxc7dUZyP-og216LoQ2dQSsl5-0TiJ6xa9x64cyK0nAIpqeBAtL1w0E6nIBKJmwmm5gMOEbplABCuakjszp-yY5KRr5K5v0VHVxwETQJc1es1UQNv1CE\",\"phone\":\"79167062291\",\"created_at\":\"08.07.2020 22:07:36\",\"updated_at\":\"08.07.2020 22:08:15\",\"confirmed\":true,\"image\":null}"
-//        val user = user_str.toObjOrNullGson(ModelUser::class.java)!!
-//        SharedPrefsManager.saveUser(user)
-//        Log.e("AppClass", "test: current fb token is ${SharedPrefsManager.getString(SharedPrefsManager.Key.FB_TOKEN)}")
+        val fb_token = SharedPrefsManager.getString(SharedPrefsManager.Key.FB_TOKEN)
+        if(fb_token != null)
+        {
+            Log.e("FbMessagingService", "test: fb token is $fb_token")
+        }
     }
 }

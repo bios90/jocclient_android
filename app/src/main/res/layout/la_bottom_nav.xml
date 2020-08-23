@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
@@ -8,11 +7,11 @@
     </data>
 
     <LinearLayout
-        android:elevation="32dp"
         android:id="@+id/lal_root"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:background="@color/white"
+        android:elevation="32dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -21,7 +20,8 @@
             android:layout_height="match_parent"
             android:layout_weight="10"
             android:background="@{BuilderBg.getSquareRippleTransOrange()}"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
                 style="@style/TvFawReg.Xl"

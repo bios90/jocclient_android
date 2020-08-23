@@ -1,5 +1,6 @@
 package com.justordercompany.client.di.activity
 
+import com.justordercompany.client.ui.screens.act_auth.ActAuth
 import com.justordercompany.client.ui.screens.act_cafe_menu.ActCafeMenu
 import com.justordercompany.client.ui.screens.act_cafe_popup.ActCafePopup
 import com.justordercompany.client.ui.screens.act_filter.ActFilter
@@ -23,4 +24,5 @@ interface ComponentActivity
     fun inject(act:ActOrderDialog)
     fun inject(act:ActPayTypeDialog)
     fun inject(act:ActReviewDialog)
+    fun inject(act:ActAuth)
 }

@@ -13,24 +13,23 @@ object BasketManager
 {
     var bs_cafe: BehaviorSubject<ModelCafe> = BehaviorSubject.create()
     var bs_items: BehaviorSubject<ArrayList<ModelBasketItem>> = BehaviorSubject.createDefault(arrayListOf())
+    var order_id:Int? = null
 
     fun addItem(item: ModelBasketItem)
     {
+        order_id = null
         this.bs_items.addItem(item)
-    }
-
-    fun addItems(items: List<ModelBasketItem>)
-    {
-        this.bs_items.addItems(items)
     }
 
     fun removeItem(item: ModelBasketItem): Boolean
     {
+        order_id = null
         return this.bs_items.removeItem(item)
     }
 
     fun clearBasket()
     {
+        order_id = null
         this.bs_items.clear()
     }
 
@@ -46,6 +45,7 @@ object BasketManager
         val index = items.indexOfFirst { it.id_str.equals(item.id_str) }
         if (index >= 0)
         {
+            order_id = null
             items.removeAt(index)
             items.add(index, item)
             bs_items.onNext(items)
@@ -70,6 +70,7 @@ object BasketManager
 
     fun setOrder(order: ModelOrder)
     {
+        order_id = null
         val items = order.items
         val cafe_menu = bs_cafe.value?.menu
 

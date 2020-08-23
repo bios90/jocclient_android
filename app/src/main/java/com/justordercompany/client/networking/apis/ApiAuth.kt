@@ -15,7 +15,7 @@ interface ApiAuth
     @POST(Constants.Urls.URL_REGISTER)
     fun makeAuth(
             @Field("phone") phone: String,
-            @Field("push_token111") push_token: String?
+            @Field("push_token") push_token: String?
     ): Observable<Response<ResponseBody>>
 
     @FormUrlEncoded

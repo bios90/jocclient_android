@@ -1,9 +1,11 @@
 package com.justordercompany.client.base
 
 import android.util.Log
+import com.justordercompany.client.base.AppClass.Companion.composite_disposable
 import com.justordercompany.client.extensions.*
 import com.justordercompany.client.logic.models.ModelCafe
 import com.justordercompany.client.logic.models.ModelOrder
+import com.justordercompany.client.logic.models.ModelUser
 import com.justordercompany.client.logic.requests.FeedLoadInfo
 import com.justordercompany.client.logic.requests.ReqCafes
 import com.justordercompany.client.logic.responses.*
@@ -142,7 +144,7 @@ class BaseNetworker(private val base_vm: BaseViewModel)
 
     fun makeOrderReview(cafe_id: Int, order_id: Int, text: String?, rating: Int, action_success: () -> Unit, action_error: ((Throwable) -> Unit)? = null)
     {
-        base_vm.api_orders.makeReview(order_id, order_id, text, rating)
+        base_vm.api_orders.makeReview(cafe_id, order_id, text, rating)
                 .mainThreaded()
                 .addMyParser<RespBaseWithData>(RespBaseWithData::class.java)
                 .addProgress(base_vm)
@@ -156,5 +158,39 @@ class BaseNetworker(private val base_vm: BaseViewModel)
                         action_error?.invoke(it)
                     })
                 .disposeBy(base_vm.composite_disposable)
+    }
+
+    fun makeAuth(phone: String, fb_token: String?, action_success: () -> Unit)
+    {
+        base_vm.api_auth.makeAuth(phone, fb_token)
+                .mainThreaded()
+                .addMyParser<BaseResponse>(BaseResponse::class.java)
+                .addProgress(base_vm)
+                .addScreenDisabling(base_vm)
+                .addErrorCatcher(base_vm)
+                .subscribeMy(
+                    {
+                        action_success()
+                    })
+                .disposeBy(composite_disposable)
+    }
+
+    fun makeCodeConfirm(phone: String, code: String, action_success: (ModelUser) -> Unit)
+    {
+        base_vm.api_auth.confirmPhone(phone, code)
+                .mainThreaded()
+                .addMyParser<RespUserSingle>(RespUserSingle::class.java)
+                .addProgress(base_vm)
+                .addScreenDisabling(base_vm)
+                .addErrorCatcher(base_vm)
+                .addParseChecker(
+                    {
+                        return@addParseChecker it.user != null
+                    })
+                .subscribeMy(
+                    {
+                        action_success(it.user!!)
+                    })
+                .disposeBy(composite_disposable)
     }
 }

@@ -2,6 +2,7 @@ package com.justordercompany.client.di.application
 
 import com.justordercompany.client.base.BusMainEvents
 import com.justordercompany.client.logic.utils.LocationManager
+import com.justordercompany.client.logic.utils.NotificationManager
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -21,5 +22,12 @@ class ModuleGlobal
     fun provideLocationManager():LocationManager
     {
         return LocationManager()
+    }
+
+    @Singleton
+    @Provides
+    fun provideNotificationManager():NotificationManager
+    {
+        return NotificationManager()
     }
 }

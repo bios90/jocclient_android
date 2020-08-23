@@ -73,4 +73,5 @@
     <string name="time_plus_dots">Время:</string>
     <string name="make_cancel">Отменить</string>
     <string name="review">Отзыв</string>
+    <string name="need_register_to_make_order">Для оформления заказа необходимо зарегестрироваться</string>
 </resources>

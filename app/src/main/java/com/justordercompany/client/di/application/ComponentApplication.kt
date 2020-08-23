@@ -2,6 +2,9 @@ package com.justordercompany.client.di.application
 
 import com.justordercompany.client.di.activity.ComponentActivity
 import com.justordercompany.client.di.activity.ModuleActivity
+import com.justordercompany.client.logic.utils.NotificationManager
+import com.justordercompany.client.networking.FbMessagingService
+import com.justordercompany.client.ui.screens.act_auth.VmActAuth
 import com.justordercompany.client.ui.screens.act_cafe_menu.VmActCafeMenu
 import com.justordercompany.client.ui.screens.act_cafe_menu.tabs.tab_basket.VmTabBasket
 import com.justordercompany.client.ui.screens.act_cafe_menu.tabs.tab_cafe_page.VmTabCafePage
@@ -24,6 +27,8 @@ import javax.inject.Singleton
 @Component(modules = [ModuleNetworking::class, ModuleGlobal::class])
 interface ComponentApplication
 {
+    fun inject(fb_messaging_service: FbMessagingService)
+    fun inject(notification_manager: NotificationManager)
     fun getActivityComponent(module: ModuleActivity): ComponentActivity
     fun inject(vm: VmActMain)
     fun inject(vm: VmTabMap)
@@ -40,4 +45,5 @@ interface ComponentApplication
     fun inject(vm: VmActOrderDialog)
     fun inject(vm: VmPayTypeDialog)
     fun inject(vm: VmActReviewDialog)
+    fun inject(vm: VmActAuth)
 }

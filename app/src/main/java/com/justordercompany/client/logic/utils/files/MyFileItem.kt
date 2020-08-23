@@ -10,7 +10,6 @@ import java.io.Serializable
 import java.lang.RuntimeException
 import java.util.*
 
-
 class MyFileItem(private var uri: String) : Serializable, ObjWithImageUrl
 {
     companion object

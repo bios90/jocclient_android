@@ -1,6 +1,9 @@
 package com.justordercompany.client.extensions
 
 import android.util.Log
+import com.justordercompany.client.logic.responses.BaseResponse
+import com.justordercompany.client.logic.responses.getError
+import com.justordercompany.client.logic.responses.hasErrors
 import com.justordercompany.client.networking.NoInternetException
 import com.justordercompany.client.networking.ParsingError
 import com.justordercompany.client.networking.ServerError
@@ -58,15 +61,22 @@ fun <T> Observable<Response<ResponseBody>>.addMyParser(obj_class: Class<out Any>
                 {
                     val reponse_as_str = it.getBodyAsStr()
 
-                    val error = reponse_as_str?.toObjOrNullGson(ServerError::class.java)
-                    if (error != null && error.message != null)
+//                    var error = reponse_as_str?.toObjOrNullGson(ServerError::class.java)
+//                    if (error != null)
+//                    {
+//                        Log.e("throwing", "Will throw SErverError")
+//                        throw error
+//                    }
+
+                    val base_response = reponse_as_str.toObjOrNullGson(BaseResponse::class.java)
+                    if (base_response == null)
                     {
-                        Log.e("throwing", "Will throw SErverError")
-                        throw error
+                        throw ParsingError()
                     }
-                    else
+
+                    if (base_response.getError() != null)
                     {
-                        Log.e("throwing", "Error is null $error")
+                        throw base_response.getError()!!
                     }
 
                     val obj = reponse_as_str?.toObjOrNullGson(obj_class) as? T
@@ -141,7 +151,7 @@ fun <T> BehaviorSubject<ArrayList<T>>.addItems(items_new: List<T>)
     this.onNext(items)
 }
 
-fun <T> BehaviorSubject<ArrayList<T>>.removeItem(item: T):Boolean
+fun <T> BehaviorSubject<ArrayList<T>>.removeItem(item: T): Boolean
 {
     var items = this.value
     if (items == null)
@@ -150,7 +160,7 @@ fun <T> BehaviorSubject<ArrayList<T>>.removeItem(item: T):Boolean
     }
 
     val removed = items.remove(item)
-    if(removed)
+    if (removed)
     {
         this.onNext(items)
     }

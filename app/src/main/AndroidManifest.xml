@@ -60,6 +60,8 @@
         <activity android:name=".ui.screens.act_review_dialog.ActReviewDialog"
             android:theme="@style/Theme.Transparent"/>
         <activity android:name=".ui.screens.DummyPendingIntentActivity" />
+        <activity android:name=".ui.screens.act_auth.ActAuth"
+            android:theme="@style/Theme.Transparent"/>
 
         <service android:name=".networking.FbMessagingService">
             <intent-filter>

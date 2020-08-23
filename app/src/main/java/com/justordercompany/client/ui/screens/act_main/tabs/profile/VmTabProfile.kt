@@ -42,7 +42,10 @@ class VmTabProfile : BaseViewModel()
         AppClass.app_component.inject(this)
         setEvents()
 
-        makeOrdersFullReload()
+        if(SharedPrefsManager.getCurrentUser() != null)
+        {
+            makeOrdersFullReload()
+        }
     }
 
     override fun viewAttached()
@@ -144,6 +147,8 @@ class VmTabProfile : BaseViewModel()
 
             ps_to_show_dialog.onNext(builder)
         }
+
+        makeOrdersFullReload()
     }
 
     fun makeOrdersFullReload()
@@ -223,7 +228,7 @@ class VmTabProfile : BaseViewModel()
 
             val fb_token = SharedPrefsManager.getString(SharedPrefsManager.Key.FB_TOKEN)
 
-            Networking().makeAuth(phone, fb_token,
+            base_networker.makeAuth(phone, fb_token,
                 {
                     bs_auth_mode.onNext(TypeAuthMode.CODE)
                 })
@@ -242,7 +247,7 @@ class VmTabProfile : BaseViewModel()
                 return
             }
 
-            Networking().makeCodeConfirm(phone!!, code!!,
+            base_networker.makeCodeConfirm(phone!!, code!!,
                 {
 
                     SharedPrefsManager.saveUser(it)
@@ -289,7 +294,7 @@ class VmTabProfile : BaseViewModel()
             val builder = BuilderIntent()
                     .setActivityToStart(ActCafeMenu::class.java)
                     .addParam(Constants.Extras.EXTRA_CAFE_ID, cafe_id)
-                    .addParam(Constants.Extras.EXTRA_ORDER_ID,order_id)
+                    .addParam(Constants.Extras.EXTRA_ORDER_ID, order_id)
 
             ps_intent_builded.onNext(builder)
         }
@@ -312,39 +317,7 @@ class VmTabProfile : BaseViewModel()
 
     inner class Networking
     {
-        fun makeAuth(phone: String, fb_token: String?, action_success: () -> Unit)
-        {
-            api_auth.makeAuth(phone, fb_token)
-                    .mainThreaded()
-                    .addMyParser<BaseResponse>(BaseResponse::class.java)
-                    .addProgress(this@VmTabProfile)
-                    .addScreenDisabling(this@VmTabProfile)
-                    .addErrorCatcher(this@VmTabProfile)
-                    .subscribeMy(
-                        {
-                            action_success()
-                        })
-                    .disposeBy(composite_disposable)
-        }
 
-        fun makeCodeConfirm(phone: String, code: String, action_success: (ModelUser) -> Unit)
-        {
-            api_auth.confirmPhone(phone, code)
-                    .mainThreaded()
-                    .addMyParser<RespUserSingle>(RespUserSingle::class.java)
-                    .addProgress(this@VmTabProfile)
-                    .addScreenDisabling(this@VmTabProfile)
-                    .addErrorCatcher(this@VmTabProfile)
-                    .addParseChecker(
-                        {
-                            return@addParseChecker it.user != null
-                        })
-                    .subscribeMy(
-                        {
-                            action_success(it.user!!)
-                        })
-                    .disposeBy(composite_disposable)
-        }
 
         fun loadUser(action_success: (ModelUser) -> Unit)
         {

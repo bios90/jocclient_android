@@ -15,6 +15,9 @@ import com.justordercompany.client.ui.screens.act_cafe_menu.ActCafeMenu
 import com.justordercompany.client.ui.screens.act_main.tabs.TabView
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.justordercompany.client.logic.utils.BasketManager
+import com.justordercompany.client.logic.utils.strings.getOffertText
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 
 
@@ -74,6 +77,11 @@ class TabBasket(val act_cafe_menu: ActCafeMenu) : TabView
             {
                 vm_tab_basket.ViewListener().clickedQuickOrder()
             })
+
+        bnd_tab_basket.tvRegister.setOnClickListener(
+            {
+                vm_tab_basket.ViewListener().clickedRegister()
+            })
     }
 
     fun setEvents()
@@ -87,5 +95,27 @@ class TabBasket(val act_cafe_menu: ActCafeMenu) : TabView
                         bnd_tab_basket.tvSum.text = BasketManager.getSumText()
                     })
                 .disposeBy(composite_disposable)
+
+        vm_tab_basket.bs_show_register
+                .subscribe(
+                    {
+                        if(it)
+                        {
+                            bnd_tab_basket.tvRegister.visibility = View.VISIBLE
+                            bnd_tab_basket.tvRegisterTitle.visibility = View.VISIBLE
+                            bnd_tab_basket.tvQuickOrder.visibility = View.GONE
+                            bnd_tab_basket.tvOrder.visibility = View.GONE
+                        }
+                        else
+                        {
+                            bnd_tab_basket.tvRegister.visibility = View.GONE
+                            bnd_tab_basket.tvRegisterTitle.visibility = View.GONE
+                            bnd_tab_basket.tvQuickOrder.visibility = View.VISIBLE
+                            bnd_tab_basket.tvOrder.visibility = View.VISIBLE
+                        }
+                    })
+                .disposeBy(composite_disposable)
+
+
     }
 }

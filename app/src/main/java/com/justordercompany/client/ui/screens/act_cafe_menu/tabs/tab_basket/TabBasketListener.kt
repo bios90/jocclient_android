@@ -8,4 +8,5 @@ interface TabBasketListener
     fun clickedDelete(item:ModelBasketItem)
     fun clickedOrder()
     fun clickedQuickOrder()
+    fun clickedRegister()
 }

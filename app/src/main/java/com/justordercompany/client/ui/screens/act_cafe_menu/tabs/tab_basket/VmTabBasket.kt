@@ -5,9 +5,11 @@ import com.justordercompany.client.base.AppClass
 import com.justordercompany.client.base.BaseViewModel
 import com.justordercompany.client.base.Constants
 import com.justordercompany.client.extensions.disposeBy
+import com.justordercompany.client.local_data.SharedPrefsManager
 import com.justordercompany.client.logic.models.ModelBasketItem
 import com.justordercompany.client.logic.utils.BasketManager
 import com.justordercompany.client.logic.utils.builders.BuilderIntent
+import com.justordercompany.client.ui.screens.act_auth.ActAuth
 import com.justordercompany.client.ui.screens.act_order_dialog.ActOrderDialog
 import com.justordercompany.client.ui.screens.act_product_setting.ActProductSetting
 import io.reactivex.subjects.BehaviorSubject
@@ -15,11 +17,18 @@ import io.reactivex.subjects.BehaviorSubject
 class VmTabBasket : BaseViewModel()
 {
     val bs_basket_items: BehaviorSubject<ArrayList<ModelBasketItem>> = BehaviorSubject.create()
+    val bs_show_register: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
     init
     {
         AppClass.app_component.inject(this)
         setEvents()
+        checkLogin()
+    }
+
+    fun checkLogin()
+    {
+        bs_show_register.onNext(SharedPrefsManager.getCurrentUser() == null)
     }
 
     fun setEvents()
@@ -30,6 +39,12 @@ class VmTabBasket : BaseViewModel()
             })
                 .disposeBy(composite_disposable)
 
+        bus_main_events.ps_user_logged
+                .subscribe(
+                    {
+                        checkLogin()
+                    })
+                .disposeBy(composite_disposable)
     }
 
     inner class ViewListener : TabBasketListener
@@ -59,7 +74,6 @@ class VmTabBasket : BaseViewModel()
 
         override fun clickedOrder()
         {
-
             val builder = BuilderIntent()
                     .setActivityToStart(ActOrderDialog::class.java)
                     .setSlider(BuilderIntent.TypeSlider.BOTTOM_UP)
@@ -68,6 +82,15 @@ class VmTabBasket : BaseViewModel()
 
         override fun clickedQuickOrder()
         {
+
+        }
+
+        override fun clickedRegister()
+        {
+            val builder = BuilderIntent()
+                    .setActivityToStart(ActAuth::class.java)
+                    .setSlider(BuilderIntent.TypeSlider.BOTTOM_UP)
+            ps_intent_builded.onNext(builder)
         }
     }
 }

@@ -20,8 +20,4 @@ class BusMainEvents
     //Orders
     val bs_order_made: BehaviorSubject<Int> = BehaviorSubject.create()
 
-    init
-    {
-
-    }
 }

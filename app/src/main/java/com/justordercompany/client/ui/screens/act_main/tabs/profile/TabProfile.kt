@@ -19,6 +19,7 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.justordercompany.client.base.adapters.AdapterRvOrders
+import com.justordercompany.client.logic.utils.strings.getOffertText
 
 
 class TabProfile(val act_main: ActMain) : TabView
@@ -166,20 +167,6 @@ class TabProfile(val act_main: ActMain) : TabView
             })
     }
 
-    private fun getOffertText(): SpannedString
-    {
-        val span_1 = MySpan()
-                .setColor(getColorMy(R.color.gray6))
-                .setFontRes(R.font.exo_reg)
-                .setText("Я согласен с условиями ")
-
-        val span_2 = MySpan()
-                .setColor(getColorMy(R.color.gray8))
-                .setFontRes(R.font.exo_bold)
-                .setText("офферты")
-
-        return TextUtils.concat(span_1.build(), span_2.build()) as SpannedString
-    }
 
     inner class MyLifecycleObserver : LifecycleObserver
     {

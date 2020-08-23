@@ -87,4 +87,6 @@
     <string name="searching_your_location">Ищем ваше местоположение</string>
     <string name="settings">Настройки</string>
     <string name="location_blocked_go_to_settings">Доступ к местоположению заблокирован =(\nОн необходим для отображения ближайших кофеен</string>
+    <string name="register">Регистрация</string>
+    <string name="need_register_to_make_order">Для оформления заказа необходимо зарегестрироваться</string>
 </resources>
