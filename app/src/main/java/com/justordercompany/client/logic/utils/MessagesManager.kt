@@ -13,6 +13,17 @@ import java.lang.Exception
 import java.util.concurrent.TimeUnit
 
 class BtnAction(val text: String, val action: (() -> Unit)?)
+{
+    companion object
+    {
+        fun getDefaultCancel(): BtnAction
+        {
+            return BtnAction(getStringMy(R.string.cancel), null)
+        }
+    }
+}
+
+
 class BtnActionWithText(val text: String, val action: ((String?) -> Unit)?)
 
 class MessagesManager(private val activity: AppCompatActivity)

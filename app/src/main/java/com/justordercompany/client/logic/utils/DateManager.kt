@@ -6,8 +6,10 @@ import com.justordercompany.client.extensions.getStringMy
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import java.lang.RuntimeException
+import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class DateManager
 {
@@ -149,19 +151,19 @@ fun areAtSameDay(date_1: Date, date_2: Date): Boolean
     return same_day
 }
 
-fun areDatesEqualForDiff(date_1: Date?,date_2: Date?):Boolean
+fun areDatesEqualForDiff(date_1: Date?, date_2: Date?): Boolean
 {
-    if(date_1 == null && date_2 == null)
+    if (date_1 == null && date_2 == null)
     {
         return true
     }
 
-    if(date_1 == null || date_2 == null)
+    if (date_1 == null || date_2 == null)
     {
         return false
     }
 
-    return areAtSameDayHourMinuteSecond(date_1,date_2)
+    return areAtSameDayHourMinuteSecond(date_1, date_2)
 }
 
 fun areAtSameDayHourMinuteSecond(date_1: Date, date_2: Date): Boolean

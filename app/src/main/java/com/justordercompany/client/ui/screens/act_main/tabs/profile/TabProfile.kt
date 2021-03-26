@@ -18,7 +18,9 @@ import com.justordercompany.client.ui.screens.act_main.tabs.TabView
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.justordercompany.client.base.LoadBehavior
 import com.justordercompany.client.base.adapters.AdapterRvOrders
+import com.justordercompany.client.base.enums.TypeScrollEvent
 import com.justordercompany.client.logic.utils.strings.getOffertText
 
 
@@ -38,7 +40,6 @@ class TabProfile(val act_main: ActMain) : TabView
         setListeners()
         setOrderRecycler()
         act_main.setBaseVmActions(vm_tab_profile)
-        act_main.lifecycle.addObserver(MyLifecycleObserver())
 
         bnd_profile.larAuthDialog.tvOffert.text = getOffertText()
         bnd_profile.viewFakeStatus.setHeight(getStatusBarHeight())
@@ -69,6 +70,11 @@ class TabProfile(val act_main: ActMain) : TabView
                 vm_tab_profile.ViewListener().clickedOffertRules()
             })
 
+        bnd_profile.imgInfo.setOnClickListener(
+            {
+                vm_tab_profile.ViewListener().clickedQuestion()
+            })
+
         connectBoth(bnd_profile.larAuthDialog.etPhone.getBsText(), vm_tab_profile.bs_phone, composite_disposable)
         connectBoth(bnd_profile.larAuthDialog.etCode.getBsText(), vm_tab_profile.bs_code, composite_disposable)
         connectBoth(bnd_profile.larAuthDialog.chOffert.getBs(), vm_tab_profile.bs_offert_checked, composite_disposable)
@@ -80,6 +86,7 @@ class TabProfile(val act_main: ActMain) : TabView
 
         bnd_profile.srlOrders.setOnRefreshListener(
             {
+                Log.e("TabProfile", "setListeners: Swiped to refresh maeddeed")
                 vm_tab_profile.ViewListener().swipedToRefresh()
             })
 
@@ -87,10 +94,12 @@ class TabProfile(val act_main: ActMain) : TabView
         bnd_profile.recOrders.getRecyclerScrollEvents()
                 .subscribe(
                     {
-                        vm_tab_profile.ViewListener().scrolledToBottom()
+                        if (it == TypeScrollEvent.AT_THE_BOTTOM)
+                        {
+                            vm_tab_profile.ViewListener().scrolledToBottom()
+                        }
                     })
                 .disposeBy(composite_disposable)
-
     }
 
     fun setEvents()
@@ -146,6 +155,7 @@ class TabProfile(val act_main: ActMain) : TabView
                 .mainThreaded()
                 .subscribe(
                     {
+                        bnd_profile.recOrders.requestFocus()
                         bnd_profile.srlOrders.isRefreshing = false
                         adapter.setItems(it)
                     })
@@ -159,26 +169,39 @@ class TabProfile(val act_main: ActMain) : TabView
 
     private fun bindUser(user: ModelUser)
     {
-        bnd_profile.tvName.text = "Name later!!"
+        bnd_profile.tvName.text = user.name
         bnd_profile.tvPhone.text = user.phone
+
+        if (user.count_cups != null)
+        {
+            bnd_profile.tvCountCoffee.text = user.count_cups!!.toString()
+        }
+        else
+        {
+            bnd_profile.tvCountCoffee.text = "-"
+        }
+
+        if (user.count_orders != null)
+        {
+            bnd_profile.tvCountOrders.text = user.count_orders!!.toString()
+        }
+        else
+        {
+            bnd_profile.tvCountOrders.text = "-"
+        }
+
+        if (user.count_reviews != null)
+        {
+            bnd_profile.tvCountReplies.text = user.count_reviews!!.toString()
+        }
+        else
+        {
+            bnd_profile.tvCountReplies.text = "-"
+        }
+
         user.image?.url_m?.let(
             {
                 GlideManager.loadImageSimpleCircle(it, bnd_profile.imgAvatar)
             })
-    }
-
-
-    inner class MyLifecycleObserver : LifecycleObserver
-    {
-        @OnLifecycleEvent(Lifecycle.Event.ON_START)
-        fun onStart()
-        {
-
-        }
-
-        @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-        fun onStop()
-        {
-        }
     }
 }

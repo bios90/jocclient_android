@@ -2,6 +2,7 @@ package com.justordercompany.client.networking.apis
 
 import com.justordercompany.client.base.Constants
 import com.justordercompany.client.base.enums.PmSortDirection
+import com.justordercompany.client.base.enums.TypeOrderStatus
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -43,4 +44,12 @@ interface ApiOrders
             @Field("order_id") order_id: Int,
             @Field("text") text: String?,
             @Field("rating") rating: Int): Observable<Response<ResponseBody>>
+
+    @PUT(Constants.Urls.URL_ORDER_CANCEL)
+    fun cancelOrder(
+            @Path("id") order_id: Int,
+            @Query("status") status: String? = TypeOrderStatus.CANCELED.getNameForServer()
+    ): Observable<Response<ResponseBody>>
+
+
 }

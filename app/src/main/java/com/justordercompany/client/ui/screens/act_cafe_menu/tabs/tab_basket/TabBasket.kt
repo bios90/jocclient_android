@@ -9,11 +9,10 @@ import com.justordercompany.client.base.FeedDisplayInfo
 import com.justordercompany.client.base.LoadBehavior
 import com.justordercompany.client.base.adapters.AdapterRvBasket
 import com.justordercompany.client.databinding.LaTabBasketBinding
-import com.justordercompany.client.extensions.disposeBy
-import com.justordercompany.client.extensions.dp2pxInt
 import com.justordercompany.client.ui.screens.act_cafe_menu.ActCafeMenu
 import com.justordercompany.client.ui.screens.act_main.tabs.TabView
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.justordercompany.client.extensions.*
 import com.justordercompany.client.logic.utils.BasketManager
 import com.justordercompany.client.logic.utils.strings.getOffertText
 import io.reactivex.subjects.BehaviorSubject
@@ -54,9 +53,7 @@ class TabBasket(val act_cafe_menu: ActCafeMenu) : TabView
         drw.shape = GradientDrawable.RECTANGLE
         drw.setSize(0, dp2pxInt(6))
 
-        val itemDecorator = DividerItemDecoration(act_cafe_menu, DividerItemDecoration.VERTICAL)
-        itemDecorator.setDrawable(drw)
-        bnd_tab_basket.rec.addItemDecoration(itemDecorator)
+        bnd_tab_basket.rec.addDivider(getColorMy(R.color.transparent), dp2pxInt(6f))
 
         adapter.action_clicked_edit =
                 {
@@ -86,6 +83,17 @@ class TabBasket(val act_cafe_menu: ActCafeMenu) : TabView
 
     fun setEvents()
     {
+       act_cafe_menu.vm_act_cafe_menu.bs_cafe
+               .mainThreaded()
+               .subscribe(
+                   {
+                       val can_order = it.can_order ?: false
+//                       val can_order = true
+                       bnd_tab_basket.lalCanOrder.visibility = can_order.toVisibility()
+                       bnd_tab_basket.tvCantOrder.visibility = (!can_order).toVisibility()
+                   })
+               .disposeBy(composite_disposable)
+
         vm_tab_basket.bs_basket_items
                 .subscribe(
                     {

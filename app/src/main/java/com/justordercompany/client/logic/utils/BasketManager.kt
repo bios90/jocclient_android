@@ -1,19 +1,16 @@
 package com.justordercompany.client.logic.utils
 
 import android.util.Log
-import com.justordercompany.client.extensions.addItem
-import com.justordercompany.client.extensions.addItems
-import com.justordercompany.client.extensions.clear
-import com.justordercompany.client.extensions.removeItem
+import com.justordercompany.client.extensions.*
 import com.justordercompany.client.logic.models.*
 import io.reactivex.subjects.BehaviorSubject
 import java.lang.RuntimeException
 
 object BasketManager
 {
-    var bs_cafe: BehaviorSubject<ModelCafe> = BehaviorSubject.create()
+    var bs_cafe: BehaviorSubject<Optional<ModelCafe>> = BehaviorSubject.create()
     var bs_items: BehaviorSubject<ArrayList<ModelBasketItem>> = BehaviorSubject.createDefault(arrayListOf())
-    var order_id:Int? = null
+    var order_id: Int? = null
 
     fun addItem(item: ModelBasketItem)
     {
@@ -31,6 +28,7 @@ object BasketManager
     {
         order_id = null
         this.bs_items.clear()
+        bs_cafe.onNext(Optional(null))
     }
 
     fun updateItem(item: ModelBasketItem)
@@ -72,7 +70,7 @@ object BasketManager
     {
         order_id = null
         val items = order.items
-        val cafe_menu = bs_cafe.value?.menu
+        val cafe_menu = bs_cafe.value?.value?.menu
 
         if (cafe_menu == null)
         {
@@ -136,6 +134,7 @@ object BasketManager
             }
             else
             {
+                //Todo later check if needed
                 new_item.milk = product_in_menu.milks?.getOrNull(0)
             }
         }
@@ -148,12 +147,12 @@ object BasketManager
                 val selected_addable_id = it.id ?: return@forEach
                 val addable_in_product: ModelAddableValue = product_in_menu.addables?.findById(selected_addable_id) ?: return@forEach
 
-                if (old_item.addables == null)
+                if (new_item.addables == null)
                 {
-                    old_item.addables = arrayListOf()
+                    new_item.addables = arrayListOf()
                 }
 
-                old_item.addables!!.add(addable_in_product)
+                new_item.addables!!.add(addable_in_product)
             })
     }
 }

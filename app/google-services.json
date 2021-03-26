@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "145729541905",
+    "firebase_url": "https://jocclient-88910.firebaseio.com",
+    "project_id": "jocclient-88910",
+    "storage_bucket": "jocclient-88910.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145729541905:android:574f5ad355d9fc9acc9eb0",
+        "android_client_info": {
+          "package_name": "com.justordercompany.client"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "145729541905-pju0eth41h2dv1a3ogodltrs71skhik0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.justordercompany.client",
+            "certificate_hash": "568334fecc7db09139a0ae822c8fb60505b6cd4c"
+          }
+        },
+        {
+          "client_id": "145729541905-5uaoe429p0j6m2vnb0a08338vs4928ek.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvbHHhbDeT1Vv6JTaT6fTu9S7DYfqCW_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "145729541905-5uaoe429p0j6m2vnb0a08338vs4928ek.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

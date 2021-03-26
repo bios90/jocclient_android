@@ -103,7 +103,7 @@ class AdapterRvCafe : RecyclerView.Adapter<AdapterRvCafe.CardCafe>()
                 {
                     tv_distance.text = LocationManager.getDistanceText(it)
                 })
-            tv_time.text = "25:00 - 26:00"
+            tv_time.text = cafe.working_hours_str
         }
     }
 }

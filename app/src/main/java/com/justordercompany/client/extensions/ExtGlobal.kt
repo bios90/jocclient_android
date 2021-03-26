@@ -132,18 +132,6 @@ fun getTypeFaceFromResource(id: Int): Typeface
     return ResourcesCompat.getFont(AppClass.app, id)!!
 }
 
-fun openAppSettings()
-{
-    val intent = Intent()
-    intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-    intent.addCategory(Intent.CATEGORY_DEFAULT)
-    intent.data = Uri.parse("package:" + AppClass.app.packageName)
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
-    intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-    AppClass.app.startActivity(intent)
-}
-
 fun isNetworkAvailable(): Boolean
 {
     val connectivityManager = AppClass.app.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -316,4 +304,35 @@ fun Boolean.toVisibility(): Int
     {
         return View.GONE
     }
+}
+
+fun emailIntent(whom: String?, text: String?, subj: String?)
+{
+    val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+        "mailto", whom, null))
+    intent.putExtra(Intent.EXTRA_SUBJECT, subj)
+    intent.putExtra(Intent.EXTRA_TEXT, text);
+
+    val chooser = Intent.createChooser(intent, "Отправить email")
+    chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    try
+    {
+        AppClass.app.startActivity(chooser)
+    }
+    catch (e: Exception)
+    {
+        e.printStackTrace()
+    }
+}
+
+fun openAppSettings()
+{
+    val intent = Intent()
+    intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+    intent.addCategory(Intent.CATEGORY_DEFAULT)
+    intent.data = Uri.parse("package:" + AppClass.app.packageName)
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+    intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+    AppClass.app.startActivity(intent)
 }

@@ -27,7 +27,7 @@
             android:id="@+id/rec"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/tv_bottom"
+            android:layout_above="@id/la_bottom"
             android:layout_below="@id/tv_header"
             android:clipChildren="false"
             android:clipToPadding="false"
@@ -44,77 +44,97 @@
             android:paddingTop="16dp"
             android:paddingBottom="16dp">
 
+            <TextView
+                android:id="@+id/tv_cant_order"
+                android:visibility="gone"
+                android:text="@string/cafe_cant_take_payment"
+                android:layout_marginRight="12dp"
+                android:layout_marginLeft="12dp"
+                style="@style/TvReg.L"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:visibility="visible"
+                android:orientation="vertical"
+                android:id="@+id/lal_can_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/TvReg.Xl"
+                <LinearLayout
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/sum"
-                    android:textColor="@color/gray6" />
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TvReg.Xl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sum"
+                        android:textColor="@color/gray6" />
+
+                    <TextView
+                        android:id="@+id/tv_sum"
+                        style="@style/TvBold.Xl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/gray6"
+                        tools:text="502 р" />
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tv_sum"
+                    android:id="@+id/tv_order"
+
                     style="@style/TvBold.Xl"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="12dp"
+                    android:background="@{BuilderBg.getGradGreen(4f,GradientDrawable.Orientation.BL_TR)}"
+                    android:text="@string/make_order"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tv_quick_order"
+
+                    style="@style/TvBold.Xl"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="12dp"
+                    android:background="@{BuilderBg.getGradOrange(4f,GradientDrawable.Orientation.BL_TR)}"
+                    android:text="@string/quick_order"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tv_register_title"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray6"
-                    tools:text="502 р" />
+                    android:gravity="center"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="6dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="6dp"
+                    android:text="@string/need_register_to_make_order" />
+
+                <TextView
+                    android:id="@+id/tv_register"
+
+                    style="@style/TvBold.Xl"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="12dp"
+                    android:background="@{BuilderBg.getEmptyOrange(4f)}"
+                    android:text="@string/register"
+                    android:textColor="@color/orange" />
+
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/tv_order"
-
-                style="@style/TvBold.Xl"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="12dp"
-                android:background="@{BuilderBg.getGradGreen(4f,GradientDrawable.Orientation.BL_TR)}"
-                android:text="@string/make_order"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/tv_quick_order"
-
-                style="@style/TvBold.Xl"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="12dp"
-                android:background="@{BuilderBg.getGradOrange(4f,GradientDrawable.Orientation.BL_TR)}"
-                android:text="@string/quick_order"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/tv_register_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingLeft="16dp"
-                android:paddingTop="6dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="6dp"
-                android:text="@string/need_register_to_make_order" />
-
-            <TextView
-                android:id="@+id/tv_register"
-
-                style="@style/TvBold.Xl"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="12dp"
-                android:background="@{BuilderBg.getEmptyOrange(4f)}"
-                android:text="@string/register"
-                android:textColor="@color/orange" />
 
         </LinearLayout>
 

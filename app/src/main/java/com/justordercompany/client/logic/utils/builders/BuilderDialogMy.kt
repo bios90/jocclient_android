@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.justordercompany.client.R
+import com.justordercompany.client.base.BaseViewModel
 import com.justordercompany.client.extensions.getNullableText
 import com.justordercompany.client.extensions.makeTransparentBg
 import com.justordercompany.client.extensions.setTextHtml
@@ -197,5 +198,10 @@ class BuilderDialogMy()
         {
             tv?.visibility = View.GONE
         }
+    }
+
+    fun sendInVm(base_vm:BaseViewModel)
+    {
+        base_vm.ps_to_show_dialog.onNext(this)
     }
 }

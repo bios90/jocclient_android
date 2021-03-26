@@ -10,7 +10,7 @@ android {
         applicationId "com.justordercompany.client"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
+        versionCode 12
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -22,6 +22,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        lintOptions {
+            checkReleaseBuilds false
+            abortOnError false
         }
     }
 
@@ -38,7 +43,8 @@ android {
 dependencies {
 
     //Other
-
+    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
+    implementation 'com.github.grapesnberries:curlloggerinterceptor:0.1'
     implementation 'com.github.stfalcon:stfalcon-imageviewer:1.0.1'
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
     implementation 'joda-time:joda-time:2.10.4'

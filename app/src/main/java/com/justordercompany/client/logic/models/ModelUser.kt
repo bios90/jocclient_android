@@ -1,6 +1,7 @@
 package com.justordercompany.client.logic.models
 
 import android.util.Log
+import com.google.gson.annotations.SerializedName
 import com.justordercompany.client.extensions.toJsonMy
 import java.util.*
 
@@ -16,11 +17,15 @@ class ModelUser : ObjectWithId, ObjectWithDates
     var api_token: String? = null
     var phone: String? = null
     var image: BaseImage? = null
+    @SerializedName("cups_count")
+    var count_cups: String? = null
+    @SerializedName("orders_count")
+    var count_orders: String? = null
+    @SerializedName("reviews_count")
+    var count_reviews: String? = null
 
     fun isEmpty(): Boolean
     {
-        Log.e("ModelUser", "isEmpty: ${this.toJsonMy()}")
-
         return name.isNullOrEmpty() && email.isNullOrEmpty() && image == null
     }
 }

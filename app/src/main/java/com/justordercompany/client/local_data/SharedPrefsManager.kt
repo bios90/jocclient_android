@@ -16,7 +16,8 @@ class SharedPrefsManager
     enum class Key
     {
         FB_TOKEN,
-        CURRENT_USER
+        CURRENT_USER,
+        MASK_INTRO_SHOWED,
     }
 
     companion object

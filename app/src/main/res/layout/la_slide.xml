@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/img_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/tv_title"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="-84dp"
+            tools:src="@drawable/img_intro1" />
+
+        <View
+            android:id="@+id/view_anchor1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/TvBold.Xxl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view_anchor1"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="84dp"
+            android:layout_marginRight="24dp"
+            android:textColor="@color/orange"
+            tools:text="Удобно" />
+
+        <TextView
+            android:id="@+id/tv_text"
+            style="@style/TvReg.L"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="24dp"
+            android:textColor="@color/gray4"
+            tools:text="Выберете подходящее заведение в списке или на карте. Используйте фильтр по рейтингу и стоимости для подбора лучшего варианта. " />
+
+    </RelativeLayout>
+
+
+</layout>

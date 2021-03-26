@@ -2,6 +2,7 @@ package com.justordercompany.client.ui.custom_views
 
 import android.content.Context
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.util.Log
@@ -38,20 +39,19 @@ class MyEtWithObserv : EditText
 
     private fun custom_init()
     {
-        br_text
-                .mainThreaded()
-                .subscribe(
-                    {
-                        this.acceptIfNotMatches(it.value)
-                    })
-                .disposeBy(composite_disposable)
-
-        this.addTextChangedListener(object : TextWatcher
+        var text_listener: TextWatcher? = null
+        text_listener = object : TextWatcher
         {
             override fun afterTextChanged(s: Editable?)
             {
-                val opt = this@MyEtWithObserv.getNullableText().asOptional()
-                br_text.acceptIfNotMatches(opt)
+                this@MyEtWithObserv.removeTextChangedListener(text_listener)
+                var text: String? = s.toString().trim()
+                if (TextUtils.isEmpty(text))
+                {
+                    text = null
+                }
+                br_text.acceptIfNotMatches(text.asOptional())
+                this@MyEtWithObserv.addTextChangedListener(text_listener)
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int)
@@ -61,7 +61,19 @@ class MyEtWithObserv : EditText
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int)
             {
             }
-        })
+        }
+        this.addTextChangedListener(text_listener)
+
+        br_text
+                .mainThreaded()
+                .distinctUntilChanged()
+                .subscribe(
+                    {
+                        this@MyEtWithObserv.removeTextChangedListener(text_listener)
+                        this.acceptIfNotMatches(it.value)
+                        this@MyEtWithObserv.addTextChangedListener(text_listener)
+                    })
+                .disposeBy(composite_disposable)
     }
 
     fun getBsText(): BehaviorSubject<Optional<String>>

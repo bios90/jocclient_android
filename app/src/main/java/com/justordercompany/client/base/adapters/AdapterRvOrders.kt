@@ -15,6 +15,9 @@ import com.justordercompany.client.base.diff.DiffBasketItem
 import com.justordercompany.client.base.diff.DiffOrders
 import com.justordercompany.client.base.enums.TypeOrderStatus
 import com.justordercompany.client.databinding.ItemOrderHistoryBinding
+import com.justordercompany.client.extensions.getColorMy
+import com.justordercompany.client.extensions.getStringMy
+import com.justordercompany.client.extensions.runActionWithDelay
 import com.justordercompany.client.extensions.toVisibility
 import com.justordercompany.client.logic.models.ModelBasketItem
 import com.justordercompany.client.logic.models.ModelOrder
@@ -29,6 +32,7 @@ class AdapterRvOrders : RecyclerView.Adapter<CardOrder>()
 {
     private var items: ArrayList<ModelOrder> = arrayListOf()
     var listener: ((ModelOrder) -> Unit)? = null
+    private var recycler_view:RecyclerView? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardOrder
     {
@@ -63,6 +67,7 @@ class AdapterRvOrders : RecyclerView.Adapter<CardOrder>()
 
     fun setItems(rec_info: FeedDisplayInfo<ModelOrder>)
     {
+        Log.e("AdapterRvOrders", "setItems: thread name is ${Thread.currentThread().name}")
         if (rec_info.load_behavior == LoadBehavior.FULL_RELOAD)
         {
             this.items = ArrayList(rec_info.items)
@@ -70,10 +75,26 @@ class AdapterRvOrders : RecyclerView.Adapter<CardOrder>()
             return
         }
 
+        ///Special case because problems with update by diff util ((((
+        if(rec_info.load_behavior == LoadBehavior.UPDATE_AT_POS)
+        {
+            val pos = rec_info.load_behavior.pos_to_update ?: return
+            this.items = ArrayList(rec_info.items)
+            notifyItemChanged(pos)
+            recycler_view?.layoutManager?.smoothScrollToPosition(recycler_view, null, pos)
+            return
+        }
+
         val diff_callback = DiffOrders(items, rec_info.items)
         val diff_result = DiffUtil.calculateDiff(diff_callback)
         diff_result.dispatchUpdatesTo(this)
         this.items = ArrayList(rec_info.items)
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView)
+    {
+        super.onAttachedToRecyclerView(recyclerView)
+        this.recycler_view = recyclerView
     }
 }
 
@@ -86,6 +107,7 @@ class CardOrder(val bnd_order: ItemOrderHistoryBinding) : RecyclerView.ViewHolde
                 GlideManager.loadImageSimpleCircle(it, bnd_order.imgLogo)
             })
 
+        bnd_order.tvOrderNum.text = "${getStringMy(R.string.order_number)} ${order.id}"
         bnd_order.tvName.text = order.cafe?.name
         bnd_order.tvAdress.text = order.cafe?.address
         order.sum?.let(
@@ -99,6 +121,7 @@ class CardOrder(val bnd_order: ItemOrderHistoryBinding) : RecyclerView.ViewHolde
         bnd_order.tvMenu.text = order.getProductNamesList()
         bnd_order.tvTime.text = order.date?.formatToString(DateManager.FORMAT_TIME)
 
+        bnd_order.lalRight.background = null
         val drawable: Drawable
         if (order.status == TypeOrderStatus.DONE)
         {

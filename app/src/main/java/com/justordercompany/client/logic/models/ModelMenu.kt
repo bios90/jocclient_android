@@ -13,24 +13,24 @@ class ModelMenu
         var snacks:ArrayList<ModelProduct>? = ArrayList()
 )
 {
-    init
-    {
-        //Todo manuall setting types here, remove later if gets from server
-        hot_drinks?.forEach(
-            {
-                it.type = TypeProduct.HOT
-            })
-
-        cold_drinks?.forEach(
-            {
-                it.type = TypeProduct.COLD
-            })
-
-        snacks?.forEach(
-            {
-                it.type = TypeProduct.SNACK
-            })
-    }
+//    init
+//    {
+//        //Todo manuall setting types here, remove later if gets from server
+//        hot_drinks?.forEach(
+//            {
+//                it.type = TypeProduct.HOT
+//            })
+//
+//        cold_drinks?.forEach(
+//            {
+//                it.type = TypeProduct.COLD
+//            })
+//
+//        snacks?.forEach(
+//            {
+//                it.type = TypeProduct.SNACK
+//            })
+//    }
 
     fun getAllItems():ArrayList<ModelProduct>
     {

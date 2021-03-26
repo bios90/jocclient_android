@@ -318,14 +318,14 @@ abstract class BaseActivity : AppCompatActivity()
         }
     }
 
-    fun applySliderBottom()
+    fun applySliderBottom(edge_size:Float = 0.3f)
     {
         val config = SlidrConfig.Builder()
                 .position(SlidrPosition.TOP)
                 .sensitivity(1.0f)
                 .distanceThreshold(0.3f)
                 .edge(true)
-                .edgeSize(0.3f)
+                .edgeSize(edge_size)
                 .scrimStartAlpha(0.5f)
                 .scrimEndAlpha(0.0f)
                 .build()

@@ -100,6 +100,8 @@ class TabCafePage(val act_cafe_menu: ActCafeMenu) : TabView
 
         if (!cafe.reviews.isNullOrEmpty())
         {
+            //Todo later maybe remake for reversed on server
+            cafe.reviews!!.reverse()
             adapter_reviews.setItems(cafe.reviews!!)
             bnd_tab_cafe_page.tvReviewsTitle.visibility = View.VISIBLE
         }

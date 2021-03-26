@@ -141,7 +141,7 @@ class ActCafeMenu : BaseActivity()
         tab_views.add(tab_basket.getView())
 
         adapter_vp_base.setViews(tab_views)
-        bnd_act_cafe_menu.vpCafe.setCurrentItem(1,false)
+        bnd_act_cafe_menu.vpCafe.setCurrentItem(0,false)
     }
 
     private fun setListeners()

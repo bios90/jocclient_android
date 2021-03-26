@@ -11,12 +11,12 @@
     </data>
 
     <RelativeLayout
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:elevation="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@{BuilderBg.getSimpleDrawableRipple(4f,R.color.white,R.color.gray0)}"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:elevation="12dp"
         android:paddingBottom="12dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             android:layout_marginRight="12dp"
             android:layout_weight="25"
             android:clipToPadding="false"
@@ -45,22 +45,10 @@
             app:srb_starPadding="0.5dp"
             app:srb_starWidth="19dp" />
 
-        <TextView
-            style="@style/TvBold.Xl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginRight="8dp"
-            android:layout_toLeftOf="@id/rating_bar"
-            android:layout_toRightOf="@id/img_logo"
-            android:gravity="left"
-            android:textColor="@color/gray6"
-            tools:text="Mike Penz" />
 
         <TextView
             android:id="@+id/tv_author_name"
-            style="@style/TvBold.Xl"
+            style="@style/TvBold.L"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"

@@ -4,6 +4,7 @@ import com.justordercompany.client.base.*
 import com.justordercompany.client.base.enums.TypeLaListIntroMode
 import com.justordercompany.client.extensions.disposeBy
 import com.justordercompany.client.extensions.openAppSettings
+import com.justordercompany.client.extensions.runActionWithDelay
 import com.justordercompany.client.logic.models.ModelCafe
 import com.justordercompany.client.logic.models.countDistanceFrom
 import com.justordercompany.client.logic.requests.ReqCafes
@@ -20,13 +21,19 @@ class VmTabList : BaseViewModel()
 {
     var bs_current_cafes: BehaviorSubject<FeedDisplayInfo<ModelCafe>> = BehaviorSubject.create()
     val ps_to_load_cafes: PublishSubject<ReqCafes> = PublishSubject.create()
-    val bs_intro_mode:BehaviorSubject<TypeLaListIntroMode> = BehaviorSubject.createDefault(TypeLaListIntroMode.SEARCHING)
+    val bs_intro_mode: BehaviorSubject<TypeLaListIntroMode> = BehaviorSubject.createDefault(TypeLaListIntroMode.SEARCHING)
 
     init
     {
         AppClass.app_component.inject(this)
         setEvents()
         checkIfLocationBlocked()
+
+        runActionWithDelay(2000,
+            {
+                reloadCafes()
+            })
+                .disposeBy(composite_disposable)
     }
 
     fun setEvents()
@@ -50,7 +57,7 @@ class VmTabList : BaseViewModel()
                 .disposeBy(composite_disposable)
 
         ps_to_load_cafes
-                .debounce(200,TimeUnit.MILLISECONDS)
+                .debounce(200, TimeUnit.MILLISECONDS)
                 .subscribe(
                     { req ->
                         base_networker.loadCafes(req,
@@ -93,7 +100,7 @@ class VmTabList : BaseViewModel()
         ps_to_load_cafes.onNext(req)
     }
 
-    inner class ViewListener:TabListListener
+    inner class ViewListener : TabListListener
     {
         override fun clickedCafe(cafe: ModelCafe)
         {

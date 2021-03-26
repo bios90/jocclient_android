@@ -1,8 +1,10 @@
 package com.justordercompany.client.ui.screens.act_review_dialog
 
+import android.content.Intent
 import android.util.Log
 import com.justordercompany.client.base.AppClass
 import com.justordercompany.client.base.BaseViewModel
+import com.justordercompany.client.base.Constants
 import com.justordercompany.client.extensions.Optional
 import com.justordercompany.client.extensions.disposeBy
 import com.justordercompany.client.extensions.getNullString
@@ -47,7 +49,9 @@ class VmActReviewDialog : BaseViewModel()
 
             base_networker.makeOrderReview(cafe_id, order_id, text, rating,
                 {
-                    Log.e("ViewListener", "clickedOk: MAdee success review!!!!")
+                    val return_intent = Intent()
+                    return_intent.putExtra(Constants.Extras.EXTRA_REVIEW_MADE,true)
+                    ps_to_finish.onNext(Optional(return_intent))
                 })
         }
 

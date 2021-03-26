@@ -82,6 +82,17 @@
                     android:text="@string/faw_pencil"
                     android:textColor="@color/white" />
 
+                <ImageView
+                    android:id="@+id/img_info"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/tv_edit"
+                    android:background="@{BuilderBg.getSquareRippleTransGray()}"
+                    android:src="@drawable/img_info_circle"
+                    android:tint="@color/white" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -108,8 +119,8 @@
                             style="@style/TvBold.Xxl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="37"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            tools:text="37" />
 
                     </LinearLayout>
 
@@ -133,8 +144,8 @@
                             style="@style/TvBold.Xxl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="17"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            tools:text="17" />
 
                     </LinearLayout>
 
@@ -159,8 +170,8 @@
                             style="@style/TvBold.Xxl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="9"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"
+                            tools:text="9" />
 
                     </LinearLayout>
 

@@ -7,10 +7,10 @@
     <color name="ucrop_color_toolbar" tools:override="true">@color/gray8</color>
     <color name="ucrop_color_toolbar_widget" tools:override="true">@color/white</color>
 
-    <string name="ucrop_crop" tools:override="true">Обрезать</string>
-    <string name="ucrop_label_edit_photo" tools:override="true">Редактирование</string>
-    <string name="ucrop_label_original" tools:override="true">Оригинал</string>
-    <string name="ucrop_menu_crop" tools:override="true">Обрезка</string>
-    <string name="ucrop_rotate" tools:override="true">Угол</string>
-    <string name="ucrop_scale" tools:override="true">Масштаб</string>
+    <string name="ucrop_crop" translatable="false" tools:override="true">Обрезать</string>
+    <string name="ucrop_label_edit_photo" translatable="false" tools:override="true">Редактирование</string>
+    <string name="ucrop_label_original" translatable="false" tools:override="true">Оригинал</string>
+    <string name="ucrop_menu_crop" translatable="false" tools:override="true">Обрезка</string>
+    <string name="ucrop_rotate" translatable="false" tools:override="true">Угол</string>
+    <string name="ucrop_scale" translatable="false" tools:override="true">Масштаб</string>
 </resources>

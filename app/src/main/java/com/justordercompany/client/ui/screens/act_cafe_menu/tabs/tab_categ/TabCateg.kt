@@ -7,7 +7,10 @@ import com.justordercompany.client.R
 import com.justordercompany.client.base.adapters.AdapterRvCafe
 import com.justordercompany.client.base.adapters.AdapterRvProducts
 import com.justordercompany.client.databinding.LaTabCategBinding
+import com.justordercompany.client.extensions.addDivider
 import com.justordercompany.client.extensions.disposeBy
+import com.justordercompany.client.extensions.dp2pxInt
+import com.justordercompany.client.extensions.getColorMy
 import com.justordercompany.client.ui.screens.act_cafe_menu.ActCafeMenu
 import com.justordercompany.client.ui.screens.act_main.tabs.TabView
 
@@ -36,6 +39,7 @@ class TabCateg(val act_cafe_menu: ActCafeMenu) : TabView
     {
         bnd_categ.rec.adapter = adapter
         bnd_categ.rec.layoutManager = LinearLayoutManager(act_cafe_menu)
+        bnd_categ.rec.addDivider(getColorMy(R.color.transparent), dp2pxInt(6f))
         adapter.action_card_clicked =
                 {
                     vm_tab_categ.ViewListener().clickedProduct(it)

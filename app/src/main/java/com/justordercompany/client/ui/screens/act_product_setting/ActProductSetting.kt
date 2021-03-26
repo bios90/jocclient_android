@@ -85,6 +85,7 @@ class ActProductSetting : BaseActivity()
 
     private fun bindProduct(product: ModelProduct)
     {
+        Log.e("ActProductSetting", "bindProduct: image_url is ${product.image?.url_l}")
         product.image?.url_l?.let(
             {
                 GlideManager.loadImageSimple(it, bnd_product_setting.imgProduct)

@@ -10,7 +10,6 @@ import java.lang.RuntimeException
 open class BaseResponse
     (
         val status: TypeResponseStatus? = null,
-//        val message: String?,
         @SerializedName("message")
         var errors: List<String>? = null
 )
@@ -27,10 +26,6 @@ fun BaseResponse.getError(): RuntimeException?
         val message = StringManager.listOfStringToSingle(this.errors!!)
         return ServerError(message)
     }
-//    else if (this.message.isNullOrEmpty() == false)
-//    {
-//        return ServerError(this.message!!)
-//    }
     else
     {
         return UnknownServerError()

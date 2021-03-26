@@ -193,4 +193,47 @@ class BaseNetworker(private val base_vm: BaseViewModel)
                     })
                 .disposeBy(composite_disposable)
     }
+
+    fun loadUser(action_success: (ModelUser) -> Unit, action_error: ((Throwable) -> Unit)? = null)
+    {
+        base_vm.api_auth.getUser()
+                .mainThreaded()
+                .addMyParser<RespUserSingle>(RespUserSingle::class.java)
+                .addProgress(base_vm)
+                .addScreenDisabling(base_vm)
+                .addErrorCatcher(base_vm)
+                .addParseChecker(
+                    {
+                        return@addParseChecker it.user != null
+                    })
+                .subscribeMy(
+                    {
+                        Log.e("BaseNetworker", "loadUser: Successs on loading user ${it.user.toJsonMy()}")
+                        action_success(it.user!!)
+                    },
+                    {
+
+                        Log.e("BaseNetworker", "loadUser: Error on loading user")
+                        action_error?.invoke(it)
+                    })
+                .disposeBy(composite_disposable)
+    }
+
+    fun cancelOrder(order_id: Int, action_success: () -> Unit, action_error: ((Throwable) -> Unit)? = null)
+    {
+        base_vm.api_orders.cancelOrder(order_id)
+                .mainThreaded()
+                .addMyParser<BaseResponse>(BaseResponse::class.java)
+                .addProgress(base_vm)
+                .addScreenDisabling(base_vm)
+                .addErrorCatcher(base_vm)
+                .subscribeMy(
+                    {
+                        action_success()
+                    },
+                    {
+                        action_error?.invoke(it)
+                    })
+                .disposeBy(composite_disposable)
+    }
 }

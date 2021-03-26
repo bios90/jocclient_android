@@ -4,6 +4,8 @@ import com.justordercompany.client.ui.screens.act_auth.ActAuth
 import com.justordercompany.client.ui.screens.act_cafe_menu.ActCafeMenu
 import com.justordercompany.client.ui.screens.act_cafe_popup.ActCafePopup
 import com.justordercompany.client.ui.screens.act_filter.ActFilter
+import com.justordercompany.client.ui.screens.act_info_dialog.ActInfoDialog
+import com.justordercompany.client.ui.screens.act_intro_slides.ActIntroSlides
 import com.justordercompany.client.ui.screens.act_main.ActMain
 import com.justordercompany.client.ui.screens.act_order_dialog.ActOrderDialog
 import com.justordercompany.client.ui.screens.act_pay_type_dialog.ActPayTypeDialog
@@ -25,4 +27,6 @@ interface ComponentActivity
     fun inject(act:ActPayTypeDialog)
     fun inject(act:ActReviewDialog)
     fun inject(act:ActAuth)
+    fun inject(act:ActInfoDialog)
+    fun inject(act:ActIntroSlides)
 }

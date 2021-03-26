@@ -10,12 +10,15 @@ import com.justordercompany.client.extensions.disposeBy
 import com.justordercompany.client.extensions.getStringMy
 import com.justordercompany.client.extensions.mainThreaded
 import com.justordercompany.client.extensions.runActionWithDelay
+import com.justordercompany.client.local_data.SharedPrefsManager
 import com.justordercompany.client.logic.models.FilterData
 import com.justordercompany.client.logic.utils.*
 import com.justordercompany.client.logic.utils.builders.BuilderAlerter
 import com.justordercompany.client.logic.utils.builders.BuilderDialogBottom
+import com.justordercompany.client.logic.utils.builders.BuilderDialogMy
 import com.justordercompany.client.logic.utils.builders.BuilderIntent
 import com.justordercompany.client.ui.screens.act_filter.ActFilter
+import com.justordercompany.client.ui.screens.act_intro_slides.ActIntroSlides
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 
@@ -28,6 +31,13 @@ class VmActMain : BaseViewModel()
         AppClass.app_component.inject(this)
 
         setBusEvents()
+
+        runActionWithDelay(2000,
+            {
+                BuilderIntent()
+                        .setActivityToStart(ActIntroSlides::class.java)
+                        .sendInVm(this)
+            })
     }
 
     override fun viewAttached()
@@ -36,6 +46,18 @@ class VmActMain : BaseViewModel()
         runActionWithDelay(500,
             {
                 checkGeoPermissions()
+            })
+
+        runActionWithDelay(1000,
+            {
+                if (!SharedPrefsManager.getBool(SharedPrefsManager.Key.MASK_INTRO_SHOWED))
+                {
+                    BuilderDialogMy()
+                            .setViewId(R.layout.la_mask_show)
+                            .setBtnOk(BtnAction(getStringMy(R.string.its_clear), {}))
+                            .sendInVm(this)
+                    SharedPrefsManager.saveBool(SharedPrefsManager.Key.MASK_INTRO_SHOWED, true)
+                }
             })
     }
 
@@ -82,7 +104,6 @@ class VmActMain : BaseViewModel()
                     })
                 .setActionAvailable(
                     {
-                        Log.e("VmActMain", "Will sgartr geo tracking!!!")
                         location_manager.startGeoTracker()
                     })
 

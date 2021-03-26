@@ -17,5 +17,19 @@ enum class TypeOrderStatus
     @SerializedName("done")
     DONE,
     @SerializedName("canceled")
-    CANCELED,
+    CANCELED;
+
+    fun getNameForServer(): String
+    {
+        return when (this)
+        {
+            NEW -> "new"
+            WAIT -> "wait"
+            PAID -> "paid"
+            PROCESS -> "process"
+            READY -> "ready"
+            DONE -> "done"
+            CANCELED -> "canceled"
+        }
+    }
 }

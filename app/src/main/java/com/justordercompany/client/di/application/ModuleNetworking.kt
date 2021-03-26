@@ -3,6 +3,7 @@ package com.justordercompany.client.di.application
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.grapesnberries.curllogger.CurlLoggerInterceptor
 import com.justordercompany.client.R
 import com.justordercompany.client.base.Constants
 import com.justordercompany.client.extensions.getStringMy
@@ -36,7 +37,6 @@ class ModuleNetworking
     fun getGson(): Gson
     {
         val gson = GsonBuilder()
-//                .registerTypeAdapter(Date::class.java, GsonDateDeSerializer())
                 .setDateFormat(getStringMy(R.string.format_for_server))
                 .create()
 
@@ -49,7 +49,8 @@ class ModuleNetworking
     {
         val httpClientBuilder = OkHttpClient.Builder()
         httpClientBuilder.addInterceptor(interceptor)
-        httpClientBuilder.addInterceptor(log_interceptor)
+//        httpClientBuilder.addInterceptor(log_interceptor)
+        httpClientBuilder.addInterceptor(CurlLoggerInterceptor("****CURL****"))
         httpClientBuilder.callTimeout(120, TimeUnit.SECONDS)
         httpClientBuilder.readTimeout(120, TimeUnit.SECONDS)
         httpClientBuilder.writeTimeout(120, TimeUnit.SECONDS)
@@ -63,9 +64,9 @@ class ModuleNetworking
     fun provideLoggingInterceptor(): HttpLoggingInterceptor
     {
         val interceptor = HttpLoggingInterceptor()
-        interceptor.level = HttpLoggingInterceptor.Level.HEADERS
-        interceptor.level = HttpLoggingInterceptor.Level.BASIC
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
+//        interceptor.level = HttpLoggingInterceptor.Level.HEADERS
+//        interceptor.level = HttpLoggingInterceptor.Level.BASIC
+//        interceptor.level = HttpLoggingInterceptor.Level.BODY
         return interceptor
     }
 

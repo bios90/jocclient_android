@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
+
         <import type="com.justordercompany.client.R" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_root"
-        android:background="@{BuilderBg.getSimpleDrawableRipple(4f,R.color.white,R.color.gray2)}"
         android:layout_width="match_parent"
         android:layout_height="120dp"
+        android:background="@{BuilderBg.getSimpleDrawableRipple(4f,R.color.white,R.color.gray2)}"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:orientation="vertical"
@@ -44,6 +46,8 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_toRightOf="@id/img_logo"
+                android:ellipsize="end"
+                android:lines="1"
                 android:textColor="@color/gray7"
                 tools:text="Stamptown Coffee" />
 
@@ -56,6 +60,8 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_toRightOf="@id/img_logo"
+                android:ellipsize="end"
+                android:lines="1"
                 android:textColor="@color/gray4"
                 tools:text="New York, 212b Pacific Str" />
 
@@ -74,6 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_toRightOf="@id/img_logo"
+                    android:clickable="false"
                     android:clipToPadding="false"
                     android:padding="2dp"
                     app:srb_clickable="false"

@@ -23,6 +23,7 @@
         tools:text="Кафе огонек as sdf" />
 
     <ImageView
+        android:id="@+id/img_arrow"
         android:layout_width="14dp"
         android:layout_height="7dp"
         android:layout_gravity="center_horizontal"

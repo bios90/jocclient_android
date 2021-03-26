@@ -9,6 +9,7 @@ import com.justordercompany.client.extensions.*
 import com.justordercompany.client.local_data.SharedPrefsManager
 import com.justordercompany.client.logic.models.ModelOrder
 import com.justordercompany.client.logic.models.ModelUser
+import com.justordercompany.client.logic.models.replaceWith
 import com.justordercompany.client.logic.requests.FeedLoadInfo
 import com.justordercompany.client.logic.responses.BaseResponse
 import com.justordercompany.client.logic.responses.RespUserSingle
@@ -19,6 +20,7 @@ import com.justordercompany.client.logic.utils.builders.BuilderDialogBottom
 import com.justordercompany.client.logic.utils.builders.BuilderDialogMy
 import com.justordercompany.client.logic.utils.builders.BuilderIntent
 import com.justordercompany.client.ui.screens.act_cafe_menu.ActCafeMenu
+import com.justordercompany.client.ui.screens.act_info_dialog.ActInfoDialog
 import com.justordercompany.client.ui.screens.act_profile_edit.ActProfileEdit
 import com.justordercompany.client.ui.screens.act_review_dialog.ActReviewDialog
 import io.reactivex.subjects.BehaviorSubject
@@ -41,11 +43,6 @@ class VmTabProfile : BaseViewModel()
     {
         AppClass.app_component.inject(this)
         setEvents()
-
-        if(SharedPrefsManager.getCurrentUser() != null)
-        {
-            makeOrdersFullReload()
-        }
     }
 
     override fun viewAttached()
@@ -65,10 +62,7 @@ class VmTabProfile : BaseViewModel()
         bus_main_events.ps_user_profile_updated
                 .subscribe(
                     {
-                        Networking().loadUser(
-                            {
-                                bs_user_to_display.onNext(it.asOptional())
-                            })
+                        reloadUserInfo()
                     })
                 .disposeBy(composite_disposable)
 
@@ -76,11 +70,20 @@ class VmTabProfile : BaseViewModel()
                 .subscribe(
                     {
                         makeOrdersFullReload()
+                        reloadUserInfo()
+
+                        val text = "Номер вашего «$it», вас уведомят о его готовности"
+                        BuilderDialogMy()
+                                .setViewId(R.layout.la_dialog_simple)
+                                .setTitle(getStringMy(R.string.order_made))
+                                .setText(text)
+                                .setBtnOk(BtnAction(getStringMy(R.string.ok), {}))
+                                .sendInVm(this)
+
                     })
                 .disposeBy(composite_disposable)
 
         ps_to_load_orders
-                .throttleFirst(3000, TimeUnit.MILLISECONDS)
                 .subscribe(
                     {
                         base_networker.loadOrders(it)
@@ -88,7 +91,7 @@ class VmTabProfile : BaseViewModel()
                 .disposeBy(composite_disposable)
 
         ps_orders_scrolled_to_bottom
-                .throttleFirst(3000, TimeUnit.MILLISECONDS)
+                .throttleFirst(2000, TimeUnit.MILLISECONDS)
                 .subscribe(
                     {
                         val info = bs_orders.value.getNextLoadInfo()
@@ -107,15 +110,20 @@ class VmTabProfile : BaseViewModel()
     private fun checkForLogin()
     {
         ps_auth_dialog_visibility.onNext(SharedPrefsManager.getCurrentUser() == null)
-//        ps_auth_dialog_visibility.onNext(true)
 
         if (SharedPrefsManager.getUserToken() != null)
         {
-            Networking().loadUser(
-                {
-                    bs_user_to_display.onNext(it.asOptional())
-                })
+            makeOrdersFullReload()
+            reloadUserInfo()
         }
+    }
+
+    private fun reloadUserInfo()
+    {
+        base_networker.loadUser(
+            {
+                bs_user_to_display.onNext(it.asOptional())
+            })
     }
 
     private fun userLogged()
@@ -173,7 +181,6 @@ class VmTabProfile : BaseViewModel()
                     val btn_cancel = BtnAction(getStringMy(R.string.make_cancel), { clickedOrderCancel(order) })
                     val btn_review = BtnAction(getStringMy(R.string.review), { clickedOrderReview(order) })
 
-                    Log.e("ViewListener", "clickedOrder: Status is ${order.status}")
                     var builder: BuilderDialogBottom? = null
 
                     //Todo later set only needed actions
@@ -191,11 +198,15 @@ class VmTabProfile : BaseViewModel()
                                 .addBtn(btn_repeat)
                                 .addBtn(btn_review)
                     }
-
-                    if (builder != null)
+                    else
                     {
-                        ps_to_show_bottom_dialog.onNext(builder)
+                        builder = BuilderDialogBottom()
+                                .addBtn(btn_cancel)
+                                .addBtn(btn_repeat)
+                                .addBtn(btn_review)
                     }
+
+                    ps_to_show_bottom_dialog.onNext(builder)
                 })
         }
 
@@ -259,7 +270,7 @@ class VmTabProfile : BaseViewModel()
         override fun clickedOffertRules()
         {
             val btn_ok = BtnAction(getStringMy(R.string.its_clear), null)
-            val text = getStringMy(R.string.offert) ?: return
+            val text = getStringMy(R.string.offert)
             val builder = BuilderDialogMy()
                     .setText(text)
                     .setBtnOk(btn_ok)
@@ -301,7 +312,24 @@ class VmTabProfile : BaseViewModel()
 
         fun clickedOrderCancel(order: ModelOrder)
         {
+            val order_id = order.id ?: return
+            base_networker.cancelOrder(order_id,
+                {
+                    base_networker.getOrderInfo(order_id,
+                        {
+                            val current_items = bs_orders.value?.items?.toCollection(ArrayList())
+                            if (current_items != null)
+                            {
+                                current_items.replaceWith(it)
+                                val pos = current_items.indexOf(it)
+                                if (pos >= 0)
+                                {
+                                    bs_orders.onNext(FeedDisplayInfo(current_items, LoadBehavior.getUpdateAtPos(pos)))
+                                }
+                            }
 
+                        })
+                })
         }
 
         fun clickedOrderReview(order: ModelOrder)
@@ -310,32 +338,31 @@ class VmTabProfile : BaseViewModel()
             val builder = BuilderIntent()
                     .setActivityToStart(ActReviewDialog::class.java)
                     .addParam(Constants.Extras.EXTRA_ORDER_ID, order_id)
+                    .setOkAction(
+                        {
+                            if (it?.getBooleanExtra(Constants.Extras.EXTRA_REVIEW_MADE, false) == true)
+                            {
+                                reloadUserInfo()
+                            }
+                        })
             ps_intent_builded.onNext(builder)
         }
-    }
 
-
-    inner class Networking
-    {
-
-
-        fun loadUser(action_success: (ModelUser) -> Unit)
+        override fun clickedQuestion()
         {
-            api_auth.getUser()
-                    .mainThreaded()
-                    .addMyParser<RespUserSingle>(RespUserSingle::class.java)
-                    .addProgress(this@VmTabProfile)
-                    .addScreenDisabling(this@VmTabProfile)
-                    .addErrorCatcher(this@VmTabProfile)
-                    .addParseChecker(
-                        {
-                            return@addParseChecker it.user != null
-                        })
-                    .subscribeMy(
-                        {
-                            action_success(it.user!!)
-                        })
-                    .disposeBy(composite_disposable)
+            BuilderIntent()
+                    .setActivityToStart(ActInfoDialog::class.java)
+                    .sendInVm(this@VmTabProfile)
+//            val user = SharedPrefsManager.getCurrentUser()
+//            val title = "Письмо из приложения Joc"
+//            var text = ""
+//            if(user != null)
+//            {
+//                text+="Пользователь: ${user.name}"
+//                text+="\nТелефон: ${user.phone}"
+//            }
+//
+//            emailIntent("jocforusers@gmail.con",text,title)
         }
     }
 

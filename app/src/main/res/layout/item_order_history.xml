@@ -33,7 +33,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_root"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="126dp"
             android:layout_below="@id/tv_date"
             android:background="@{BuilderBg.getSimpleDrawableRipple(4f,R.color.white,R.color.gray1)}"
             android:clipChildren="false"
@@ -76,14 +76,24 @@
                     android:clipToPadding="false"
                     android:orientation="vertical">
 
+
+                    <TextView
+                        android:id="@+id/tv_order_num"
+                        style="@style/TvReg.M"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="12dp"
+                        android:textColor="@color/orange" />
+
                     <TextView
                         android:id="@+id/tv_name"
                         style="@style/TvBold.Xl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginRight="12dp"
+                        android:layout_marginTop="6dp"
                         android:textColor="@color/gray7"
                         tools:text="Stumptown cofeee" />
 

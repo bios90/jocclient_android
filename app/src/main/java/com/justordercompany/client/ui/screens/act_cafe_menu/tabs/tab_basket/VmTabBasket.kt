@@ -4,15 +4,20 @@ import android.util.Log
 import com.justordercompany.client.base.AppClass
 import com.justordercompany.client.base.BaseViewModel
 import com.justordercompany.client.base.Constants
+import com.justordercompany.client.extensions.Optional
 import com.justordercompany.client.extensions.disposeBy
 import com.justordercompany.client.local_data.SharedPrefsManager
 import com.justordercompany.client.logic.models.ModelBasketItem
 import com.justordercompany.client.logic.utils.BasketManager
+import com.justordercompany.client.logic.utils.PaymentManager
+import com.justordercompany.client.logic.utils.addMinutes
 import com.justordercompany.client.logic.utils.builders.BuilderIntent
 import com.justordercompany.client.ui.screens.act_auth.ActAuth
 import com.justordercompany.client.ui.screens.act_order_dialog.ActOrderDialog
 import com.justordercompany.client.ui.screens.act_product_setting.ActProductSetting
 import io.reactivex.subjects.BehaviorSubject
+import java.util.*
+import kotlin.collections.ArrayList
 
 class VmTabBasket : BaseViewModel()
 {
@@ -43,6 +48,13 @@ class VmTabBasket : BaseViewModel()
                 .subscribe(
                     {
                         checkLogin()
+                    })
+                .disposeBy(composite_disposable)
+
+        bus_main_events.bs_order_made
+                .subscribe(
+                    {
+                        ps_to_finish.onNext(Optional(null))
                     })
                 .disposeBy(composite_disposable)
     }
@@ -82,7 +94,11 @@ class VmTabBasket : BaseViewModel()
 
         override fun clickedQuickOrder()
         {
-
+            val date = Date().addMinutes(5)
+            PaymentManager.createOrder(this@VmTabBasket, date, null,
+                {
+                    bus_main_events.bs_order_made.onNext(it)
+                })
         }
 
         override fun clickedRegister()

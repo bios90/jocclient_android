@@ -1,8 +1,8 @@
 package com.justordercompany.client.logic.models
 
+import com.google.gson.annotations.SerializedName
 import com.justordercompany.client.base.enums.TypeProduct
 import com.justordercompany.client.logic.utils.BasketManager
-import com.justordercompany.client.logic.utils.strings.StringManager
 import com.justordercompany.client.logic.utils.strings.getRandomString
 import java.io.Serializable
 import java.lang.RuntimeException
@@ -13,6 +13,7 @@ class ModelBasketItem
         var sugar: Int? = null,
         var weight: ModelAddableValue? = null,
         var milk: ModelAddableValue? = null,
+        @SerializedName("additive")
         var addables: ArrayList<ModelAddableValue>? = null,
         var id_str: String = String.getRandomString()
 ) : Serializable
@@ -48,7 +49,7 @@ class ModelBasketItem
         return price
     }
 
-    fun toModelBasketValue(): ArrayList<ModelServerBasketValue>
+    fun toServerBasketValue(): ArrayList<ModelServerBasketValue>
     {
         val items: ArrayList<ModelServerBasketValue> = arrayListOf()
 
@@ -93,7 +94,7 @@ fun ArrayList<ModelBasketItem>.toServerBasketItems(): ArrayList<ArrayList<ModelS
     val items: ArrayList<ArrayList<ModelServerBasketValue>> = arrayListOf()
     this.forEach(
         {
-            items.add(it.toModelBasketValue())
+            items.add(it.toServerBasketValue())
         })
     return items
 }

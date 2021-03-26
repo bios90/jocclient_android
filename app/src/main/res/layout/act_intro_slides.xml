@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.justordercompany.client.R" />
+
+        <import type="android.graphics.drawable.GradientDrawable" />
+
+        <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray8_trans_50">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="560dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="4dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/vp_vp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="64dp" />
+
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/dots_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="72dp"
+                    app:dotsColor="@color/gray2"
+                    app:dotsCornerRadius="6dp"
+                    app:dotsSize="12dp"
+                    app:dotsSpacing="3dp"
+                    app:dotsWidthFactor="2"
+                    app:progressMode="false"
+                    app:selectedDotColor="@color/orange" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_skip"
+                        style="@style/TvReg.M"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_weight="10"
+                        android:background="@{BuilderBg.getSimpleDrawableRipple(0f,R.color.transparent,R.color.orange_trans_50)}"
+                        android:padding="14dp"
+                        android:text="@string/skip"
+                        android:textColor="@color/gray5" />
+
+                    <TextView
+                        android:id="@+id/tv_start"
+                        style="@style/TvReg.M"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="10"
+                        android:background="@{BuilderBg.getSimpleDrawableRipple(0f,R.color.transparent,R.color.orange_trans_50)}"
+                        android:padding="14dp"
+                        android:text="@string/start"
+                        android:textColor="@color/orange"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:id="@+id/tv_next"
+                        style="@style/TvReg.M"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_weight="10"
+                        android:background="@{BuilderBg.getSimpleDrawableRipple(0f,R.color.transparent,R.color.orange_trans_50)}"
+                        android:padding="14dp"
+                        android:text="@string/dalee"
+                        android:textColor="@color/gray5" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+</layout>

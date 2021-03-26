@@ -7,6 +7,7 @@ interface TabProfileListener
     fun clickedAuthLogin()
     fun clickedOffertRules()
     fun clickedEditUser()
+    fun clickedQuestion()
     fun swipedToRefresh()
     fun scrolledToBottom()
     fun clickedOrder(order:ModelOrder)

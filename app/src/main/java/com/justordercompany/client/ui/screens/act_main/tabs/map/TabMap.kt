@@ -1,14 +1,20 @@
 package com.justordercompany.client.ui.screens.act_main.tabs.map
 
+import android.annotation.SuppressLint
+import android.graphics.drawable.Drawable
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.justordercompany.client.R
+import com.justordercompany.client.base.data_binding.BuilderBg
 import com.justordercompany.client.databinding.LaMainMapBinding
 import com.justordercompany.client.extensions.*
 import com.justordercompany.client.logic.models.ModelCafe
@@ -76,6 +82,7 @@ class TabMap(val act_main: ActMain) : TabView
         return bnd_map.root
     }
 
+    @SuppressLint("MissingPermission")
     fun initMap()
     {
         frag_map = act_main.supportFragmentManager.findFragmentById(R.id.frag_map) as SupportMapFragment
@@ -85,7 +92,7 @@ class TabMap(val act_main: ActMain) : TabView
 
                 this.google_map.getUiSettings().setMapToolbarEnabled(false)
                 this.google_map.getUiSettings().setMyLocationButtonEnabled(false)
-                google_map.moveCameraToPos(LatLng(55.7558, 37.6173))
+                google_map.moveCameraToPos(LatLng(55.751244, 37.618423))
                 setMapListener()
 
                 act_main.permissions_manager.checkAndRequest(PermissionManager.permissions_location)
@@ -119,7 +126,7 @@ class TabMap(val act_main: ActMain) : TabView
         google_map.setOnMarkerClickListener(
             {
                 val cafe = it.tag as? ModelCafe
-                if(cafe != null)
+                if (cafe != null)
                 {
                     vm_tab_map.ViewListener().clickedCafe(cafe)
                     return@setOnMarkerClickListener true
@@ -142,6 +149,14 @@ class TabMap(val act_main: ActMain) : TabView
 
             val view = act_main.layoutInflater.inflate(R.layout.la_marker, null, false)
             val tv: TextView = view.findViewById(R.id.tv_cafe_name)
+            val arrow: ImageView = view.findViewById(R.id.img_arrow)
+
+            if (cafe.can_order != true)
+            {
+                tv.background = BuilderBg.getSimpleDrawable(999f, R.color.biryza)
+                arrow.setColorFilter(getColorMy(R.color.biryza))
+            }
+
             tv.text = cafe.name
             val bitmap = view.toBitmap()
             val options = MarkerOptions()

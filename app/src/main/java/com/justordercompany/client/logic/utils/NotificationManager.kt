@@ -20,10 +20,7 @@ import com.justordercompany.client.base.AppClass
 import com.justordercompany.client.base.BusMainEvents
 import com.justordercompany.client.base.Constants
 import com.justordercompany.client.base.enums.TypeTab
-import com.justordercompany.client.extensions.getInt
-import com.justordercompany.client.extensions.getString
-import com.justordercompany.client.extensions.getStringMy
-import com.justordercompany.client.extensions.makeClearAllPrevious
+import com.justordercompany.client.extensions.*
 import com.justordercompany.client.ui.screens.DummyPendingIntentActivity
 import com.justordercompany.client.ui.screens.act_cafe_menu.ActCafeMenu
 import com.justordercompany.client.ui.screens.act_main.ActMain
@@ -59,6 +56,8 @@ class NotificationManager()
     {
         val my_push = MyPush.initFromRemoteMessage(remoteMessage)
         val notification = getNotification(my_push)
+
+        Log.e("NotificationManager", "notify: Got push ${my_push.toJsonMy()}")
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
         {

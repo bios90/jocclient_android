@@ -5,6 +5,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.justordercompany.client.base.AppClass
 import com.justordercompany.client.base.BaseViewModel
 import com.justordercompany.client.base.Constants
+import com.justordercompany.client.base.enums.TypeLaListIntroMode
 import com.justordercompany.client.extensions.*
 import com.justordercompany.client.logic.models.ModelCafe
 import com.justordercompany.client.logic.models.ModelMapPos
@@ -44,46 +45,47 @@ class VmTabMap : BaseViewModel()
             })
                 .disposeBy(composite_disposable)
 
-        bus_main_events.bs_filter
-                .subscribe(
-                    {
-                        val distance = bs_current_visible_distance.value ?: return@subscribe
-                        val center = bs_current_center.value ?: return@subscribe
-
-                        val request = ReqCafes()
-                        request.lat = center.latitude
-                        request.lon = center.longitude
-                        request.distance = distance.toInt()
-                        request.filter = it
-
-                        base_networker.loadCafes(request,
-                            {
-                                bs_cafe_to_display.onNext(it)
-                            })
-                    })
-                .disposeBy(composite_disposable)
-    }
-
-    private fun moveMapToUserLocation()
-    {
-        location_manager.getLocationSingle()
+        location_manager
+                .bs_location
                 .subscribe(
                     {
                         val map_pos = ModelMapPos(it.toLatLng())
                         ps_move_map_pos.onNext(map_pos)
-                        bus_main_events.bs_current_user_position.onNext(it.toLatLng())
-                    },
+
+                        reloadCafes()
+                    })
+                .disposeBy(composite_disposable)
+
+        bus_main_events.bs_filter
+                .subscribe(
                     {
-                        it.printStackTrace()
+                        reloadCafes()
                     })
                 .disposeBy(composite_disposable)
     }
+
+    private fun reloadCafes()
+    {
+        val distance = bs_current_visible_distance.value ?: 10f
+        val center = bs_current_center.value ?: LatLng(55.751244, 37.618423)
+
+        val request = ReqCafes()
+        request.lat = center.latitude
+        request.lon = center.longitude
+        request.distance = distance.toInt()
+        request.filter = bus_main_events.bs_filter.value
+
+        base_networker.loadCafes(request,
+            {
+                bs_cafe_to_display.onNext(it)
+            })
+    }
+
 
     inner class ViewListener() : TabMapListener
     {
         override fun mapInited()
         {
-//            moveMapToUserLocation()
         }
 
         override fun clickedCafe(cafe: ModelCafe)
@@ -114,21 +116,13 @@ class VmTabMap : BaseViewModel()
 
         override fun mapIdled()
         {
-            val distance = bs_current_visible_distance.value ?: return
-            val center = bs_current_center.value ?: return
-
-            val request = ReqCafes()
-            request.lat = center.latitude
-            request.lon = center.longitude
-            request.distance = distance.toInt()
-            request.filter = bus_main_events.bs_filter.value
-
-            base_networker.loadCafes(request,
-                {
-
-                    bs_cafe_to_display.onNext(it)
-                })
+            reloadCafes()
         }
+    }
+
+    private fun loadRouteToCafe()
+    {
+
     }
 
 }

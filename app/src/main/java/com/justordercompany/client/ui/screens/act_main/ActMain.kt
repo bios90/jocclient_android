@@ -12,7 +12,9 @@ import com.justordercompany.client.base.enums.TypeTab
 import com.justordercompany.client.databinding.ActMainBinding
 import com.justordercompany.client.extensions.*
 import com.justordercompany.client.local_data.SharedPrefsManager
+import com.justordercompany.client.logic.utils.BtnAction
 import com.justordercompany.client.logic.utils.NotificationManager
+import com.justordercompany.client.logic.utils.builders.BuilderDialogMy
 import com.justordercompany.client.ui.screens.act_main.tabs.list.TabList
 import com.justordercompany.client.ui.screens.act_main.tabs.map.TabMap
 import com.justordercompany.client.ui.screens.act_main.tabs.profile.TabProfile

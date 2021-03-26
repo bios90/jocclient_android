@@ -6,6 +6,7 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.maps.model.LatLng
 import com.justordercompany.client.R
 import com.justordercompany.client.base.AppClass
+import com.justordercompany.client.base.BusMainEvents
 import com.justordercompany.client.extensions.disposeBy
 import com.justordercompany.client.extensions.getStringMy
 import com.patloew.rxlocation.RxLocation
@@ -76,11 +77,9 @@ class LocationManager
 
     fun startGeoTracker()
     {
-        Log.e("LocationManager", "startGeoTracker: Geo tracking started!")
         getLocationUpdates()
                 .subscribe(
                     {
-                        Log.e("LocationManager", "startGeoTracker: Will pass new got location!!!")
                         bs_location.onNext(it)
                     })
                 .disposeBy(composite_disposable_location)

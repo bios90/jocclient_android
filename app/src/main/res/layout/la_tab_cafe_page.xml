@@ -23,7 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipChildren="false"
-            android:clipToPadding="false">
+            android:clipToPadding="false"
+            android:overScrollMode="never">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,12 +42,13 @@
 
                     <TextView
                         android:id="@+id/tv_name"
-                        style="@style/TvBold.Xxxl"
-                        android:layout_width="wrap_content"
+                        style="@style/TvBold.L"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
                         android:layout_marginTop="12dp"
-                        android:layout_marginRight="12dp"
+                        android:layout_marginRight="104dp"
+                        android:gravity="left"
                         android:textColor="@color/white"
                         tools:text="Starbacks" />
 
@@ -93,7 +95,9 @@
                         android:layout_below="@id/ftv_text"
                         android:layout_marginTop="12dp"
                         android:clipChildren="false"
-                        android:clipToPadding="false">
+                        android:clipToPadding="false"
+                        android:overScrollMode="never"
+                        android:scrollbars="none">
 
                         <LinearLayout
                             android:id="@+id/la_for_images"
@@ -191,7 +195,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="68dp"
                     android:layout_marginTop="12dp"
-                    android:background="@{BuilderBg.getGradGreen(0f,GradientDrawable.Orientation.BL_TR)}">
+                    android:background="@{BuilderBg.getGradGreen(0f,GradientDrawable.Orientation.BL_TR)}"
+                    android:visibility="gone">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/img_day_logo"
@@ -257,11 +262,12 @@
                     android:textColor="@color/gray6" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
                     android:id="@+id/rec_reviews"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:overScrollMode="never"
                     android:padding="8dp" />
 
             </LinearLayout>

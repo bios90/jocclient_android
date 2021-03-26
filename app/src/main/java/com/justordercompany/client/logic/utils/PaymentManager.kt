@@ -31,10 +31,16 @@ class PaymentManager
             val currency = Currency.getInstance("RUB")
             val amount = Amount(items.getSumPrice().toBigDecimal(), currency)
 
+            Log.e("PaymentManager", "makePay: Amount is $amount")
+
             val title = getStringMy(R.string.payment)
             val message = getStringMy(R.string.order_in_app_joc)
-            val pay_params = PaymentParameters(amount, title, message, Constants.Payments.API_KEY, Constants.Payments.SHOP_ID, SavePaymentMethod.USER_SELECTS, methods)
+            val pay_params = PaymentParameters(amount, title, message, Constants.Payments.API_KEY, Constants.Payments.SHOP_ID, SavePaymentMethod.OFF, methods)
             val ui_params = UiParameters(false, color_scheme)
+
+            ////
+            val test_params = TestParameters(true, true)
+            ///
             val intent = Checkout.createTokenizeIntent(activity, pay_params, uiParameters = ui_params)
             activity.startForResult(intent)
             { result ->
@@ -68,11 +74,11 @@ class PaymentManager
                 })
         }
 
-        fun makePayWithMethod(base_vm: BaseViewModel, method: PaymentMethodType, order_id: Int, action_success: (Int) -> Unit)
+        fun makePayWithMethod(base_vm: BaseViewModel, methods: Set<PaymentMethodType>, order_id: Int, action_success: (Int) -> Unit)
         {
             val items = BasketManager.bs_items.value ?: return
 
-            PaymentManager.makePay(items, setOf(method),
+            PaymentManager.makePay(items, methods,
                 {
                     val token = it.paymentToken
 
@@ -80,7 +86,7 @@ class PaymentManager
                         {
                             val confirmation_url = it.getString("confirmation_url")
 
-                            if (confirmation_url != null)
+                            if (!confirmation_url.isNullOrEmpty())
                             {
                                 PaymentManager.make3dSecureIntent(confirmation_url,
                                     {
@@ -107,11 +113,12 @@ class PaymentManager
             }
 
             val items_str = items.toJsonMy() ?: return
-            val str_date = date.formatToString(DateManager.FORMAT_FOR_SERVER) ?: return
+            val str_date = date.formatToString(DateManager.FORMAT_FOR_SERVER)
+            val methods = setOf(PaymentMethodType.BANK_CARD, PaymentMethodType.GOOGLE_PAY)
 
             if (BasketManager.order_id != null)
             {
-                makePayWithMethod(base_vm, PaymentMethodType.BANK_CARD, BasketManager.order_id!!, action_success)
+                makePayWithMethod(base_vm, methods, BasketManager.order_id!!, action_success)
             }
             else
             {
@@ -119,7 +126,7 @@ class PaymentManager
                     { order_id ->
 
                         BasketManager.order_id = order_id
-                        makePayWithMethod(base_vm, PaymentMethodType.BANK_CARD, order_id, action_success)
+                        makePayWithMethod(base_vm, methods, order_id, action_success)
                     })
             }
         }

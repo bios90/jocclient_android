@@ -27,12 +27,11 @@ class VmActProfileEdit : BaseViewModel()
     {
         AppClass.app_component.inject(this)
 
-        Networking().loadUser(
+        base_networker.loadUser(
             {
                 bs_user_to_display.onNext(it.asOptional())
             })
     }
-
 
     inner class ViewListener() : ActProfileEditListener
     {
@@ -85,25 +84,6 @@ class VmActProfileEdit : BaseViewModel()
         fun updateUser(name: String?, email: String?, push_token: String?, image_str: String?, action_success: (ModelUser) -> Unit)
         {
             api_auth.updateUserInfo(name, email, push_token, image_str)
-                    .mainThreaded()
-                    .addMyParser<RespUserSingle>(RespUserSingle::class.java)
-                    .addProgress(this@VmActProfileEdit)
-                    .addScreenDisabling(this@VmActProfileEdit)
-                    .addErrorCatcher(this@VmActProfileEdit)
-                    .addParseChecker(
-                        {
-                            return@addParseChecker it.user != null
-                        })
-                    .subscribeMy(
-                        {
-                            action_success(it.user!!)
-                        })
-                    .disposeBy(composite_disposable)
-        }
-
-        fun loadUser(action_success: (ModelUser) -> Unit)
-        {
-            api_auth.getUser()
                     .mainThreaded()
                     .addMyParser<RespUserSingle>(RespUserSingle::class.java)
                     .addProgress(this@VmActProfileEdit)

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.justordercompany.client.R" />
+
+        <import type="android.graphics.drawable.GradientDrawable" />
+
+        <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@{BuilderBg.getRounded4White()}"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TvBold.Xxl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:text="Дорогие Гости!"
+            android:textColor="@color/gray7" />
+
+        <TextView
+            style="@style/TvReg.M"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:text="В Москве усилен контроль за ношением масок и перчаток."
+            android:textColor="@color/gray5" />
+
+        <TextView
+            style="@style/TvReg.M"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:text="Если мы обслужим вас без них - нас могут оштрафовать или даже закрыть."
+            android:textColor="@color/gray5" />
+
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/img_face_mask" />
+
+
+        <TextView
+            style="@style/TvReg.M"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="24dp"
+            android:text="Нам бы очень хотелось продолжить радовать вас вкусными напитками, и мы просим поддержать нас."
+            android:textColor="@color/gray5" />
+
+        <TextView
+            style="@style/TvBold.M"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="24dp"
+            android:text="Пожалуйста, наденьте маску и перчатки перед входом в кафе и не снимайте их до конца пребывания."
+            android:textColor="@color/gray7" />
+
+
+        <TextView
+            style="@style/TvReg.M"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="24dp"
+            android:text="Спасибо за понимание!"
+            android:textColor="@color/gray5" />
+
+        <TextView
+            android:id="@+id/tv_ok"
+            style="@style/TvReg.M"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="22dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@{BuilderBg.getSquareRippleTransOrange()}"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColor="@color/orange"
+            tools:text="@string/its_clear" />
+
+
+    </LinearLayout>
+
+
+</layout>

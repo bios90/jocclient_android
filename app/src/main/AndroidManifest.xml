@@ -57,11 +57,19 @@
         <activity
             android:name=".ui.screens.act_pay_type_dialog.ActPayTypeDialog"
             android:theme="@style/Slider" />
-        <activity android:name=".ui.screens.act_review_dialog.ActReviewDialog"
-            android:theme="@style/Theme.Transparent"/>
+        <activity
+            android:name=".ui.screens.act_review_dialog.ActReviewDialog"
+            android:theme="@style/Theme.Transparent" />
         <activity android:name=".ui.screens.DummyPendingIntentActivity" />
-        <activity android:name=".ui.screens.act_auth.ActAuth"
-            android:theme="@style/Theme.Transparent"/>
+        <activity
+            android:name=".ui.screens.act_auth.ActAuth"
+            android:theme="@style/Theme.Transparent" />
+        <activity
+            android:name=".ui.screens.act_info_dialog.ActInfoDialog"
+            android:theme="@style/Theme.Transparent" />
+        <activity
+            android:name=".ui.screens.act_intro_slides.ActIntroSlides"
+            android:theme="@style/Theme.Transparent" />
 
         <service android:name=".networking.FbMessagingService">
             <intent-filter>
@@ -78,6 +86,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
     </application>
 
 </manifest>

@@ -18,8 +18,7 @@ class Constants
 
     object Urls
     {
-
-        const val test_mode = true
+        const val test_mode = false
         const val API_VERSION = "v1"
         val BEARER_TOKEN = "B1ZpaLlhBgMQ9onHc05oCG8GNbYyIvtd"
         val URL_BASE: String
@@ -31,7 +30,7 @@ class Constants
                 }
                 else
                 {
-                    return "https://dev.justordercompany.com/"
+                    return "https://justordercompany.com/"
                 }
             }
 
@@ -45,6 +44,7 @@ class Constants
 
         const val URL_ORDER_CREATE = "api/${API_VERSION}/order/create"
         const val URL_ORDER_PAY = "api/${API_VERSION}/order/payment/{id}"
+        const val URL_ORDER_CANCEL = "api/${API_VERSION}/order/status-update/{id}"
         const val URL_ORDER_GET_INFO = "api/${API_VERSION}/order/info/{id}"
         const val URL_ORDER_GET_USER_ORDERS = "api/${API_VERSION}/order/list"
         const val URL_ORDER_MAKE_REVIEW = "api/${API_VERSION}/cafe/review/{id}"
@@ -60,11 +60,15 @@ class Constants
         const val EXTRA_PAY_WITH_CARD = "Extra_Pay_With_Card"
         const val EXTRA_PAY_WITH_GOOGLE_PAY = "Extra_Pay_Google_Pay"
         const val EXTRA_ORDER_ID = "Extra_Order_Id"
+        const val EXTRA_REVIEW_MADE = "Extra_Review_Made"
     }
 
     object Payments
     {
         const val SHOP_ID = "724027"
+//        const val SHOP_ID = "721268"
+        //Todo donot forget to change
         const val API_KEY = "test_NzI0MDI3O0fCxNm7K8L46XswOyF6e661TFvPCmMGclk"
+//        const val API_KEY = "live_NzIxMjY4I2UiYQSiF5Q1IN5dNntIb4ORicC8MElopsU"
     }
 }

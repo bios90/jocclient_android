@@ -21,7 +21,6 @@ class FbMessagingService:FirebaseMessagingService()
     override fun onMessageReceived(message: RemoteMessage)
     {
         super.onMessageReceived(message)
-        Log.e("FbMessagingService", "onMessageReceived:")
         notification_manager.notify(message)
     }
 
@@ -29,7 +28,6 @@ class FbMessagingService:FirebaseMessagingService()
     override fun onNewToken(token: String)
     {
         super.onNewToken(token)
-        Log.e("FbMessagingService", "onNewToken: got new token $token")
         SharedPrefsManager.saveString(SharedPrefsManager.Key.FB_TOKEN,token)
     }
 }

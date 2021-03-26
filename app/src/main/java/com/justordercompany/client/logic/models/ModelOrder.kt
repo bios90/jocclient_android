@@ -11,7 +11,6 @@ import kotlin.collections.ArrayList
 class ModelOrder
     (
         override var id: Int? = null,
-        var type: TypeProduct? = null,
         override var created: Date?,
         override var updated: Date?,
         override var deleted: Date?,
@@ -23,8 +22,9 @@ class ModelOrder
         var cafe: ModelCafe? = null,
         var sum: Double? = null,
         @SerializedName("products")
-        var items: ArrayList<ModelBasketItem>? = null
-) : Serializable, ObjectWithDates, ObjectWithId
+        var items: ArrayList<ModelBasketItem>? = null,
+        var user: ModelUser? = null
+        ) : Serializable, ObjectWithDates, ObjectWithId
 {
     fun getProductNamesList(): String?
     {
@@ -39,6 +39,6 @@ class ModelOrder
 
     fun canBeCancelled(): Boolean
     {
-        return this.status == TypeOrderStatus.NEW || this.status == TypeOrderStatus.PAID
+        return this.status == TypeOrderStatus.NEW || this.status == TypeOrderStatus.PAID || this.status == TypeOrderStatus.PROCESS
     }
 }

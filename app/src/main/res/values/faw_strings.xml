@@ -17,5 +17,5 @@
     <string name="faw_trash" translatable="false">&#xf1f8;</string>
     <string name="faw_google_pay" translatable="false">&#xe079;</string>
     <string name="faw_credit_card" translatable="false">&#xf09d;</string>
-
+    <string name="faw_question" translatable="false">&#xf128;</string>
 </resources>

@@ -24,6 +24,7 @@ import android.view.WindowManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.justordercompany.client.base.enums.TypeScrollEvent
 
 
@@ -307,6 +308,69 @@ fun View.simulateSwipeRight()
     this.dispatchTouchEvent(event_up)
 }
 
+fun View.simulateSwipeUpDown()
+{
+    val downTime = SystemClock.uptimeMillis()
+    val x = 0.0f
+    val y = 0.0f
+    val metaState = 0
+
+    val event_down = MotionEvent.obtain(
+        downTime,
+        downTime + 10,
+        MotionEvent.ACTION_DOWN,
+        x,
+        y,
+        metaState
+    )
+
+    val event_move_up = MotionEvent.obtain(
+        downTime + 10,
+        downTime + 100,
+        MotionEvent.ACTION_MOVE,
+        x,
+        y,
+        metaState
+    )
+
+    val event_move_down = MotionEvent.obtain(
+        downTime + 110,
+        downTime + 210,
+        MotionEvent.ACTION_MOVE,
+        x,
+        y,
+        metaState
+    )
+
+    val event_up = MotionEvent.obtain(
+        downTime + 320,
+        downTime + 330,
+        MotionEvent.ACTION_UP,
+        x,
+        y,
+        metaState
+    )
+
+    this.dispatchTouchEvent(event_down)
+    this.dispatchTouchEvent(event_move_up)
+    this.dispatchTouchEvent(event_move_down)
+    this.dispatchTouchEvent(event_up)
+}
+
+
+fun View.isVisibleOnScreen(): Boolean
+{
+    if (!this.isShown())
+    {
+        return false
+    }
+    val actualPosition = Rect()
+    this.getGlobalVisibleRect(actualPosition)
+    val screen = Rect(0, 0, getScreenWidth(), getScreenHeight())
+    return actualPosition.intersect(screen)
+}
+
+
 fun getScreenWidth(): Int
 {
     val displayMetrics = DisplayMetrics()
@@ -323,18 +387,6 @@ fun getScreenHeight(): Int
     window_manager.getDefaultDisplay().getMetrics(displayMetrics)
     val height = displayMetrics.heightPixels
     return height
-}
-
-fun View.isVisibleOnScreen(): Boolean
-{
-    if (!this.isShown())
-    {
-        return false
-    }
-    val actualPosition = Rect()
-    this.getGlobalVisibleRect(actualPosition)
-    val screen = Rect(0, 0, getScreenWidth(), getScreenHeight())
-    return actualPosition.intersect(screen)
 }
 
 fun RecyclerView.addDivider(color: Int, size: Int, orientation: Int = DividerItemDecoration.VERTICAL)
@@ -406,5 +458,30 @@ fun RecyclerView.getRecyclerScrollEvents(): BehaviorSubject<TypeScrollEvent>
 
     return bs
 }
+
+fun ViewPager.scrollToNextIfPossible()
+{
+    val adapter = this.adapter ?: return
+    val current_pos = this.currentItem
+    val max = adapter.count
+    val next_pos = current_pos + 1
+    if (next_pos < max)
+    {
+        this.setCurrentItem(next_pos, true)
+    }
+}
+
+
+fun ViewPager.scrollToPrevIfPossible()
+{
+    val current_pos = this.currentItem
+    val next_pos = current_pos - 1
+    if (next_pos > 0)
+    {
+        this.setCurrentItem(next_pos, true)
+    }
+}
+
+
 
 

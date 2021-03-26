@@ -33,48 +33,18 @@ class VmActOrderDialog : BaseViewModel()
         BasketManager.bs_cafe
                 .subscribe(
                     {
-                        bs_cafe.onNext(it)
+                        val cafe = it.value ?: return@subscribe
+                        bs_cafe.onNext(cafe)
+                    })
+                .disposeBy(composite_disposable)
+
+        bus_main_events.bs_order_made
+                .subscribe(
+                    {
+                        ps_to_finish.onNext(Optional(null))
                     })
                 .disposeBy(composite_disposable)
     }
-
-//    private fun makePayWithMethod(method: PaymentMethodType, order_id: Int)
-//    {
-//        val items = BasketManager.bs_items.value ?: return
-//
-//        PaymentManager.makePay(items, setOf(method),
-//            {
-//                val token = it.paymentToken
-//
-//                base_networker.payOrder(token, order_id,
-//                    {
-//                        val confirmation_url = it.getString("confirmation_url")
-//
-//                        if (confirmation_url != null)
-//                        {
-//                            PaymentManager.make3dSecureIntent(confirmation_url,
-//                                {
-//                                    handleAfterOrder(order_id)
-//                                })
-//                        }
-//                        else
-//                        {
-//                            handleAfterOrder(order_id)
-//                        }
-//                    })
-//            })
-//    }
-
-//    private fun handleAfterOrder(order_id: Int)
-//    {
-//        base_networker.getOrderInfo(order_id,
-//            {
-//                //Todo make logic with pass check!!!
-//                bus_main_events.bs_order_made.onNext(order_id)
-//                ps_to_finish.onNext(Optional(null))
-//
-//            })
-//    }
 
 
     inner class ViewListener : ActOrderDialogListener
@@ -86,34 +56,7 @@ class VmActOrderDialog : BaseViewModel()
             PaymentManager.createOrder(this@VmActOrderDialog, date, comment,
                 {
                     bus_main_events.bs_order_made.onNext(it)
-                    ps_to_finish.onNext(Optional(null))
                 })
-//            val items = BasketManager.bs_items.value?.toServerBasketItems()
-//
-//            if (items == null || items.size == 0)
-//            {
-//                val text = getStringMy(R.string.basket_is_empty)
-//                showRedAlerter(text)
-//                return
-//            }
-//
-//            val items_str = items.toJsonMy() ?: return
-//            val str_date = bs_time.value?.formatToString(DateManager.FORMAT_FOR_SERVER) ?: return
-//            val comment = bs_comment.value?.value
-//
-//            if (BasketManager.order_id != null)
-//            {
-//                makePayWithMethod(PaymentMethodType.BANK_CARD, BasketManager.order_id!!)
-//            }
-//            else
-//            {
-//                base_networker.makeOrder(str_date, comment, items_str,
-//                    { order_id ->
-//
-//                        BasketManager.order_id = order_id
-//                        makePayWithMethod(PaymentMethodType.BANK_CARD, order_id)
-//                    })
-//            }
         }
     }
 }

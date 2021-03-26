@@ -29,8 +29,12 @@ class ActProfileEdit : BaseActivity()
 
     private fun setNavStatus()
     {
+        is_full_screen = true
+        is_below_nav_bar = true
         is_light_status_bar = true
-        color_nav_bar = getColorMy(R.color.gray8).overlay(getColorMy(R.color.white))
+        is_light_nav_bar = true
+        color_nav_bar = getColorMy(R.color.transparent)
+        color_status_bar = getColorMy(R.color.transparent)
     }
 
     private fun setListeners()
@@ -66,6 +70,7 @@ class ActProfileEdit : BaseActivity()
                     {
                         val user = it.value ?: return@subscribe
 
+                        bnd_act_profile_edit.etName.setText(user.name)
                         bnd_act_profile_edit.etEmail.setText(user.email)
                         bnd_act_profile_edit.etPhone.setText(user.phone)
                         user.image?.url_l?.let(

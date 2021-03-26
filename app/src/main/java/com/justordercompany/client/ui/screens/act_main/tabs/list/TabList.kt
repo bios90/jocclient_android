@@ -87,6 +87,7 @@ class TabList(val act_main: ActMain) : TabView
         rec_by_distance.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         rec_by_distance.adapter = adapter_rec_distance
         rec_by_distance.layoutManager = LinearLayoutManager(act_main)
+        rec_by_distance.addDivider(getColorMy(R.color.transparent), dp2pxInt(6f))
         rec_by_distance.setPadding(dp2pxInt(12), dp2pxInt(12), dp2pxInt(12), dp2pxInt(12))
         rec_by_distance.clipToPadding = false
         rec_by_distance.clipChildren = false
@@ -95,6 +96,7 @@ class TabList(val act_main: ActMain) : TabView
         rec_by_rating.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         rec_by_rating.adapter = adapter_rec_rating
         rec_by_rating.layoutManager = LinearLayoutManager(act_main)
+        rec_by_rating.addDivider(getColorMy(R.color.transparent), dp2pxInt(6f))
         rec_by_rating.setPadding(dp2pxInt(12), dp2pxInt(12), dp2pxInt(12), dp2pxInt(12))
         rec_by_rating.clipToPadding = false
         rec_by_rating.clipChildren = false

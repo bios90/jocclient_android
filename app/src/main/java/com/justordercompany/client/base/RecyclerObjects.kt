@@ -6,10 +6,12 @@ enum class LoadBehavior
 {
     FULL_RELOAD,
     UPDATE,
+    UPDATE_AT_POS,
     SCROLL_TO_ID,
     NONE;
 
     open var id_to_scroll: Int? = null
+    open var pos_to_update: Int? = null
 
     companion object
     {
@@ -17,6 +19,13 @@ enum class LoadBehavior
         {
             val behavior = SCROLL_TO_ID
             behavior.id_to_scroll = id
+            return behavior
+        }
+
+        fun getUpdateAtPos(pos: Int): LoadBehavior
+        {
+            val behavior = UPDATE_AT_POS
+            behavior.pos_to_update = pos
             return behavior
         }
     }
@@ -38,15 +47,15 @@ fun <T> FeedDisplayInfo<T>?.getNextLoadInfo(): FeedLoadInfo<T>
     return FeedLoadInfo(this.items.size, Constants.COUNT_ADD_ON_LOAD, {})
 }
 
-fun <T> FeedDisplayInfo<T>?.addElements(items:List<T>): FeedDisplayInfo<T>
+fun <T> FeedDisplayInfo<T>?.addElements(items: List<T>): FeedDisplayInfo<T>
 {
     if (this == null)
     {
         return FeedDisplayInfo(items, LoadBehavior.FULL_RELOAD)
     }
 
-    val new_items : ArrayList<T> = arrayListOf()
+    val new_items: ArrayList<T> = arrayListOf()
     new_items.addAll(this.items)
     new_items.addAll(items)
-    return FeedDisplayInfo(new_items,LoadBehavior.UPDATE)
+    return FeedDisplayInfo(new_items, LoadBehavior.UPDATE)
 }

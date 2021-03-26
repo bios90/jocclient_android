@@ -21,7 +21,7 @@ class ActCafePopup : BaseActivity()
     {
         setNavStatus()
         super.onCreate(savedInstanceState)
-        applySliderBottom()
+        applySliderBottom(0.6f)
         bnd_act_popup = DataBindingUtil.setContentView(this, R.layout.act_cafe_popup)
         getActivityComponent().inject(this)
         vm_cafe_popup = my_vm_factory.getViewModel(VmCafePopup::class.java)

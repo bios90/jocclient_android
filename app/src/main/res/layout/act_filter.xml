@@ -90,6 +90,8 @@
                     android:layout_marginRight="2dp"
                     android:isScrollContainer="true"
                     app:rsb_max="100"
+                    app:rsb_maxThumbOffsetHorizontal="20"
+                    app:rsb_minThumbOffsetHorizontal="-20"
                     app:rsb_maxThumbDrawable="@drawable/range_seek_cursor"
                     app:rsb_minRange="5"
                     app:rsb_minThumbDrawable="@drawable/range_seek_cursor"

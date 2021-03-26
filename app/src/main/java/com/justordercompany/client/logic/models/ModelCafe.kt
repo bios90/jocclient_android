@@ -8,7 +8,7 @@ import com.justordercompany.client.logic.utils.LocationManager
 
 class ModelCafe(
         override var id: Int? = null,
-        @SerializedName("canOrder")
+        @SerializedName("canOrder", alternate = ["can_order"])
         var can_order: Boolean? = null,
         var name: String? = null,
         var lat: Double? = null,
@@ -49,16 +49,16 @@ class ModelCafe(
         distance = LocationManager.getDistanceInMeters(lat_lng, cafe_lat_lng)
     }
 
-    fun getAllImagesWithLogo():ArrayList<BaseImage>
+    fun getAllImagesWithLogo(): ArrayList<BaseImage>
     {
-        val all_images:ArrayList<BaseImage> = arrayListOf()
+        val all_images: ArrayList<BaseImage> = arrayListOf()
 
         this.logo?.let(
             {
                 all_images.add(it)
             })
 
-        if(!this.images.isNullOrEmpty())
+        if (!this.images.isNullOrEmpty())
         {
             all_images.addAll(this.images!!)
         }

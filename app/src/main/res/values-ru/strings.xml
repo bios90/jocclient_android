@@ -15,7 +15,7 @@
     <string name="enter_phone_number">Введите ваш номер телефона</string>
     <string name="enter_sms_code">Введите код подтверждения</string>
     <string name="send">Send</string>
-    <string name="authorization_allows_you">Авторизация позволит вам делать заказы, отслеживать статус заказа, оставлять отзывы а так же многое другое. Пройдите процесс регстирации прямо сейчас, это займет не больше 1 минуты.</string>
+    <string name="authorization_allows_you">Авторизация позволит вам совершать предзаказ и «быстрый заказ», отслеживать статус заказа, а также многое другое. Пройдите процесс регистрации прямо сейчас, это займёт не больше 1 минуты.</string>
     <string name="please_phone">Пожалуйста заполните поле телефон</string>
     <string name="send_code">Выслать код</string>
     <string name="confirm">Подтвердить</string>
@@ -71,7 +71,27 @@
     <string name="order_in_app_joc">Оплата заказа в приложении JustOrderCompany</string>
     <string name="payment">Оплата</string>
     <string name="time_plus_dots">Время:</string>
+    <string name="m">м</string>
+    <string name="km">км</string>
+    <string name="sum">"Сумма : "</string>
+    <string name="repeat">Повторить</string>
     <string name="make_cancel">Отменить</string>
     <string name="review">Отзыв</string>
+    <string name="notify_chanel_joc">Уведомления из приложения JOC</string>
+    <string name="searching_your_location">Ищем ваше местоположение</string>
+    <string name="settings">Настройки</string>
+    <string name="location_blocked_go_to_settings">Доступ к местоположению заблокирован =(\nОн необходим для отображения ближайших кофеен</string>
+    <string name="register">Регистрация</string>
     <string name="need_register_to_make_order">Для оформления заказа необходимо зарегестрироваться</string>
+    <string name="basket_already_contains">В вашей корзине содержаться продукты из другого кафе, хотите продолжить выбор продуктов или очистить корзину и открыть новое меню?</string>
+    <string name="_continue">Продолжить</string>
+    <string name="clear">Очистить</string>
+    <string name="err_no_internet">Отсутствует соединение с сетью</string>
+    <string name="err_server_internal">Внутренняя ошибка сервера</string>
+    <string name="err_parsing">Ошибка при обработке запроса</string>
+    <string name="order_made">Заказ оформлен</string>
+    <string name="order_number">Номер заказа : </string>
+    <string name="skip">Пропустить</string>
+    <string name="dalee">Далее</string>
+    <string name="start">Начать</string>
 </resources>

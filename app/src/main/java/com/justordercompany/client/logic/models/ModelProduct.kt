@@ -69,16 +69,18 @@ class ModelProduct
     fun toDefaultBasketItem(): ModelBasketItem
     {
         val item = ModelBasketItem(this)
+
+        if (hasWeights())
+        {
+            item.weight = weights!!.get(0)
+        }
+
         if (this.type == TypeProduct.SNACK)
         {
             return item
         }
 
         item.sugar = 0
-        if (hasWeights())
-        {
-            item.weight = weights!!.get(0)
-        }
 
         if (hasMilks())
         {
@@ -88,10 +90,10 @@ class ModelProduct
         return item
     }
 
-    fun getPosesOfAddables(addables:List<ModelAddableValue>):List<Int>
+    fun getPosesOfAddables(addables: List<ModelAddableValue>): List<Int>
     {
-        val poses:ArrayList<Int> = arrayListOf()
-        if(!this.hasAddables())
+        val poses: ArrayList<Int> = arrayListOf()
+        if (!this.hasAddables())
         {
             return poses
         }
@@ -102,7 +104,7 @@ class ModelProduct
                 this.addables!!.forEachIndexed(
                     { index, product_addable ->
 
-                        if(added_addable.id == product_addable.id)
+                        if (added_addable.id == product_addable.id)
                         {
                             poses.add(index)
                         }
