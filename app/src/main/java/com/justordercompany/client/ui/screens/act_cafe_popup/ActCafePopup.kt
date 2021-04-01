@@ -47,6 +47,11 @@ class ActCafePopup : BaseActivity()
             {
                 vm_cafe_popup.ViewListener().clickedVisit()
             })
+
+        bnd_act_popup.larRoute.setOnClickListener(
+            {
+                vm_cafe_popup.ViewListener().clickedRoute()
+            })
     }
 
     private fun setEvents()
@@ -64,6 +69,15 @@ class ActCafePopup : BaseActivity()
                 .subscribe(
                     {
                         bnd_act_popup.tvDistance.text = it
+                    })
+                .disposeBy(composite_diposable)
+
+        vm_cafe_popup.ps_route_time_text
+                .mainThreaded()
+                .subscribe(
+                    {
+                        bnd_act_popup.tvRouteTime.text = it.value
+                        bnd_act_popup.larRoute.visibility = (it.value != null).toVisibility()
                     })
                 .disposeBy(composite_diposable)
     }

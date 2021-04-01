@@ -127,7 +127,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/tv_adress"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginTop="14dp"
                             android:gravity="center">
 
                             <TextView
@@ -160,12 +160,15 @@
                             tools:text="Красная пресня, 23" />
 
                         <LinearLayout
+                            android:id="@+id/lal_distance"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="28dp"
                             android:layout_below="@id/tv_adress"
                             android:layout_alignParentRight="true"
-                            android:layout_marginTop="4dp"
-                            android:gravity="center">
+                            android:layout_marginTop="8dp"
+                            android:gravity="center"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp">
 
                             <TextView
                                 android:id="@+id/tv_location_arrow"

@@ -1,5 +1,6 @@
 package com.justordercompany.client.logic.utils
 
+import android.annotation.SuppressLint
 import android.location.Location
 import android.util.Log
 import com.google.android.gms.location.LocationRequest
@@ -63,6 +64,7 @@ class LocationManager
         return Single.fromObservable(observable)
     }
 
+    @SuppressLint("MissingPermission")
     fun getLocationUpdates(): Observable<Location>
     {
         val rx_location = RxLocation(AppClass.app)

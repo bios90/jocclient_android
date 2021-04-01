@@ -181,3 +181,18 @@ fun areAtSameDayHourMinuteSecond(date_1: Date, date_2: Date): Boolean
 
     return same_day
 }
+
+fun getTextRouteTime(seconds_all: Long): String
+{
+    val hours = seconds_all / 3600
+    val minutes = (seconds_all % 3600) / 60
+
+    if (hours > 0)
+    {
+        return String.format("%01d ч. %02d м.", hours, minutes)
+    }
+    else
+    {
+        return "$minutes м."
+    }
+}

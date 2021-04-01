@@ -2,6 +2,7 @@ package com.justordercompany.client.ui.screens.act_main.tabs.map
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,9 +11,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.justordercompany.client.R
 import com.justordercompany.client.base.data_binding.BuilderBg
 import com.justordercompany.client.databinding.LaMainMapBinding
@@ -31,6 +30,8 @@ class TabMap(val act_main: ActMain) : TabView
 
     lateinit var frag_map: SupportMapFragment
     lateinit var google_map: GoogleMap
+    var current_markers: ArrayList<Marker> = arrayListOf()
+    var current_route: Polyline? = null
 
     init
     {
@@ -73,6 +74,15 @@ class TabMap(val act_main: ActMain) : TabView
                         val dialog = DialogBottomCafe()
                         dialog.cafe = it
                         dialog.show(this.act_main.supportFragmentManager, null)
+                    })
+                .disposeBy(composite_disposable)
+
+        vm_tab_map.ps_to_show_route
+                .mainThreaded()
+                .subscribe(
+                    {
+                        clearRoute()
+                        current_route = google_map.addPolyline(it)
                     })
                 .disposeBy(composite_disposable)
     }
@@ -134,11 +144,12 @@ class TabMap(val act_main: ActMain) : TabView
 
                 return@setOnMarkerClickListener false
             })
+
     }
 
     private fun bindCafes(cafes: ArrayList<ModelCafe>)
     {
-        google_map.clear()
+        clearMarkers()
 
         for (cafe in cafes)
         {
@@ -165,6 +176,23 @@ class TabMap(val act_main: ActMain) : TabView
 
             val marker = google_map.addMarker(options)
             marker.tag = cafe
+            current_markers.add(marker)
         }
+    }
+
+    private fun clearMarkers()
+    {
+        for (marker in current_markers)
+        {
+            marker.remove()
+        }
+
+        current_markers.clear()
+    }
+
+    private fun clearRoute()
+    {
+        current_route?.remove()
+        current_route = null
     }
 }

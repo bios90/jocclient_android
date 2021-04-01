@@ -6,4 +6,5 @@ interface TabCafePageListener
 {
     fun clickedImage(image:BaseImage)
     fun clickedLogo()
+    fun clickedDistance()
 }

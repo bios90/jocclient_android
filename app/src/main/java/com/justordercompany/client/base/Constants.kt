@@ -55,6 +55,7 @@ class Constants
         const val EXTRA_FILTER = "Extra_Filter"
         const val EXTRA_CAFE_ID = "Extra_Cafe_Id"
         const val EXTRA_CLICKED_VISIT = "Extra_Clicked_Visit"
+        const val EXTRA_ROUTE_INFO = "Extra_Route_Info"
         const val EXTRA_PRODUCT = "Extra_Product"
         const val EXTRA_BASKET_ITEM = "Extra_Basket_Item"
         const val EXTRA_PAY_WITH_CARD = "Extra_Pay_With_Card"

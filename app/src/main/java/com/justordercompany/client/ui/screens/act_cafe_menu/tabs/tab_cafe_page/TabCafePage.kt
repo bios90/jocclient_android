@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.justordercompany.client.R
 import com.justordercompany.client.base.adapters.AdapterRvReviews
+import com.justordercompany.client.base.data_binding.BuilderBg
 import com.justordercompany.client.databinding.ItemCafeImageBinding
 import com.justordercompany.client.databinding.LaTabCafePageBinding
 import com.justordercompany.client.extensions.*
@@ -30,6 +31,17 @@ class TabCafePage(val act_cafe_menu: ActCafeMenu) : TabView
         setListeners()
         setRecycler()
         setEvents()
+
+        bnd_tab_cafe_page.lalDistance.background = BuilderBg()
+                .isGradient(false)
+                .isRipple(true)
+                .setStrokeColor(getColorMy(R.color.white))
+                .setStrokeWidth(1f)
+                .setCorners(999f)
+                .isDpMode(true)
+                .setBgColor(getColorMy(R.color.transparent))
+                .setRippleColor(getColorMy(R.color.white).applyTransparency(50))
+                .get()
     }
 
     fun setRecycler()
@@ -49,6 +61,11 @@ class TabCafePage(val act_cafe_menu: ActCafeMenu) : TabView
         bnd_tab_cafe_page.imgLogo.setOnClickListener(
             {
                 vm_tab_cafe_page.ViewListener().clickedLogo()
+            })
+
+        bnd_tab_cafe_page.lalDistance.setOnClickListener(
+            {
+                vm_tab_cafe_page.ViewListener().clickedDistance()
             })
     }
 

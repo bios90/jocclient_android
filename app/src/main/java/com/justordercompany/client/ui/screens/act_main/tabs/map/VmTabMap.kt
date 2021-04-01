@@ -2,6 +2,11 @@ package com.justordercompany.client.ui.screens.act_main.tabs.map
 
 import android.util.Log
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.PolylineOptions
+import com.google.maps.DirectionsApi
+import com.google.maps.DirectionsApiRequest
+import com.google.maps.GeoApiContext
+import com.justordercompany.client.R
 import com.justordercompany.client.base.AppClass
 import com.justordercompany.client.base.BaseViewModel
 import com.justordercompany.client.base.Constants
@@ -11,6 +16,9 @@ import com.justordercompany.client.logic.models.ModelCafe
 import com.justordercompany.client.logic.models.ModelMapPos
 import com.justordercompany.client.logic.models.countDistanceFrom
 import com.justordercompany.client.logic.requests.ReqCafes
+import com.justordercompany.client.logic.utils.LocationManager
+import com.justordercompany.client.logic.utils.RouteInfoMy
+import com.justordercompany.client.logic.utils.RoutesManager
 import com.justordercompany.client.logic.utils.builders.BuilderIntent
 import com.justordercompany.client.logic.utils.toLatLng
 import com.justordercompany.client.networking.apis.ApiCafe
@@ -18,6 +26,7 @@ import com.justordercompany.client.ui.screens.act_cafe_menu.ActCafeMenu
 import com.justordercompany.client.ui.screens.act_cafe_popup.ActCafePopup
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
+import java.lang.Exception
 import javax.inject.Inject
 
 class VmTabMap : BaseViewModel()
@@ -30,6 +39,7 @@ class VmTabMap : BaseViewModel()
     var bs_current_center: BehaviorSubject<LatLng> = BehaviorSubject.create()
     var bs_cafe_to_display: BehaviorSubject<ArrayList<ModelCafe>> = BehaviorSubject.create()
     var bs_cafe_bottom_dialog: BehaviorSubject<ModelCafe> = BehaviorSubject.create()
+    var ps_to_show_route: PublishSubject<PolylineOptions> = PublishSubject.create()
 
     init
     {
@@ -97,16 +107,15 @@ class VmTabMap : BaseViewModel()
                     .addParam(Constants.Extras.EXTRA_CAFE_ID, cafe_id)
                     .setOkAction(
                         {
-                            if (it?.getBoolExtraMy(Constants.Extras.EXTRA_CLICKED_VISIT) == true)
-                            {
-                                val builder = BuilderIntent()
-                                        .setActivityToStart(ActCafeMenu::class.java)
-                                        .addParam(Constants.Extras.EXTRA_CAFE_ID, cafe_id)
+                            val route_info = it?.getSerializableExtra(Constants.Extras.EXTRA_ROUTE_INFO) as? RouteInfoMy
 
-                                runActionWithDelay(300,
-                                    {
-                                        ps_intent_builded.onNext(builder)
-                                    })
+                            if (route_info != null)
+                            {
+                                showRoute(route_info)
+                            }
+                            else if (it?.getBoolExtraMy(Constants.Extras.EXTRA_CLICKED_VISIT) == true)
+                            {
+                                toCafeShow(cafe_id)
                             }
                         })
                     .setSlider(BuilderIntent.TypeSlider.BOTTOM_UP)
@@ -120,9 +129,33 @@ class VmTabMap : BaseViewModel()
         }
     }
 
-    private fun loadRouteToCafe()
+    private fun toCafeShow(cafe_id: Int)
     {
+        val builder = BuilderIntent()
+                .setActivityToStart(ActCafeMenu::class.java)
+                .setOkAction(
+                    {
+                        val route_info = it?.getSerializableExtra(Constants.Extras.EXTRA_ROUTE_INFO) as? RouteInfoMy
 
+                        if (route_info != null)
+                        {
+                            showRoute(route_info)
+                        }
+                    })
+                .addParam(Constants.Extras.EXTRA_CAFE_ID, cafe_id)
+
+        runActionWithDelay(300,
+            {
+                ps_intent_builded.onNext(builder)
+            })
     }
 
+    private fun showRoute(route_info: RouteInfoMy)
+    {
+        ps_to_show_route.onNext(route_info.getPolyInfo())
+        location_manager.bs_location.value?.let(
+            {
+                ps_move_map_pos.onNext(ModelMapPos(it.toLatLng(), 15f))
+            })
+    }
 }
