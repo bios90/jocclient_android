@@ -13,6 +13,8 @@ import io.reactivex.subjects.BehaviorSubject
 
 class VmActReviewDialog : BaseViewModel()
 {
+    var bs_cafe_id: BehaviorSubject<Int> = BehaviorSubject.create()
+    var bs_cafe_name: BehaviorSubject<String> = BehaviorSubject.create()
     var bs_order_id: BehaviorSubject<Int> = BehaviorSubject.create()
     var bs_order: BehaviorSubject<ModelOrder> = BehaviorSubject.create()
 
@@ -36,21 +38,32 @@ class VmActReviewDialog : BaseViewModel()
                             })
                     })
                 .disposeBy(composite_disposable)
+
+        bs_cafe_id
+                .subscribe(
+                    {
+                        base_networker.loadCafeSingle(it,
+                            {
+                                val name = it.name ?: return@loadCafeSingle
+                                bs_cafe_name.onNext(name)
+                            })
+                    })
+                .disposeBy(composite_disposable)
     }
 
     inner class ViewListener() : ActReviewDialogListener
     {
         override fun clickedOk()
         {
-            val cafe_id = bs_order.value?.cafe?.id ?: return
-            val order_id = bs_order_id.value ?: return
+            val cafe_id = bs_order.value?.cafe?.id ?: bs_cafe_id.value ?: return
+            val order_id = bs_order_id.value
             val rating = bs_rating.value?.toInt() ?: return
             val text = bs_review_text.value?.value
 
             base_networker.makeOrderReview(cafe_id, order_id, text, rating,
                 {
                     val return_intent = Intent()
-                    return_intent.putExtra(Constants.Extras.EXTRA_REVIEW_MADE,true)
+                    return_intent.putExtra(Constants.Extras.EXTRA_REVIEW_MADE, true)
                     ps_to_finish.onNext(Optional(return_intent))
                 })
         }

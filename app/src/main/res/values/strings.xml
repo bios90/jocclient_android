@@ -101,4 +101,12 @@
     <string name="skip">Пропустить</string>
     <string name="dalee">Далее</string>
     <string name="start">Начать</string>
+    <string name="no_reviews_yet">Отзывы пока не доступны, но вы можете стать первым, кто это сделает</string>
+    <string name="yur_info" translatable="false">"ООО «ДЖОК» ОГРН: 1217700201839\nИНН: 7707452396\nКПП: 770701001\nТелефон: +7 916 347-68-27\ne-mail: jocforpartners@gmail.com"</string>
+    <string name="review_about_cafe">Отзыв о кафе</string>
+    <string name="favorite">Избранное</string>
+    <string name="you_have_no_favorites">У вас пока нет кафе добавленных в избранное. Вы можете добавить их при просмотре кафе.</string>
+    <string name="cafe_added_to_favorites">Кафе добавлено в избранное</string>
+    <string name="cafe_removed_from_favorites">Кафе удалено из избранного</string>
+    <string name="map_legend">Легенда карты</string>
 </resources>

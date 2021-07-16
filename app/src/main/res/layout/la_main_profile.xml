@@ -7,6 +7,8 @@
 
         <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
 
+        <import type="com.justordercompany.client.R" />
+
         <import type="android.graphics.drawable.GradientDrawable" />
     </data>
 
@@ -21,7 +23,7 @@
         <RelativeLayout
             android:id="@+id/lar_top"
             android:layout_width="match_parent"
-            android:layout_height="212dp"
+            android:layout_height="244dp"
             android:background="@drawable/bg_overlapped"
             android:translationZ="1dp">
 
@@ -94,6 +96,7 @@
                     android:tint="@color/white" />
 
                 <LinearLayout
+                    android:id="@+id/lal_goals"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/img_avatar"
@@ -176,6 +179,39 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/lar_favorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:layout_below="@id/lal_goals"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="12dp"
+                    android:background="@{BuilderBg.getSimpleDrawableRipple(13f,R.color.white,R.color.gray4_trans_50)}">
+
+                    <TextView
+                        android:id="@+id/tv_favorite"
+                        style="@style/TvBold.M"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="22dp"
+                        android:text="@string/favorite"
+                        android:textColor="@color/orange" />
+
+                    <TextView
+                        style="@style/TvFawSolid.M"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_toRightOf="@id/tv_favorite"
+                        android:gravity="center"
+                        android:text="@string/faw_heart"
+                        android:textColor="@color/orange" />
+
+                </RelativeLayout>
 
             </RelativeLayout>
 

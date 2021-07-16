@@ -51,9 +51,11 @@ class VmTabCateg : BaseViewModel()
     {
         override fun clickedProduct(product: ModelProduct)
         {
+            val can_order = bs_cafe.value?.can_order == true
             val builder = BuilderIntent()
                     .setActivityToStart(ActProductSetting::class.java)
                     .addParam(Constants.Extras.EXTRA_PRODUCT, product)
+                    .addParam(Constants.Extras.EXTRA_CAN_ORDER, can_order)
                     .setOkAction(
                         {
                             val item = it?.getSerializableExtra(Constants.Extras.EXTRA_BASKET_ITEM) as? ModelBasketItem

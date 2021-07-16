@@ -1,10 +1,18 @@
 package com.justordercompany.client.logic.utils
 
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.justordercompany.client.R
+import com.justordercompany.client.base.data_binding.BuilderBg
+import com.justordercompany.client.base.enums.TypeCafeStatus
+import com.justordercompany.client.databinding.LaLegendBinding
 import com.justordercompany.client.extensions.*
 import com.justordercompany.client.logic.utils.builders.BuilderDialogMy
 import io.reactivex.Observable
@@ -137,5 +145,48 @@ class MessagesManager(private val activity: AppCompatActivity)
     fun enableScreenTouches()
     {
         activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+    }
+
+    fun showLegendDialog()
+    {
+        val dialogView = DataBindingUtil.inflate<LaLegendBinding>(LayoutInflater.from(activity), R.layout.la_legend, null, false).root
+
+        val dialog = AlertDialog.Builder(activity).create()
+        dialog.setCancelable(true)
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.setView(dialogView)
+        dialog.makeTransparentBg()
+        try
+        {
+            dialog.show()
+        }
+        catch (e: Exception)
+        {
+            e.printStackTrace()
+            return
+        }
+
+        val view_empty: View = dialogView.findViewById(R.id.la_empty)
+        val view_half: View = dialogView.findViewById(R.id.la_filled)
+        val view_full: View = dialogView.findViewById(R.id.la_full)
+        val views = arrayListOf(view_empty, view_half, view_full)
+        val statuses = TypeCafeStatus.values()
+
+        for ((index, view) in views.withIndex())
+        {
+            val color = statuses.get(index).getColorId()
+            val tv: TextView = view.findViewById(R.id.tv_cafe_name)
+            val arrow: ImageView = view.findViewById(R.id.img_arrow)
+
+            tv.background = BuilderBg.getSimpleDrawable(999f, color)
+            arrow.setColorFilter(getColorMy(color))
+            tv.text = "              "
+        }
+
+        val tv_ok: TextView = dialogView.findViewById(R.id.tv_ok)
+        tv_ok.setOnClickListener(
+            {
+                dialog.dismiss()
+            })
     }
 }

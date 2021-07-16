@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="com.justordercompany.client.R" />
+
+        <import type="android.graphics.drawable.GradientDrawable" />
+
+        <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray8_trans_50">
+
+
+        <RelativeLayout
+            android:id="@+id/lar_root"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="40dp"
+            android:background="@{BuilderBg.getSimpleDrawable(8f,R.color.white)}"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+            <TextView
+                android:textColor="@color/gray5"
+                style="@style/TvReg.L"
+                android:id="@+id/tv_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_cafes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:padding="8dp" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</layout>

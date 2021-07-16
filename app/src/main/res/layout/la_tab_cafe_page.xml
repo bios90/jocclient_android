@@ -88,6 +88,20 @@
 
                     </uk.co.deanwild.flowtextview.FlowTextView>
 
+                    <TextView
+                        android:id="@+id/tv_is_favorite"
+                        style="@style/TvFawReg.L"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="72dp"
+                        android:background="@{BuilderBg.getSimpleDrawableRipple(17f,R.color.white,R.color.orange_trans_50)}"
+                        android:elevation="12dp"
+                        android:gravity="center"
+                        android:text="@string/faw_heart"
+                        android:textColor="@color/orange" />
+
                     <HorizontalScrollView
                         android:id="@+id/scroll_images"
                         android:layout_width="match_parent"
@@ -114,10 +128,23 @@
 
                     </HorizontalScrollView>
 
+                    <TextView
+                        android:id="@+id/tv_adress"
+                        style="@style/TvReg.M"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/scroll_images"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"
+                        android:textColor="@color/white"
+                        tools:text="Красная пресня, 23" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/scroll_images"
+                        android:layout_below="@id/tv_adress"
                         android:layout_marginLeft="12dp"
                         android:layout_marginTop="12dp"
                         android:layout_marginRight="12dp"
@@ -126,7 +153,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/tv_adress"
+                            android:layout_centerVertical="true"
                             android:layout_marginTop="14dp"
                             android:gravity="center">
 
@@ -150,22 +177,20 @@
                         </LinearLayout>
 
 
-                        <TextView
-                            android:id="@+id/tv_adress"
-                            style="@style/TvReg.M"
+                        <include
+                            android:id="@+id/la_social_icons"
+                            layout="@layout/la_social_icons"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:textColor="@color/white"
-                            tools:text="Красная пресня, 23" />
+                            android:layout_centerInParent="true" />
+
 
                         <LinearLayout
                             android:id="@+id/lal_distance"
                             android:layout_width="wrap_content"
                             android:layout_height="28dp"
-                            android:layout_below="@id/tv_adress"
                             android:layout_alignParentRight="true"
-                            android:layout_marginTop="8dp"
+                            android:layout_centerVertical="true"
                             android:gravity="center"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp">
@@ -252,16 +277,47 @@
 
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp">
+
+                    <TextView
+                        android:id="@+id/tv_reviews_title"
+                        style="@style/TvBold.Xl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:gravity="left"
+                        android:text="@string/replies"
+                        android:textColor="@color/gray6" />
+
+                    <TextView
+                        android:id="@+id/tv_add_reply"
+                        style="@style/TvBold.L"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="6dp"
+                        android:padding="6dp"
+                        android:text="@string/add"
+                        android:textColor="@color/orange" />
+
+                </RelativeLayout>
+
+
                 <TextView
-                    android:id="@+id/tv_reviews_title"
-                    style="@style/TvBold.Xl"
+                    android:id="@+id/tv_no_reviews"
+                    style="@style/TvReg.M"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginRight="12dp"
-                    android:gravity="left"
-                    android:text="@string/replies"
+                    android:text="@string/no_reviews_yet"
                     android:textColor="@color/gray6" />
 
                 <androidx.recyclerview.widget.RecyclerView

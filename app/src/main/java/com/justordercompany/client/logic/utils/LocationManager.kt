@@ -10,6 +10,8 @@ import com.justordercompany.client.base.AppClass
 import com.justordercompany.client.base.BusMainEvents
 import com.justordercompany.client.extensions.disposeBy
 import com.justordercompany.client.extensions.getStringMy
+import com.justordercompany.client.local_data.MyLatLng
+import com.justordercompany.client.local_data.SharedPrefsManager
 import com.patloew.rxlocation.RxLocation
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -54,24 +56,25 @@ class LocationManager
         }
     }
 
-    val bs_location: BehaviorSubject<Location> = BehaviorSubject.create()
+    val bs_location: BehaviorSubject<LatLng> = BehaviorSubject.create()
     private val composite_disposable_location = CompositeDisposable()
 
     fun getLocationSingle(): Single<Location>
     {
         val observable = getLocationUpdates().take(1)
-        Log.e("LocationManager", "getLocationSingle: will retunt@!1")
         return Single.fromObservable(observable)
     }
 
     @SuppressLint("MissingPermission")
     fun getLocationUpdates(): Observable<Location>
     {
+
         val rx_location = RxLocation(AppClass.app)
         val locationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
                 .setInterval(30000)
-                .setSmallestDisplacement(50f)
+                .setFastestInterval(30000)
+                .setSmallestDisplacement(100f)
 
         return rx_location.location().updates(locationRequest)
     }
@@ -79,10 +82,18 @@ class LocationManager
 
     fun startGeoTracker()
     {
+        val last_location = SharedPrefsManager.getLastLatLng()
+        if (last_location != null)
+        {
+            bs_location.onNext(last_location.toLatLng())
+        }
+
         getLocationUpdates()
                 .subscribe(
                     {
-                        bs_location.onNext(it)
+                        val my_lat_lng = MyLatLng.initFromLatLng(it.toLatLng())
+                        SharedPrefsManager.saveLastLatLng(my_lat_lng)
+                        bs_location.onNext(it.toLatLng())
                     })
                 .disposeBy(composite_disposable_location)
 

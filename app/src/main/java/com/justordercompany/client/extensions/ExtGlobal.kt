@@ -336,3 +336,20 @@ fun openAppSettings()
     intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
     AppClass.app.startActivity(intent)
 }
+
+fun openUrlIntent(url: String)
+{
+    val intent = Intent(Intent.ACTION_VIEW)
+    intent.setData(Uri.parse(url))
+
+    val chooser = Intent.createChooser(intent, "Открыть")
+    chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    try
+    {
+        AppClass.app.startActivity(chooser)
+    }
+    catch (e: java.lang.Exception)
+    {
+        e.printStackTrace()
+    }
+}

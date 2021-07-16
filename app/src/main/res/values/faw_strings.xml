@@ -19,4 +19,13 @@
     <string name="faw_google_pay" translatable="false">&#xe079;</string>
     <string name="faw_credit_card" translatable="false">&#xf09d;</string>
     <string name="faw_question" translatable="false">&#xf128;</string>
+    <string name="faw_heart" translatable="false">&#xf004;</string>
+    <string name="faw_map_layers" translatable="false">&#xf5fd;</string>
+
+    <string name="faw_facebook" translatable="false">&#xf39e;</string>
+    <string name="faw_instagram" translatable="false">&#xf16d;</string>
+    <string name="faw_twitter" translatable="false">&#xf099;</string>
+    <string name="faw_vk" translatable="false">&#xf189;</string>
+    <string name="faw_whatsapp" translatable="false">&#xf232;</string>
+
 </resources>

@@ -49,7 +49,8 @@ interface BaseViewModelInterface
     val ps_ucrop_action: PublishSubject<BuilderCropMy>
     val ps_to_toggle_overlay: PublishSubject<Pair<Boolean, Int>>
     val ps_act_slider: PublishSubject<SlidrConfig>
-    val ps_to_show_images_slider: PublishSubject<Pair<ArrayList<out ObjWithImageUrl>,Int?>>
+    val ps_to_show_images_slider: PublishSubject<Pair<ArrayList<out ObjWithImageUrl>, Int?>>
+    val ps_to_hide_keyboard: PublishSubject<Any>
 
     fun clickedBack()
     {
@@ -91,7 +92,8 @@ abstract class BaseViewModel : ViewModel(), BaseViewModelInterface
     override val ps_ucrop_action: PublishSubject<BuilderCropMy> = PublishSubject.create()
     override val ps_to_toggle_overlay: PublishSubject<Pair<Boolean, Int>> = PublishSubject.create()
     override val ps_act_slider: PublishSubject<SlidrConfig> = PublishSubject.create()
-    override val ps_to_show_images_slider: PublishSubject<Pair<ArrayList<out ObjWithImageUrl>,Int?>> = PublishSubject.create()
+    override val ps_to_show_images_slider: PublishSubject<Pair<ArrayList<out ObjWithImageUrl>, Int?>> = PublishSubject.create()
+    override val ps_to_hide_keyboard: PublishSubject<Any> = PublishSubject.create()
 
     override fun viewAttached()
     {

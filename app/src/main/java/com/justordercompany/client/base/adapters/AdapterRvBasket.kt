@@ -116,6 +116,10 @@ class AdapterRvBasket : RecyclerView.Adapter<AdapterRvBasket.CardBasketItem>()
             item.product?.image?.url_m?.let(
                 {
                     GlideManager.loadImageSimpleCircle(it, img_logo)
+                    img_logo.visibility = View.VISIBLE
+                }) ?: run(
+                {
+                    img_logo.visibility = View.GONE
                 })
 
             tv_name.text = item.product?.name

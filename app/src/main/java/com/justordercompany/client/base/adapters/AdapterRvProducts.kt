@@ -78,6 +78,10 @@ class AdapterRvProducts : RecyclerView.Adapter<AdapterRvProducts.CardCafe>()
             product.image?.url_m?.let(
                 {
                     GlideManager.loadImageSimpleCircle(it, img_logo)
+                    img_logo.visibility = View.VISIBLE
+                }) ?: run(
+                {
+                    img_logo.visibility = View.GONE
                 })
 
             tv_name.text = product.name

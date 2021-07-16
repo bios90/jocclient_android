@@ -25,4 +25,17 @@ interface ApiCafe
     fun getCafeSingle(
             @Path("id") id: Int
     ): Observable<Response<ResponseBody>>
+
+    @GET(Constants.Urls.URL_FAVORITE_GET_ALL)
+    fun favoriteGetAll(): Observable<Response<ResponseBody>>
+
+    @PUT(Constants.Urls.URL_FAVORITE_ADD)
+    fun favoriteAdd(
+            @Query("cafe_id") cafe_id: Int
+    ): Observable<Response<ResponseBody>>
+
+    @PUT(Constants.Urls.URL_FAVORITE_REMOVE)
+    fun favoriteRemove(
+            @Query("cafe_id") cafe_id: Int
+    ): Observable<Response<ResponseBody>>
 }

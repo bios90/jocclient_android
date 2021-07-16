@@ -14,16 +14,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray8_trans_50"
-        android:orientation="vertical">
+        android:background="@color/gray8_trans_50">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
             android:layout_marginTop="40dp"
+            android:layout_marginRight="24dp"
             android:layout_marginBottom="40dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="4dp">
@@ -33,10 +32,10 @@
                 android:layout_height="match_parent">
 
                 <ScrollView
-                    android:layout_marginBottom="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_above="@id/tv_contact">
+                    android:layout_above="@id/tv_contact"
+                    android:layout_marginBottom="12dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -60,7 +59,7 @@
                             android:layout_marginLeft="12dp"
                             android:layout_marginRight="12dp"
                             android:gravity="left"
-                            android:text="ИП Лекан Александра Владимировна ОГРНИП: 320745600066981\nИНН: 022003572411\nРеквизиты АО 'АЛЬФА-БАНК\'\nБИК: 044525593\nК/с: 30101810200000000593 в ГУ БАНКА РОССИИ ПО ЦФО\nТелефон: +7 916 347-68-27\ne-mail: jocforpartners@gmail.com"
+                            android:text="@string/yur_info"
                             android:textColor="@color/gray5" />
 
                         <TextView
@@ -72,7 +71,6 @@
                             android:layout_marginRight="12dp"
                             android:text="Договор"
                             android:textColor="@color/gray7" />
-
 
                         <TextView
                             android:id="@+id/tv_offert"

@@ -47,7 +47,7 @@ class TabList(val act_main: ActMain) : TabView
                     {
                         Log.e("TabList", "setEvents: Hot Here!!")
 
-                        val by_rating = it.items.sortedBy({ it.rating })
+                        val by_rating = it.items.sortedByDescending({ it.rating })
                         val by_distance = it.items.sortedBy({ it.distance })
 
                         adapter_rec_rating.setItems(FeedDisplayInfo(by_rating, it.load_behavior))

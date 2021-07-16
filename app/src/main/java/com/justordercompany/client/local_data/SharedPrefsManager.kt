@@ -2,11 +2,13 @@ package com.justordercompany.client.local_data
 
 import android.annotation.SuppressLint
 import android.content.Context.MODE_PRIVATE
+import com.google.android.gms.maps.model.LatLng
 import com.justordercompany.client.base.AppClass
 import com.justordercompany.client.base.Constants
 import com.justordercompany.client.extensions.toJsonMy
 import com.justordercompany.client.extensions.toObjOrNullGson
 import com.justordercompany.client.logic.models.ModelUser
+import java.io.Serializable
 import java.lang.Exception
 import java.lang.RuntimeException
 
@@ -18,6 +20,7 @@ class SharedPrefsManager
         FB_TOKEN,
         CURRENT_USER,
         MASK_INTRO_SHOWED,
+        LAST_LAT_LNG,
     }
 
     companion object
@@ -91,5 +94,31 @@ class SharedPrefsManager
         {
             return getCurrentUser()?.api_token
         }
+
+        fun saveLastLatLng(lat_lng: MyLatLng)
+        {
+            saveObj(Key.LAST_LAT_LNG, lat_lng)
+        }
+
+        fun getLastLatLng(): MyLatLng?
+        {
+            return getObj(Key.LAST_LAT_LNG, MyLatLng::class.java)
+        }
+    }
+}
+
+class MyLatLng(val lat: Double, val lng: Double) : Serializable
+{
+    companion object
+    {
+        fun initFromLatLng(lat_lng: LatLng): MyLatLng
+        {
+            return MyLatLng(lat_lng.latitude, lat_lng.longitude)
+        }
+    }
+
+    fun toLatLng(): LatLng
+    {
+        return LatLng(this.lat, this.lng)
     }
 }

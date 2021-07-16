@@ -20,6 +20,7 @@ import com.justordercompany.client.logic.utils.builders.BuilderDialogBottom
 import com.justordercompany.client.logic.utils.builders.BuilderDialogMy
 import com.justordercompany.client.logic.utils.builders.BuilderIntent
 import com.justordercompany.client.ui.screens.act_cafe_menu.ActCafeMenu
+import com.justordercompany.client.ui.screens.act_favorites.ActFavorites
 import com.justordercompany.client.ui.screens.act_info_dialog.ActInfoDialog
 import com.justordercompany.client.ui.screens.act_profile_edit.ActProfileEdit
 import com.justordercompany.client.ui.screens.act_review_dialog.ActReviewDialog
@@ -157,6 +158,8 @@ class VmTabProfile : BaseViewModel()
         }
 
         makeOrdersFullReload()
+        reloadUserInfo()
+        ps_to_hide_keyboard.onNext(Any())
     }
 
     fun makeOrdersFullReload()
@@ -363,6 +366,22 @@ class VmTabProfile : BaseViewModel()
 //            }
 //
 //            emailIntent("jocforusers@gmail.con",text,title)
+        }
+
+        override fun clickedFavorites()
+        {
+            BuilderIntent()
+                    .setActivityToStart(ActFavorites::class.java)
+                    .setOkAction(
+                        {
+                            val cafe_id = it?.getIntExtraMy(Constants.Extras.EXTRA_CAFE_ID) ?: return@setOkAction
+
+                            BuilderIntent()
+                                    .setActivityToStart(ActCafeMenu::class.java)
+                                    .addParam(Constants.Extras.EXTRA_CAFE_ID, cafe_id)
+                                    .sendInVm(this@VmTabProfile)
+                        })
+                    .sendInVm(this@VmTabProfile)
         }
     }
 

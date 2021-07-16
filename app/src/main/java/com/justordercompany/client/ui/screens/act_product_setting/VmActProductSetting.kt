@@ -18,6 +18,7 @@ class VmActProductSetting : BaseViewModel()
 {
     val bs_product: BehaviorSubject<ModelProduct> = BehaviorSubject.create()
     val bs_busket_item: BehaviorSubject<ModelBasketItem> = BehaviorSubject.create()
+    val bs_can_order:BehaviorSubject<Boolean> = BehaviorSubject.create()
 
     init
     {

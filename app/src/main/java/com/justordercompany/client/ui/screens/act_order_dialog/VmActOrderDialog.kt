@@ -53,7 +53,9 @@ class VmActOrderDialog : BaseViewModel()
         {
             val date = bs_time.value ?: return
             val comment = bs_comment.value?.value
-            PaymentManager.createOrder(this@VmActOrderDialog, date, comment,
+            val cafe_id = bs_cafe.value?.id ?: return
+
+            PaymentManager.createOrder(this@VmActOrderDialog, date, comment, cafe_id,
                 {
                     bus_main_events.bs_order_made.onNext(it)
                 })

@@ -23,7 +23,6 @@ import com.justordercompany.client.extensions.toObjOrNullGson
 import com.justordercompany.client.logic.models.ModelUser
 
 
-//User real geo moving!!
 
 class AppClass : Application()
 {

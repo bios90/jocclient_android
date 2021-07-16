@@ -101,7 +101,7 @@ class PaymentManager
                 })
         }
 
-        fun createOrder(base_vm: BaseViewModel, date: Date, comment: String?, action_success: (Int) -> Unit)
+        fun createOrder(base_vm: BaseViewModel, date: Date, comment: String?, cafe_id: Int, action_success: (Int) -> Unit)
         {
             val items = BasketManager.bs_items.value?.toServerBasketItems()
 
@@ -122,7 +122,7 @@ class PaymentManager
             }
             else
             {
-                base_vm.base_networker.makeOrder(str_date, comment, items_str,
+                base_vm.base_networker.makeOrder(str_date, comment, items_str,cafe_id,
                     { order_id ->
 
                         BasketManager.order_id = order_id

@@ -61,6 +61,14 @@ class ActReviewDialog : BaseActivity()
                         bnd_act_review_dialog.tvRating.text = it.toInt().toString()
                     })
                 .disposeBy(composite_diposable)
+
+        vm_review_dialog.bs_cafe_name
+                .mainThreaded()
+                .subscribe(
+                    {
+                        bindCafeName(it)
+                    })
+                .disposeBy(composite_diposable)
     }
 
     fun setListeners()
@@ -92,13 +100,27 @@ class ActReviewDialog : BaseActivity()
         bnd_act_review_dialog.tvText.text = text
     }
 
+    private fun bindCafeName(name: String)
+    {
+        val title = getStringMy(R.string.review)
+        val text = getString(R.string.review_about_cafe) + " $name"
+
+        bnd_act_review_dialog.tvTitle.text = title
+        bnd_act_review_dialog.tvText.text = text
+    }
+
     private fun checkExtra()
     {
         val order_id = intent.getIntExtraMy(Constants.Extras.EXTRA_ORDER_ID)
-        if(order_id == null)
+        val cafe_id = intent.getIntExtraMy(Constants.Extras.EXTRA_CAFE_ID)
+
+        if (order_id != null)
         {
-            throw RuntimeException("**** Error no order id passed ****")
+            vm_review_dialog.bs_order_id.onNext(order_id)
         }
-        vm_review_dialog.bs_order_id.onNext(order_id)
+        if (cafe_id != null)
+        {
+            vm_review_dialog.bs_cafe_id.onNext(cafe_id)
+        }
     }
 }

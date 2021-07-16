@@ -8,6 +8,7 @@ import com.justordercompany.client.extensions.Optional
 import com.justordercompany.client.extensions.disposeBy
 import com.justordercompany.client.local_data.SharedPrefsManager
 import com.justordercompany.client.logic.models.ModelBasketItem
+import com.justordercompany.client.logic.models.ModelCafe
 import com.justordercompany.client.logic.utils.BasketManager
 import com.justordercompany.client.logic.utils.PaymentManager
 import com.justordercompany.client.logic.utils.addMinutes
@@ -21,6 +22,7 @@ import kotlin.collections.ArrayList
 
 class VmTabBasket : BaseViewModel()
 {
+    var bs_cafe: BehaviorSubject<ModelCafe> = BehaviorSubject.create()
     val bs_basket_items: BehaviorSubject<ArrayList<ModelBasketItem>> = BehaviorSubject.create()
     val bs_show_register: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
@@ -63,9 +65,11 @@ class VmTabBasket : BaseViewModel()
     {
         override fun clickedEdit(item: ModelBasketItem)
         {
+            val can_order = bs_cafe.value?.can_order == true
             val builder = BuilderIntent()
                     .setActivityToStart(ActProductSetting::class.java)
                     .addParam(Constants.Extras.EXTRA_BASKET_ITEM, item)
+                    .addParam(Constants.Extras.EXTRA_CAN_ORDER, can_order)
                     .setOkAction(
                         {
                             val item = it?.getSerializableExtra(Constants.Extras.EXTRA_BASKET_ITEM) as? ModelBasketItem
@@ -95,7 +99,8 @@ class VmTabBasket : BaseViewModel()
         override fun clickedQuickOrder()
         {
             val date = Date().addMinutes(5)
-            PaymentManager.createOrder(this@VmTabBasket, date, null,
+            val cafe_id = bs_cafe.value?.id ?: return
+            PaymentManager.createOrder(this@VmTabBasket, date, null, cafe_id,
                 {
                     bus_main_events.bs_order_made.onNext(it)
                 })

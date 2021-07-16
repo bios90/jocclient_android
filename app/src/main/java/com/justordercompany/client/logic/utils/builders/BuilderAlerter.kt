@@ -3,6 +3,7 @@ package com.justordercompany.client.logic.utils.builders
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.justordercompany.client.R
+import com.justordercompany.client.base.BaseViewModel
 import com.justordercompany.client.extensions.getColorMy
 import com.tapadoo.alerter.Alerter
 import com.tapadoo.alerter.OnHideAlertListener
@@ -64,6 +65,11 @@ class BuilderAlerter
         {
             this.duration = duration
         })
+
+    fun sendInVm(base_vm:BaseViewModel)
+    {
+        base_vm.ps_to_show_alerter.onNext(this)
+    }
 
     fun show(activity: AppCompatActivity)
     {

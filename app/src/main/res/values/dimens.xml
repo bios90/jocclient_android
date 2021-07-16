@@ -18,4 +18,6 @@
     <dimen name="size_faw_xl">19dp</dimen>
     <dimen name="size_faw_xxl">22dp</dimen>
     <dimen name="size_faw_xxxl">28dp</dimen>
+
+    <dimen name="social_icon_size">26dp</dimen>
 </resources>

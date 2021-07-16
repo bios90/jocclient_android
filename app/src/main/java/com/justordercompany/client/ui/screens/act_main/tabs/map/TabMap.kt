@@ -14,9 +14,12 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.justordercompany.client.R
 import com.justordercompany.client.base.data_binding.BuilderBg
+import com.justordercompany.client.base.enums.TypeCafeStatus
 import com.justordercompany.client.databinding.LaMainMapBinding
 import com.justordercompany.client.extensions.*
+import com.justordercompany.client.local_data.SharedPrefsManager
 import com.justordercompany.client.logic.models.ModelCafe
+import com.justordercompany.client.logic.utils.LocationManager
 import com.justordercompany.client.logic.utils.PermissionManager
 import com.justordercompany.client.ui.dialogs.DialogBottomCafe
 import com.justordercompany.client.ui.screens.act_main.ActMain
@@ -42,11 +45,21 @@ class TabMap(val act_main: ActMain) : TabView
         setEvents()
         setListeners()
         initMap()
+
+        bnd_map.tvLegend.setMargins(null, getStatusBarHeight() + dp2pxInt(62f), null, null)
     }
 
     fun setListeners()
     {
+        bnd_map.tvClearRoute.setOnClickListener(
+            {
+                vm_tab_map.ViewListener().clickedClearRoute()
+            })
 
+        bnd_map.tvLegend.setOnClickListener(
+            {
+                vm_tab_map.ViewListener().clickedLegend()
+            })
     }
 
     fun setEvents()
@@ -82,7 +95,23 @@ class TabMap(val act_main: ActMain) : TabView
                 .subscribe(
                     {
                         clearRoute()
-                        current_route = google_map.addPolyline(it)
+                        if (it.value != null)
+                        {
+                            bnd_map.tvClearRoute.animateFadeOut()
+                            current_route = google_map.addPolyline(it.value)
+                        }
+                        else
+                        {
+                            bnd_map.tvClearRoute.animateFadeIn()
+                        }
+                    })
+                .disposeBy(composite_disposable)
+
+        vm_tab_map.ps_to_show_legend
+                .mainThreaded()
+                .subscribe(
+                    {
+                        act_main.messages_manager.showLegendDialog()
                     })
                 .disposeBy(composite_disposable)
     }
@@ -101,8 +130,12 @@ class TabMap(val act_main: ActMain) : TabView
                 google_map = it
 
                 this.google_map.getUiSettings().setMapToolbarEnabled(false)
-                this.google_map.getUiSettings().setMyLocationButtonEnabled(false)
-                google_map.moveCameraToPos(LatLng(55.751244, 37.618423))
+                this.google_map.getUiSettings().setMyLocationButtonEnabled(true)
+                val padding = dp2px(0f).toInt()
+                this.google_map.setPadding(padding, padding + getStatusBarHeight(), padding, padding)
+
+                val pos_to_move = SharedPrefsManager.getLastLatLng()?.toLatLng() ?: LatLng(55.751244, 37.618423)
+                google_map.moveCameraToPos(pos_to_move)
                 setMapListener()
 
                 act_main.permissions_manager.checkAndRequest(PermissionManager.permissions_location)
@@ -162,11 +195,10 @@ class TabMap(val act_main: ActMain) : TabView
             val tv: TextView = view.findViewById(R.id.tv_cafe_name)
             val arrow: ImageView = view.findViewById(R.id.img_arrow)
 
-            if (cafe.can_order != true)
-            {
-                tv.background = BuilderBg.getSimpleDrawable(999f, R.color.biryza)
-                arrow.setColorFilter(getColorMy(R.color.biryza))
-            }
+            Log.e("TabMap", "bindCafes: Status is "+cafe.status)
+            val color = cafe.status?.getColorId() ?: R.color.biryza
+            tv.background = BuilderBg.getSimpleDrawable(999f, color)
+            arrow.setColorFilter(getColorMy(color))
 
             tv.text = cafe.name
             val bitmap = view.toBitmap()

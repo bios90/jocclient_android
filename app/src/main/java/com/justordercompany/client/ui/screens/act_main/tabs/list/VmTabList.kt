@@ -3,6 +3,7 @@ package com.justordercompany.client.ui.screens.act_main.tabs.list
 import com.justordercompany.client.base.*
 import com.justordercompany.client.base.enums.TypeLaListIntroMode
 import com.justordercompany.client.extensions.disposeBy
+import com.justordercompany.client.extensions.mainThreaded
 import com.justordercompany.client.extensions.openAppSettings
 import com.justordercompany.client.extensions.runActionWithDelay
 import com.justordercompany.client.logic.models.ModelCafe
@@ -56,6 +57,15 @@ class VmTabList : BaseViewModel()
                     })
                 .disposeBy(composite_disposable)
 
+        bus_main_events.bs_current_map_center
+                .debounce(1000,TimeUnit.MILLISECONDS)
+                .mainThreaded()
+                .subscribe(
+                    {
+                        reloadCafes()
+                    })
+                .disposeBy(composite_disposable)
+
         ps_to_load_cafes
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .subscribe(
@@ -82,7 +92,7 @@ class VmTabList : BaseViewModel()
 
     private fun reloadCafes()
     {
-        val location = location_manager.bs_location.value ?: return
+        val location = bus_main_events.bs_current_map_center.value ?: location_manager.bs_location.value ?: return
         val filter = bus_main_events.bs_filter.value ?: return
 
         val req = ReqCafes()
@@ -92,7 +102,12 @@ class VmTabList : BaseViewModel()
         req.filter = filter
         req.action_success =
                 {
-                    it.countDistanceFrom(location.toLatLng())
+                    val location_for_distance = location_manager.bs_location.value ?: bus_main_events.bs_current_map_center.value
+                    if(location_for_distance != null)
+                    {
+                        it.countDistanceFrom(location_for_distance)
+                    }
+
                     val load_info = FeedDisplayInfo(it, LoadBehavior.UPDATE)
                     bs_current_cafes.onNext(load_info)
                 }
@@ -106,10 +121,10 @@ class VmTabList : BaseViewModel()
         {
             val cafe_id = cafe.id ?: return
 
-            val builder = BuilderIntent()
+            BuilderIntent()
                     .setActivityToStart(ActCafeMenu::class.java)
                     .addParam(Constants.Extras.EXTRA_CAFE_ID, cafe_id)
-            ps_intent_builded.onNext(builder)
+                    .sendInVm(this@VmTabList)
         }
 
         override fun clickedToSettings()

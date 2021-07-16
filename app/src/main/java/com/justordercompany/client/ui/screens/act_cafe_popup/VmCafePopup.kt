@@ -4,6 +4,7 @@ import android.content.Intent
 import android.location.Location
 import android.text.format.DateUtils
 import android.util.Log
+import com.google.android.gms.maps.model.LatLng
 import com.justordercompany.client.base.AppClass
 import com.justordercompany.client.base.BaseViewModel
 import com.justordercompany.client.base.Constants
@@ -14,6 +15,7 @@ import com.justordercompany.client.logic.responses.RespBaseWithData
 import com.justordercompany.client.logic.responses.RespCafeSingle
 import com.justordercompany.client.logic.utils.*
 import com.justordercompany.client.networking.apis.ApiCafe
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
@@ -43,16 +45,27 @@ class VmCafePopup : BaseViewModel()
                         val cafe_lat_lng = cafe.getLatLng() ?: return@loadCafeSingle
 
                         location_manager.getLocationSingle()
+                                .subscribeOn(Schedulers.io())
+                                .mainThreaded()
                                 .subscribe(
                                     {
-
                                         val user_pos = it.toLatLng()
 
-                                        val route_info = RoutesManager.getRouteInfo(user_pos, cafe_lat_lng)
-                                        if (route_info != null)
-                                        {
-                                            bs_route_info.onNext(route_info)
-                                        }
+                                        Thread(
+                                            {
+                                                val route_info = RoutesManager.getRouteInfo(user_pos, cafe_lat_lng)
+
+                                                if (route_info != null)
+                                                {
+                                                    runActionOnMainThread(
+                                                        {
+                                                            bs_route_info.onNext(route_info)
+                                                        })
+
+                                                }
+                                            })
+                                                .start()
+
                                     },
                                     {
                                         it.printStackTrace()
@@ -86,9 +99,8 @@ class VmCafePopup : BaseViewModel()
         override fun clickedRoute()
         {
             val route_into = bs_route_info.value ?: return
-            val return_intent = Intent()
-            return_intent.putExtra(Constants.Extras.EXTRA_ROUTE_INFO, route_into)
-            ps_to_finish.onNext(return_intent.asOptional())
+            bus_main_events.ps_clicked_cafe_route.onNext(route_into)
+            ps_to_finish.onNext(Optional(null))
         }
     }
 }

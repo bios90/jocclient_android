@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.justordercompany.client.R" />
+
+        <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
+
+    </data>
+
+    <LinearLayout
+        my_divider_size="@{8f}"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:showDividers="middle">
+
+        <TextView
+            android:id="@+id/tv_instagram"
+            style="@style/TvFawBrand"
+            android:layout_width="@dimen/social_icon_size"
+            android:layout_height="@dimen/social_icon_size"
+            android:background="@{BuilderBg.getSimpleDrawableRipple(13f,R.color.white,R.color.gray1)}"
+            android:text="@string/faw_instagram"
+            android:textColor="@color/orange_dark"
+            android:textSize="@dimen/size_l"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_vk"
+            style="@style/TvFawBrand"
+            android:layout_width="@dimen/social_icon_size"
+            android:layout_height="@dimen/social_icon_size"
+            android:background="@{BuilderBg.getSimpleDrawableRipple(13f,R.color.white,R.color.gray1)}"
+            android:text="@string/faw_vk"
+            android:textColor="@color/orange_dark"
+            android:textSize="@dimen/size_l"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_facebook"
+            style="@style/TvFawBrand"
+            android:layout_width="@dimen/social_icon_size"
+            android:layout_height="@dimen/social_icon_size"
+            android:background="@{BuilderBg.getSimpleDrawableRipple(13f,R.color.white,R.color.gray1)}"
+            android:text="@string/faw_facebook"
+            android:textColor="@color/orange_dark"
+            android:textSize="@dimen/size_l"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_whatsapp"
+            style="@style/TvFawBrand"
+            android:layout_width="@dimen/social_icon_size"
+            android:layout_height="@dimen/social_icon_size"
+            android:background="@{BuilderBg.getSimpleDrawableRipple(13f,R.color.white,R.color.gray1)}"
+            android:text="@string/faw_whatsapp"
+            android:textColor="@color/orange_dark"
+            android:textSize="@dimen/size_l"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_twitter"
+            style="@style/TvFawBrand"
+            android:layout_width="@dimen/social_icon_size"
+            android:layout_height="@dimen/social_icon_size"
+            android:background="@{BuilderBg.getSimpleDrawableRipple(13f,R.color.white,R.color.gray1)}"
+            android:text="@string/faw_twitter"
+            android:textColor="@color/orange_dark"
+            android:textSize="@dimen/size_l"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</layout>

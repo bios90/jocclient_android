@@ -37,6 +37,7 @@ import android.os.Build
 import android.view.WindowManager
 import com.justordercompany.client.logic.models.ObjWithImageUrl
 import com.justordercompany.client.logic.utils.images.GlideManager
+import com.r0adkll.slidr.model.SlidrInterface
 import com.stfalcon.imageviewer.StfalconImageViewer
 import io.reactivex.subjects.PublishSubject
 
@@ -263,6 +264,14 @@ abstract class BaseActivity : AppCompatActivity()
                     })
                 .disposeBy(composite_diposable)
 
+        base_vm.ps_to_hide_keyboard
+                .mainThreaded()
+                .subscribe(
+                    {
+                        hideKeyboard()
+                    })
+                .disposeBy(composite_diposable)
+
         base_vm.viewAttached()
     }
 
@@ -318,7 +327,7 @@ abstract class BaseActivity : AppCompatActivity()
         }
     }
 
-    fun applySliderBottom(edge_size:Float = 0.3f)
+    fun applySliderBottom(edge_size: Float = 0.3f)
     {
         val config = SlidrConfig.Builder()
                 .position(SlidrPosition.TOP)
@@ -384,5 +393,22 @@ abstract class BaseActivity : AppCompatActivity()
                 .allowSwipeToDismiss(true)
                 .withStartPosition(pos)
                 .show()
+    }
+
+    protected fun addSliderLeft(action_slide_changed: ((Int) -> Unit)? = null, only_edge: Boolean = false): SlidrInterface
+    {
+        val config = SlidrConfig.Builder()
+                .position(SlidrPosition.LEFT)
+                .edge(only_edge)
+                .edgeSize(0.2f)
+                .distanceThreshold(0.4f)
+                .edgeSize(0.2f)
+                .build()
+        return Slidr.attach(this, config)
+    }
+
+    protected fun hideKeyboard()
+    {
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
     }
 }

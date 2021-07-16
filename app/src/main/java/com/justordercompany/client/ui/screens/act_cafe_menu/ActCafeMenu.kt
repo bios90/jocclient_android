@@ -43,6 +43,7 @@ class ActCafeMenu : BaseActivity()
     {
         setNavStatus()
         super.onCreate(savedInstanceState)
+        addSliderLeft()
         bnd_act_cafe_menu = DataBindingUtil.setContentView(this, R.layout.act_cafe_menu)
         getActivityComponent().inject(this)
         vm_act_cafe_menu = my_vm_factory.getViewModel(VmActCafeMenu::class.java)
@@ -75,6 +76,13 @@ class ActCafeMenu : BaseActivity()
                     {
                         setPager(it)
                         tab_cafe_page.vm_tab_cafe_page.bs_cafe.onNext(it)
+
+                        runActionWithDelay(200,
+                            {
+                                bnd_act_cafe_menu.viewOverlay.animateFadeIn()
+                            })
+                                .disposeBy(composite_diposable)
+
                     })
                 .disposeBy(composite_diposable)
 
@@ -137,16 +145,21 @@ class ActCafeMenu : BaseActivity()
             bnd_act_cafe_menu.lalBottomNav.lalSnacks.visibility = View.VISIBLE
         }
 
-        tab_basket = TabBasket(this)
-        tab_views.add(tab_basket.getView())
+        if (cafe.can_order == true)
+        {
+            tab_basket = TabBasket(this)
+            tab_views.add(tab_basket.getView())
+            bnd_act_cafe_menu.lalBottomNav.lalBasket.visibility = View.VISIBLE
+            tab_basket.vm_tab_basket.bs_cafe.onNext(cafe)
+        }
 
         adapter_vp_base.setViews(tab_views)
-        bnd_act_cafe_menu.vpCafe.setCurrentItem(0,false)
+        bnd_act_cafe_menu.vpCafe.setCurrentItem(0, false)
     }
 
     private fun setListeners()
     {
-        bnd_act_cafe_menu.vpCafe.addOnPageChangeListener(object:ViewPager.OnPageChangeListener
+        bnd_act_cafe_menu.vpCafe.addOnPageChangeListener(object : ViewPager.OnPageChangeListener
         {
             override fun onPageScrollStateChanged(state: Int)
             {
@@ -160,7 +173,7 @@ class ActCafeMenu : BaseActivity()
             override fun onPageSelected(position: Int)
             {
                 val cafe = vm_act_cafe_menu.bs_cafe.value ?: return
-                val type = TypeTabCafe.initFromPagerPos(position,cafe)
+                val type = TypeTabCafe.initFromPagerPos(position, cafe)
                 vm_act_cafe_menu.bs_current_tab.onNext(type)
             }
         })
@@ -223,7 +236,7 @@ class ActCafeMenu : BaseActivity()
         vm_act_cafe_menu.bs_cafe_id.onNext(cafe_id)
 
         val order_id = intent.getIntExtraMy(Constants.Extras.EXTRA_ORDER_ID)
-        if(order_id != null)
+        if (order_id != null)
         {
             vm_act_cafe_menu.bs_order_id.onNext(order_id)
         }

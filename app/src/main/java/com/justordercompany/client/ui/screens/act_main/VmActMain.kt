@@ -31,13 +31,6 @@ class VmActMain : BaseViewModel()
         AppClass.app_component.inject(this)
 
         setBusEvents()
-
-        runActionWithDelay(2000,
-            {
-                BuilderIntent()
-                        .setActivityToStart(ActIntroSlides::class.java)
-                        .sendInVm(this)
-            })
     }
 
     override fun viewAttached()
@@ -52,9 +45,8 @@ class VmActMain : BaseViewModel()
             {
                 if (!SharedPrefsManager.getBool(SharedPrefsManager.Key.MASK_INTRO_SHOWED))
                 {
-                    BuilderDialogMy()
-                            .setViewId(R.layout.la_mask_show)
-                            .setBtnOk(BtnAction(getStringMy(R.string.its_clear), {}))
+                    BuilderIntent()
+                            .setActivityToStart(ActIntroSlides::class.java)
                             .sendInVm(this)
                     SharedPrefsManager.saveBool(SharedPrefsManager.Key.MASK_INTRO_SHOWED, true)
                 }

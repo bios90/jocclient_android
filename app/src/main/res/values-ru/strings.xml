@@ -50,8 +50,8 @@
     <string name="quick_order">Быстрый заказ</string>
     <string name="by_distance">По расстоянию</string>
     <string name="by_rating">По рейтингу</string>
-    <string name="hot_drinks">Hot drinks</string>
-    <string name="cold_drinks">Cold drinks</string>
+    <string name="hot_drinks">Горячие напитки</string>
+    <string name="cold_drinks">Холодные напитки</string>
     <string name="snacks">Закуски</string>
     <string name="basket">Корзина</string>
     <string name="weight">Объем</string>
@@ -89,9 +89,11 @@
     <string name="err_no_internet">Отсутствует соединение с сетью</string>
     <string name="err_server_internal">Внутренняя ошибка сервера</string>
     <string name="err_parsing">Ошибка при обработке запроса</string>
+    <string name="cafe_cant_take_payment">Данное кафе пока не принимает оплату</string>
     <string name="order_made">Заказ оформлен</string>
     <string name="order_number">Номер заказа : </string>
     <string name="skip">Пропустить</string>
     <string name="dalee">Далее</string>
     <string name="start">Начать</string>
+    <string name="no_reviews_yet">Отзывов пока нет, но вы сможете стать первым, кто это сделает</string>
 </resources>

@@ -9,6 +9,9 @@ import com.justordercompany.client.logic.models.ModelUser
 import com.justordercompany.client.logic.requests.FeedLoadInfo
 import com.justordercompany.client.logic.requests.ReqCafes
 import com.justordercompany.client.logic.responses.*
+import io.reactivex.Observable
+import okhttp3.ResponseBody
+import retrofit2.Response
 
 class BaseNetworker(private val base_vm: BaseViewModel)
 {
@@ -53,9 +56,9 @@ class BaseNetworker(private val base_vm: BaseViewModel)
                 .disposeBy(base_vm.composite_disposable)
     }
 
-    fun makeOrder(date: String, comment: String?, items: String, action_success: (Int) -> Unit, action_error: ((Throwable) -> Unit)? = null)
+    fun makeOrder(date: String, comment: String?, items: String, cafe_id: Int, action_success: (Int) -> Unit, action_error: ((Throwable) -> Unit)? = null)
     {
-        base_vm.api_orders.createOrder(date, comment, items)
+        base_vm.api_orders.createOrder(date, comment, items, cafe_id)
                 .mainThreaded()
                 .addMyParser<RespBaseWithData>(RespBaseWithData::class.java)
                 .addProgress(base_vm)
@@ -142,7 +145,7 @@ class BaseNetworker(private val base_vm: BaseViewModel)
                 .disposeBy(base_vm.composite_disposable)
     }
 
-    fun makeOrderReview(cafe_id: Int, order_id: Int, text: String?, rating: Int, action_success: () -> Unit, action_error: ((Throwable) -> Unit)? = null)
+    fun makeOrderReview(cafe_id: Int, order_id: Int?, text: String?, rating: Int, action_success: () -> Unit, action_error: ((Throwable) -> Unit)? = null)
     {
         base_vm.api_orders.makeReview(cafe_id, order_id, text, rating)
                 .mainThreaded()
@@ -235,5 +238,55 @@ class BaseNetworker(private val base_vm: BaseViewModel)
                         action_error?.invoke(it)
                     })
                 .disposeBy(composite_disposable)
+    }
+
+    fun toggleCafeFavorite(cafe_id: Int, is_favorite: Boolean, action_success: () -> Unit, action_error: ((Throwable) -> Unit)? = null)
+    {
+        val obs: Observable<Response<ResponseBody>>
+        if (is_favorite)
+        {
+            obs = base_vm.api_cafe.favoriteAdd(cafe_id)
+        }
+        else
+        {
+            obs = base_vm.api_cafe.favoriteRemove(cafe_id)
+        }
+
+        obs.mainThreaded()
+                .addMyParser<BaseResponse>(RespCafeSingle::class.java)
+                .addProgress(base_vm)
+                .addScreenDisabling(base_vm)
+                .addErrorCatcher(base_vm)
+                .subscribeMy(
+                    {
+                        action_success()
+                    },
+                    {
+                        action_error?.invoke(it)
+                        Log.e("BaseNetworker", "**** Got error on loading cafe single ****")
+                    })
+                .disposeBy(base_vm.composite_disposable)
+    }
+
+    fun loadFavorites(action_success: (ArrayList<ModelCafe>) -> Unit, action_error: ((Throwable) -> Unit)? = null)
+    {
+        base_vm.api_cafe.favoriteGetAll()
+                .mainThreaded()
+                .addMyParser<RespCafes>(RespCafes::class.java)
+                .addProgress(base_vm)
+                .addScreenDisabling(base_vm)
+                .addErrorCatcher(base_vm)
+                .map(
+                    {
+                        return@map it.data?.cafes ?: arrayListOf()
+                    })
+                .subscribeMy(
+                    {
+                        action_success(it)
+                    },
+                    {
+                        action_error?.invoke(it)
+                    })
+                .disposeBy(base_vm.composite_disposable)
     }
 }

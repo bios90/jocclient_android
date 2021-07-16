@@ -21,7 +21,6 @@ fun Number.formatAsRating(): String
     return this.formatWith(NumberFormatter.FORMAT_RATING)
 }
 
-
 fun Number.formatAsMoney(): String
 {
     return this.formatWith(NumberFormatter.FORMAT_MONEY)

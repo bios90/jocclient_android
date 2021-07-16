@@ -10,6 +10,7 @@ import com.justordercompany.client.ui.screens.act_cafe_menu.tabs.tab_basket.VmTa
 import com.justordercompany.client.ui.screens.act_cafe_menu.tabs.tab_cafe_page.VmTabCafePage
 import com.justordercompany.client.ui.screens.act_cafe_menu.tabs.tab_categ.VmTabCateg
 import com.justordercompany.client.ui.screens.act_cafe_popup.VmCafePopup
+import com.justordercompany.client.ui.screens.act_favorites.VmActFavorites
 import com.justordercompany.client.ui.screens.act_filter.VmActFilter
 import com.justordercompany.client.ui.screens.act_main.VmActMain
 import com.justordercompany.client.ui.screens.act_main.tabs.list.VmTabList
@@ -46,4 +47,5 @@ interface ComponentApplication
     fun inject(vm: VmPayTypeDialog)
     fun inject(vm: VmActReviewDialog)
     fun inject(vm: VmActAuth)
+    fun inject(vm: VmActFavorites)
 }

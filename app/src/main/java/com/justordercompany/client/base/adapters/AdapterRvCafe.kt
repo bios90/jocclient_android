@@ -16,6 +16,7 @@ import com.justordercompany.client.base.LoadBehavior
 import com.justordercompany.client.base.FeedDisplayInfo
 import com.justordercompany.client.base.diff.DiffCafes
 import com.justordercompany.client.databinding.ItemCafeBinding
+import com.justordercompany.client.extensions.toVisibility
 import com.justordercompany.client.logic.models.ModelCafe
 import com.justordercompany.client.logic.utils.LocationManager
 import com.justordercompany.client.logic.utils.images.GlideManager
@@ -47,6 +48,9 @@ class AdapterRvCafe : RecyclerView.Adapter<AdapterRvCafe.CardCafe>()
             {
                 listener?.invoke(cafe)
             })
+
+        holder.rating_bar.isClickable = false
+        holder.rating_bar.isFocusable = false
     }
 
     fun setItems(rec_info: FeedDisplayInfo<ModelCafe>)
@@ -73,6 +77,7 @@ class AdapterRvCafe : RecyclerView.Adapter<AdapterRvCafe.CardCafe>()
         val rating_bar: ScaleRatingBar
         val tv_time: TextView
         val tv_distance: TextView
+        val tv_is_favorite: TextView
 
         init
         {
@@ -83,6 +88,7 @@ class AdapterRvCafe : RecyclerView.Adapter<AdapterRvCafe.CardCafe>()
             rating_bar = view.findViewById(R.id.rating_bar)
             tv_time = view.findViewById(R.id.tv_time)
             tv_distance = view.findViewById(R.id.tv_distance)
+            tv_is_favorite = view.findViewById(R.id.tv_is_favorite)
         }
 
         fun bindCafe(cafe: ModelCafe)
@@ -93,6 +99,8 @@ class AdapterRvCafe : RecyclerView.Adapter<AdapterRvCafe.CardCafe>()
                 })
             tv_name.text = cafe.name
             tv_adress.text = cafe.address
+
+            tv_is_favorite.visibility = cafe.isFavorite().toVisibility()
 
             cafe.rating?.let(
                 {

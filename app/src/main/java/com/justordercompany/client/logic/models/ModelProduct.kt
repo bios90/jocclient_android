@@ -58,10 +58,10 @@ class ModelProduct
     {
         val price = getMinPrice() ?: return null
         var text = "${price.formatAsMoney()} р."
-        if (hasWeights() || hasMilks() || hasAddables())
-        {
-            text = "${getStringMy(R.string.from)}\n$text"
-        }
+//        if (hasWeights() || hasMilks() || hasAddables())
+//        {
+//            text = "${getStringMy(R.string.from)}\n$text"
+//        }
 
         return text
     }

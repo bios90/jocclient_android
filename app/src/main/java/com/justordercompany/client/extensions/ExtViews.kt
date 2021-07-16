@@ -26,6 +26,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.justordercompany.client.base.enums.TypeScrollEvent
+import com.justordercompany.client.base.enums.TypeSocialIcon
+import com.justordercompany.client.databinding.LaSocialIconsBinding
 
 
 //Alert Dialog
@@ -210,13 +212,16 @@ fun getNavbarHeight(): Int
     return result
 }
 
-fun View.setMargins(l: Int, t: Int, r: Int, b: Int)
+fun View.setMargins(left: Int? = null, top: Int? = null, right: Int? = null, bottom: Int? = null)
 {
-    if (this.getLayoutParams() is ViewGroup.MarginLayoutParams)
+    if (layoutParams is ViewGroup.MarginLayoutParams)
     {
-        val p = this.getLayoutParams() as ViewGroup.MarginLayoutParams
-        p.setMargins(l, t, r, b)
-        this.requestLayout()
+        val params = layoutParams as ViewGroup.MarginLayoutParams
+        left?.run { params.leftMargin = this }
+        top?.run { params.topMargin = this }
+        right?.run { params.rightMargin = this }
+        bottom?.run { params.bottomMargin = this }
+        requestLayout()
     }
 }
 
@@ -480,6 +485,51 @@ fun ViewPager.scrollToPrevIfPossible()
     {
         this.setCurrentItem(next_pos, true)
     }
+}
+
+fun LaSocialIconsBinding.bindSocialIcons(map: Map<TypeSocialIcon, String?>)
+{
+    val url_instagram = map.get(TypeSocialIcon.INSTAGRAM)
+    val url_vk = map.get(TypeSocialIcon.VK)
+    val url_facebook = map.get(TypeSocialIcon.FACEBOOK)
+    val url_whatsapp = map.get(TypeSocialIcon.WHATSAPP)
+    val url_twitter = map.get(TypeSocialIcon.TWITTER)
+
+    this.tvInstagram.visibility = (!url_instagram.isNullOrEmpty()).toVisibility()
+    this.tvVk.visibility = (!url_vk.isNullOrEmpty()).toVisibility()
+    this.tvFacebook.visibility = (!url_facebook.isNullOrEmpty()).toVisibility()
+    this.tvWhatsapp.visibility = (!url_whatsapp.isNullOrEmpty()).toVisibility()
+    this.tvTwitter.visibility = (!url_twitter.isNullOrEmpty()).toVisibility()
+
+    this.tvInstagram.setOnClickListener(
+        {
+            url_instagram ?: return@setOnClickListener
+            openUrlIntent(url_instagram)
+        })
+
+    this.tvVk.setOnClickListener(
+        {
+            url_vk ?: return@setOnClickListener
+            openUrlIntent(url_vk)
+        })
+
+    this.tvFacebook.setOnClickListener(
+        {
+            url_facebook ?: return@setOnClickListener
+            openUrlIntent(url_facebook)
+        })
+
+    this.tvWhatsapp.setOnClickListener(
+        {
+            url_whatsapp ?: return@setOnClickListener
+            openUrlIntent(url_whatsapp)
+        })
+
+    this.tvTwitter.setOnClickListener(
+        {
+            url_twitter ?: return@setOnClickListener
+            openUrlIntent(url_twitter)
+        })
 }
 
 

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.justordercompany.client.R" />
+
+        <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
+
+        <import type="android.graphics.drawable.GradientDrawable" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@{BuilderBg.getSimpleDrawable(8f,R.color.white)}"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TvReg.Xxl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="22dp"
+            android:text="@string/map_legend"
+            android:textColor="@color/gray6" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="22dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <include
+                android:id="@+id/la_empty"
+                layout="@layout/la_marker" />
+
+            <TextView
+                android:layout_marginBottom="3dp"
+                style="@style/TvReg.M"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:gravity="left"
+                android:text="Новое кафе, меню пока не заполнено" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="22dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginRight="22dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <include
+                android:id="@+id/la_filled"
+                layout="@layout/la_marker" />
+
+            <TextView
+                android:layout_marginBottom="3dp"
+                style="@style/TvReg.M"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:gravity="left"
+                android:text="Кафе с заполненным меню, но без предзаказа" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="22dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginRight="22dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <include
+                android:id="@+id/la_full"
+                layout="@layout/la_marker" />
+
+            <TextView
+                android:layout_marginBottom="3dp"
+                style="@style/TvReg.M"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:gravity="left"
+                android:text="Кафе с полностью заполненным меню и с предзаказом" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_ok"
+            style="@style/TvReg.M"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_margin="22dp"
+            android:background="@{BuilderBg.getGradOrange(4f,GradientDrawable.Orientation.LEFT_RIGHT)}"
+            android:text="Ясно, понятно"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+
+</layout>

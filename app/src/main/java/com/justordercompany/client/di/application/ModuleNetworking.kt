@@ -50,7 +50,7 @@ class ModuleNetworking
         val httpClientBuilder = OkHttpClient.Builder()
         httpClientBuilder.addInterceptor(interceptor)
 //        httpClientBuilder.addInterceptor(log_interceptor)
-        httpClientBuilder.addInterceptor(CurlLoggerInterceptor("****CURL****"))
+//        httpClientBuilder.addInterceptor(CurlLoggerInterceptor("****CURL****"))
         httpClientBuilder.callTimeout(120, TimeUnit.SECONDS)
         httpClientBuilder.readTimeout(120, TimeUnit.SECONDS)
         httpClientBuilder.writeTimeout(120, TimeUnit.SECONDS)

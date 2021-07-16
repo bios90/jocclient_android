@@ -43,7 +43,7 @@ class TabProfile(val act_main: ActMain) : TabView
 
         bnd_profile.larAuthDialog.tvOffert.text = getOffertText()
         bnd_profile.viewFakeStatus.setHeight(getStatusBarHeight())
-        bnd_profile.larTop.setHeight(dp2pxInt(212) + getStatusBarHeight())
+        bnd_profile.larTop.setHeight(dp2pxInt(236) + getStatusBarHeight())
     }
 
     fun setOrderRecycler()
@@ -73,6 +73,11 @@ class TabProfile(val act_main: ActMain) : TabView
         bnd_profile.imgInfo.setOnClickListener(
             {
                 vm_tab_profile.ViewListener().clickedQuestion()
+            })
+
+        bnd_profile.larFavorite.setOnClickListener(
+            {
+                vm_tab_profile.ViewListener().clickedFavorites()
             })
 
         connectBoth(bnd_profile.larAuthDialog.etPhone.getBsText(), vm_tab_profile.bs_phone, composite_disposable)

@@ -11,4 +11,5 @@ interface TabProfileListener
     fun swipedToRefresh()
     fun scrolledToBottom()
     fun clickedOrder(order:ModelOrder)
+    fun clickedFavorites()
 }

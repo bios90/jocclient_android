@@ -3,7 +3,11 @@ package com.justordercompany.client.logic.models
 import android.util.Log
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.annotations.SerializedName
+import com.justordercompany.client.R
+import com.justordercompany.client.base.enums.TypeCafeStatus
 import com.justordercompany.client.base.enums.TypeProduct
+import com.justordercompany.client.base.enums.TypeSocialIcon
+import com.justordercompany.client.extensions.getStringMy
 import com.justordercompany.client.logic.utils.LocationManager
 
 class ModelCafe(
@@ -25,9 +29,23 @@ class ModelCafe(
         var description: String? = null,
         @SerializedName("photo")
         var images: ArrayList<BaseImage>? = null,
-        var reviews: ArrayList<ModelReview>? = null
+        var reviews: ArrayList<ModelReview>? = null,
+        var is_favorite: String? = null,
+        var status:TypeCafeStatus? = null,
+
+        var social_instagram: String? = null,
+        var social_vk: String? = null,
+        var social_facebook: String? = null,
+        var social_twitter: String? = null,
+        var social_whatsapp: String? = null
+
 ) : ObjectWithId
 {
+    fun isFavorite(): Boolean
+    {
+        return is_favorite.equals("true")
+    }
+
     fun getLatLng(): LatLng?
     {
         if (lat == null || lon == null)
@@ -64,6 +82,33 @@ class ModelCafe(
         }
 
         return all_images
+    }
+
+    fun getSocials(): Map<TypeSocialIcon, String?>
+    {
+        val url_whatwapp: String? = run(
+            {
+                if (social_whatsapp.isNullOrEmpty())
+                {
+                    return@run null
+                }
+                else if (social_whatsapp?.startsWith("https://", true) == true)
+                {
+                    return@run social_whatsapp
+                }
+                else
+                {
+                    return@run "https://wa.me/" + social_whatsapp!!.filter({ it.isDigit() })
+                }
+            })
+
+        return mapOf(
+            Pair(TypeSocialIcon.INSTAGRAM, social_instagram),
+            Pair(TypeSocialIcon.VK, social_vk),
+            Pair(TypeSocialIcon.FACEBOOK, social_facebook),
+            Pair(TypeSocialIcon.WHATSAPP, url_whatwapp),
+            Pair(TypeSocialIcon.TWITTER, social_twitter)
+        )
     }
 }
 

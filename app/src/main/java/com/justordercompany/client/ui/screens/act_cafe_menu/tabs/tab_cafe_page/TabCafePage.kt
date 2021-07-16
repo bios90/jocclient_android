@@ -10,6 +10,7 @@ import com.justordercompany.client.base.data_binding.BuilderBg
 import com.justordercompany.client.databinding.ItemCafeImageBinding
 import com.justordercompany.client.databinding.LaTabCafePageBinding
 import com.justordercompany.client.extensions.*
+import com.justordercompany.client.local_data.SharedPrefsManager
 import com.justordercompany.client.logic.models.ModelCafe
 import com.justordercompany.client.logic.utils.images.GlideManager
 import com.justordercompany.client.ui.screens.act_cafe_menu.ActCafeMenu
@@ -49,6 +50,11 @@ class TabCafePage(val act_cafe_menu: ActCafeMenu) : TabView
         bnd_tab_cafe_page.recReviews.adapter = adapter_reviews
         bnd_tab_cafe_page.recReviews.layoutManager = LinearLayoutManager(act_cafe_menu)
         bnd_tab_cafe_page.recReviews.addDivider(getColorMy(R.color.transparent), dp2pxInt(8f))
+
+        adapter_reviews.action_card_clicked =
+                {
+
+                }
     }
 
     override fun getView(): View
@@ -66,6 +72,16 @@ class TabCafePage(val act_cafe_menu: ActCafeMenu) : TabView
         bnd_tab_cafe_page.lalDistance.setOnClickListener(
             {
                 vm_tab_cafe_page.ViewListener().clickedDistance()
+            })
+
+        bnd_tab_cafe_page.tvAddReply.setOnClickListener(
+            {
+                vm_tab_cafe_page.ViewListener().clickedAddReview()
+            })
+
+        bnd_tab_cafe_page.tvIsFavorite.setOnClickListener(
+            {
+                vm_tab_cafe_page.ViewListener().clickedToggleFavorite()
             })
     }
 
@@ -100,6 +116,16 @@ class TabCafePage(val act_cafe_menu: ActCafeMenu) : TabView
                 GlideManager.loadImageSimpleCircle(it, bnd_tab_cafe_page.imgLogo)
             })
 
+        bnd_tab_cafe_page.tvIsFavorite.visibility = (SharedPrefsManager.getCurrentUser() != null).toVisibility()
+        if (cafe.isFavorite())
+        {
+            bnd_tab_cafe_page.tvIsFavorite.typeface = getTypeFaceFromResource(R.font.fa_solid)
+        }
+        else
+        {
+            bnd_tab_cafe_page.tvIsFavorite.typeface = getTypeFaceFromResource(R.font.fa_regular)
+        }
+
         bnd_tab_cafe_page.ftvText.setTypeface(getTypeFaceFromResource(R.font.exo_reg))
         bnd_tab_cafe_page.ftvText.setTextSize(getDimenMy(R.dimen.size_s))
         bnd_tab_cafe_page.ftvText.setTextColor(getColorMy(R.color.white))
@@ -117,15 +143,16 @@ class TabCafePage(val act_cafe_menu: ActCafeMenu) : TabView
 
         if (!cafe.reviews.isNullOrEmpty())
         {
-            //Todo later maybe remake for reversed on server
             cafe.reviews!!.reverse()
             adapter_reviews.setItems(cafe.reviews!!)
-            bnd_tab_cafe_page.tvReviewsTitle.visibility = View.VISIBLE
+            bnd_tab_cafe_page.tvNoReviews.visibility = View.GONE
         }
         else
         {
-            bnd_tab_cafe_page.tvReviewsTitle.visibility = View.GONE
+            bnd_tab_cafe_page.tvNoReviews.visibility = View.VISIBLE
         }
+
+        bnd_tab_cafe_page.laSocialIcons.bindSocialIcons(cafe.getSocials())
     }
 
     private fun bindCafeImages(cafe: ModelCafe)
@@ -135,6 +162,8 @@ class TabCafePage(val act_cafe_menu: ActCafeMenu) : TabView
             bnd_tab_cafe_page.scrollImages.visibility = View.GONE
             return
         }
+
+        bnd_tab_cafe_page.laForImages.removeAllViews()
 
         bnd_tab_cafe_page.scrollImages.visibility = View.VISIBLE
 

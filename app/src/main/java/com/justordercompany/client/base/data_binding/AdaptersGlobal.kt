@@ -24,8 +24,8 @@ fun setMyBuilderBg(view: View, my_stroke_width: Float = 0f, my_stroke_color: Int
             .applyToView()
 }
 
-@BindingAdapter(value = ["my_divider_size", "my_divider_color"],requireAll = true)
-fun setDivider(lal: LinearLayout, my_divider_size: Float, my_divider_color: Int)
+@BindingAdapter(value = ["my_divider_size", "my_divider_color"], requireAll = false)
+fun setDivider(lal: LinearLayout, my_divider_size: Float, my_divider_color: Int?)
 {
     val drw = GradientDrawable()
     drw.shape = GradientDrawable.RECTANGLE
@@ -37,7 +37,8 @@ fun setDivider(lal: LinearLayout, my_divider_size: Float, my_divider_color: Int)
     {
         drw.setSize(dp2pxInt(my_divider_size), 0)
     }
-    drw.setColor(getColorMy(my_divider_color))
+    val color_id = my_divider_color ?: R.color.transparent
+    drw.setColor(getColorMy(color_id))
     lal.dividerDrawable = drw
 }
 

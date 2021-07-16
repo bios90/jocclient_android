@@ -15,7 +15,8 @@ interface ApiOrders
     fun createOrder(
             @Field("date") date: String,
             @Field("comment") comment: String?,
-            @Field("items") items: String
+            @Field("items") items: String,
+            @Field("cafeId") cafe_id: Int
     ): Observable<Response<ResponseBody>>
 
     @FormUrlEncoded
@@ -41,7 +42,7 @@ interface ApiOrders
     @PUT(Constants.Urls.URL_ORDER_MAKE_REVIEW)
     fun makeReview(
             @Path("id") cafe_id: Int,
-            @Field("order_id") order_id: Int,
+            @Field("order_id") order_id: Int?,
             @Field("text") text: String?,
             @Field("rating") rating: Int): Observable<Response<ResponseBody>>
 

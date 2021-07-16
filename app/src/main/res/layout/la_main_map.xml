@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+
+        <import type="com.justordercompany.client.R" />
+
+        <import type="com.justordercompany.client.base.data_binding.BuilderBg" />
+    </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -10,7 +17,30 @@
             android:id="@+id/frag_map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_legend"
+            style="@style/TvFawReg.Xl"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:background="@{BuilderBg.getSimpleDrawableRipple(26f,R.color.green,R.color.green_dark)}"
+            android:text="@string/faw_map_layers"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_clear_route"
+            style="@style/TvFawReg.Xl"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="32dp"
+            android:background="@{BuilderBg.getSimpleDrawableRipple(26f,R.color.orange,R.color.gray4)}"
+            android:text="@string/faw_times"
+            android:textColor="@color/white"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

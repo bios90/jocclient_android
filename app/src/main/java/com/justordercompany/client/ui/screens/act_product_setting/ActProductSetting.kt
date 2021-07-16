@@ -2,6 +2,8 @@ package com.justordercompany.client.ui.screens.act_product_setting
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.RelativeLayout
 import androidx.databinding.DataBindingUtil
 import com.justordercompany.client.R
 import com.justordercompany.client.base.BaseActivity
@@ -73,6 +75,15 @@ class ActProductSetting : BaseActivity()
                         bindBasketItem(it)
                     })
                 .disposeBy(composite_diposable)
+
+        vm_product_setting.bs_can_order
+                .mainThreaded()
+                .subscribe(
+                    {
+                        bubble_view_sugar?.getView()?.visibility = it.toVisibility()
+                        bnd_product_setting.tvAdd.visibility = it.toVisibility()
+                    })
+                .disposeBy(composite_diposable)
     }
 
     fun setListeners()
@@ -85,11 +96,19 @@ class ActProductSetting : BaseActivity()
 
     private fun bindProduct(product: ModelProduct)
     {
-        Log.e("ActProductSetting", "bindProduct: image_url is ${product.image?.url_l}")
-        product.image?.url_l?.let(
-            {
-                GlideManager.loadImageSimple(it, bnd_product_setting.imgProduct)
-            })
+        if(product.image?.url_l != null)
+        {
+            GlideManager.loadImageSimple(product.image?.url_l!!, bnd_product_setting.imgProduct)
+        }
+        else
+        {
+            bnd_product_setting.laTop.setHeight(dp2pxInt(92f))
+            bnd_product_setting.viewOverlay.visibility = View.GONE
+            bnd_product_setting.tvName.setTextColor(getColorMy(R.color.gray6))
+            bnd_product_setting.tvDescription.setTextColor(getColorMy(R.color.gray6))
+            bnd_product_setting.tvName.maxLines = 1
+            bnd_product_setting.tvDescription.maxLines = 3
+        }
 
         bnd_product_setting.tvName.text = product.name
         bnd_product_setting.tvDescription.text = product.description
@@ -274,5 +293,8 @@ class ActProductSetting : BaseActivity()
                     vm_product_setting.bs_busket_item.onNext(basket_item)
                 })
         }
+
+        val can_order = intent.getBooleanExtra(Constants.Extras.EXTRA_CAN_ORDER, false)
+        vm_product_setting.bs_can_order.onNext(can_order)
     }
 }

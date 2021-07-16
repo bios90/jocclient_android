@@ -3,17 +3,16 @@ package com.justordercompany.client.base.enums
 enum class TypeTab
 {
     PROFILE,
-    LIST,
-    MAP;
-
+    MAP,
+    LIST;
 
     fun getPos(): Int
     {
         when (this)
         {
             PROFILE -> return 0
-            LIST -> return 1
-            MAP -> return 2
+            MAP -> return 1
+            LIST -> return 2
         }
     }
 
