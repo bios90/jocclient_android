@@ -23,7 +23,7 @@ object RoutesManager
         val to_str = "${finish.latitude},${finish.longitude}"
 
         val geo_context = GeoApiContext.Builder()
-                .apiKey("AIzaSyDGvaukwLZyj3jvJrWQ7fAFBxMHOWJKS2U")
+                .apiKey("")
                 .build()
 
         val req = DirectionsApi.newRequest(geo_context)
